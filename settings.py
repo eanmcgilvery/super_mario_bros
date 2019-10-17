@@ -3,6 +3,7 @@ import pygame
 
 class Settings:
     def __init__(self):
+        """ALL NUMBERS ARE JUST PLACEHOLDERS, FEEL FREE TO CHANGE SCREEN WIDTH AND SCREEN HEIGHT"""
         # Screen settings
         self.screen_width = 1200
         self.screen_height = 700
