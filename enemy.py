@@ -14,3 +14,6 @@ class Enemy(Sprite):
         # Initial movement direction is left and up
         self.x_direction = -1
         self.y_direction = -1
+
+        # Place in animation
+        self.frame = 1
