@@ -1,6 +1,3 @@
-import pygame
-
-
 class Settings:
     def __init__(self):
         """ALL NUMBERS ARE JUST PLACEHOLDERS, FEEL FREE TO CHANGE SCREEN WIDTH AND SCREEN HEIGHT"""
