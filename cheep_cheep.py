@@ -3,8 +3,8 @@ from enemy import Enemy
 
 
 class CheepCheep(Enemy):
-    def __init__(self, settings, screen, x, y):
-        super(CheepCheep, self).__init__(settings, screen, x, y)
+    def __init__(self, settings, screen, x, y, etype):
+        super(CheepCheep, self).__init__(settings, screen, x, y, etype)
 
         # Rect, image, and initial position set up
         self.rect = pygame.Rect(x, y, settings.cheep_width, settings.cheep_height)

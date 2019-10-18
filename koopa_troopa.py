@@ -3,8 +3,8 @@ from enemy import Enemy
 
 
 class KoopaTroopa(Enemy):
-    def __init__(self, settings, screen, x, y):
-        super(KoopaTroopa, self).__init__(settings, screen, x, y)
+    def __init__(self, settings, screen, x, y, etype):
+        super(KoopaTroopa, self).__init__(settings, screen, x, y, etype)
 
         # Rect, image, and initial position set up
         self.rect = pygame.Rect(x, y, settings.koopa_width, settings.koopa_height)

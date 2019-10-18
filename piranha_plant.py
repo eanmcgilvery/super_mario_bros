@@ -3,8 +3,8 @@ from enemy import Enemy
 
 
 class PiranhaPlant(Enemy):
-    def __init__(self, settings, screen, x, y):
-        super(PiranhaPlant, self).__init__(settings, screen, x, y)
+    def __init__(self, settings, screen, x, y, etype):
+        super(PiranhaPlant, self).__init__(settings, screen, x, y, etype)
 
         # Rect, image, and initial position set up
         self.rect = pygame.Rect(x, y, settings.piranha_plant_width, settings.piranha_plant_height)

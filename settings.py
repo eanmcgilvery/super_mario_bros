@@ -19,17 +19,8 @@ class Settings:
         self.koopa_width = self.goomba_width
         self.koopa_height = self.goomba_height
 
-        self.hammer_bro_width = self.koopa_width
-        self.hammer_bro_height = self.koopa_height
-
-        self.lakitu_width = self.koopa_width
-        self.lakitu_height = self.koopa_height
-
         self.piranha_plant_width = self.koopa_width
-        self.piranha_plant_height = self.piranha_plant_width * 3
-
-        self.spiny_width = self.goomba_width
-        self.spiny_height = self.goomba_height
+        self.piranha_plant_height = self.piranha_plant_width * 2
 
         self.cheep_width = self.goomba_width
         self.cheep_height = self.goomba_height
@@ -37,20 +28,13 @@ class Settings:
         self.blooper_width = self.koopa_width
         self.blooper_height = self.koopa_height
 
-        self.bullet_bill_width = self.goomba_width
-        self.bullet_bill_height = self.goomba_height
-
-        self.buzzy_width = self.spiny_width
-        self.buzzy_height = self.spiny_height
+        self.fake_bowser_width = self.koopa_width * 1.5
+        self.fake_bowser_height = self.koopa_height * 2
 
         # Enemy speeds
         self.goomba_speed = 1.0
         self.koopa_speed = self.goomba_speed
-        self.hammer_bro_speed = self.koopa_speed / 2
-        self.lakitu_speed = self.koopa_speed * 2
         self.piranha_plant_speed = self.koopa_speed / 2
-        self.spiny_speed = self.goomba_speed
         self.cheep_speed = self.goomba_speed
         self.blooper_speed = self.goomba_speed * 2
-        self.bullet_bill_speed = self.goomba_speed
-        self.buzzy_speed = self.spiny_speed
+        self.fake_bowser_speed = self.goomba_speed

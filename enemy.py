@@ -2,7 +2,7 @@ from pygame.sprite import Sprite
 
 
 class Enemy(Sprite):
-    def __init__(self, settings, screen, x, y):
+    def __init__(self, settings, screen, x, y, etype):
         super(Enemy, self).__init__()
         self.settings = settings
         self.screen = screen
@@ -10,6 +10,9 @@ class Enemy(Sprite):
         # Store exact position
         self.x = x
         self.y = y
+
+        # Identify which type the enemy is
+        self.etype = etype
 
         # Initial movement direction is left and up
         self.x_direction = -1

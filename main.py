@@ -4,7 +4,7 @@ from pygame.sprite import Group
 
 
 def run_game():
-    
+
     # Initialize pygame, settings, and screen object.
     pygame.init()
     settings = Settings()
@@ -13,15 +13,12 @@ def run_game():
 
     # Create a group for each enemy
     bloopers = Group()
-    bullet_bills = Group()
-    buzzy_beetles = Group()
     cheep_cheeps = Group()
+    fake_bowsers = Group()
     goombas = Group()
-    hammer_bros = Group()
     koopa_troopas = Group()
-    lakitus = Group()
     piranha_plants = Group()
-    spinies = Group()
+    enemies = [bloopers, cheep_cheeps, fake_bowsers, goombas, koopa_troopas, piranha_plants]
 
 
 run_game()
