@@ -9,7 +9,7 @@ class Settings:
         self.MAX_WALKING_SPEED = 10
         self.MAX_HEIGHT_SPEED = 5
 
-        #Speed of gravity in our world
+        # Speed of gravity in our world
         self.MAX_FALL_SPEED = 9.8
 
         # Enemy sizes
@@ -44,10 +44,7 @@ class Settings:
         self.buzzy_height = self.spiny_height
 
         # Enemy speeds
-        self.enemy_fall_speed_min = 1
-        self.enemy_fall_speed_inc = 1.5
-        self.enemy_fall_speed_max = 4
-        self.goomba_speed = 1
+        self.goomba_speed = 1.0
         self.koopa_speed = self.goomba_speed
         self.hammer_bro_speed = self.koopa_speed / 2
         self.lakitu_speed = self.koopa_speed * 2
