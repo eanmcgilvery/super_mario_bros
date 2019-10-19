@@ -12,24 +12,31 @@ class Settings:
         # Speed of gravity in our world
         self.MAX_FALL_SPEED = 9.8
 
-        # Enemy sizes
-        self.goomba_width = 35
-        self.goomba_height = 35
+        # All enemy sizes depend on goomba width
+        self.goomba_width = 16
+        self.goomba_height = self.goomba_width
 
         self.koopa_width = self.goomba_width
-        self.koopa_height = self.goomba_height
+        self.koopa_height = self.goomba_height * 1.5
+
+        self.dead_koopa_width = self.goomba_width
+        self.dead_koopa_height = self.goomba_height
 
         self.piranha_plant_width = self.koopa_width
-        self.piranha_plant_height = self.piranha_plant_width * 2
+        self.piranha_plant_height = self.koopa_height
 
         self.cheep_width = self.goomba_width
         self.cheep_height = self.goomba_height
 
         self.blooper_width = self.koopa_width
-        self.blooper_height = self.koopa_height
+        self.bloopera1_height = self.koopa_height
+        self.bloopera2_height = self.goomba_height
 
-        self.fake_bowser_width = self.koopa_width * 1.5
-        self.fake_bowser_height = self.koopa_height * 2
+        self.fake_bowser_width = self.goomba_width * 2
+        self.fake_bowser_height = self.goomba_height * 2
+
+        self.bowser_fire_width = self.goomba_width * 1.5
+        self.bowser_fire_height = self.goomba_height * 0.5
 
         # Enemy speeds
         self.goomba_speed = 1.0
