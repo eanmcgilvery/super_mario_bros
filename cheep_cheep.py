@@ -42,7 +42,7 @@ class CheepCheep(Enemy):
                 self.pic = pygame.image.load('images/Cheep_cheep1a2.png')
             elif self.etype is 2:
                 self.pic = pygame.image.load('images/Cheep_cheep2a2.png')
-            elif self.etype is 2:
+            elif self.etype is 3:
                 self.pic = pygame.image.load('images/Cheep_cheep3a2.png')
             self.frame = 2
         elif self.frame is 2:
@@ -50,7 +50,7 @@ class CheepCheep(Enemy):
                 self.pic = pygame.image.load('images/Cheep_cheep1a1.png')
             elif self.etype is 2:
                 self.pic = pygame.image.load('images/Cheep_cheep2a1.png')
-            elif self.etype is 2:
+            elif self.etype is 3:
                 self.pic = pygame.image.load('images/Cheep_cheep3a1.png')
             self.frame = 1
         self.image = pygame.transform.scale(self.pic, (self.settings.cheep_width, self.settings.cheep_height))

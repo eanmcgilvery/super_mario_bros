@@ -1,6 +1,8 @@
 import pygame
-from settings import Settings
+import game_functions as gf
 from pygame.sprite import Group
+from settings import Settings
+from timers import Timers
 
 
 def run_game():
@@ -11,14 +13,19 @@ def run_game():
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     pygame.display.set_caption("Super Mario Bros")
 
-    # Create a group for each enemy
-    bloopers = Group()
-    cheep_cheeps = Group()
-    fake_bowsers = Group()
-    goombas = Group()
-    koopa_troopas = Group()
-    piranha_plants = Group()
-    enemies = [bloopers, cheep_cheeps, fake_bowsers, goombas, koopa_troopas, piranha_plants]
+    # Create our timers
+    timers = Timers()
+
+    # Create a group to hold all enemies
+    enemies = Group()
+
+    # Start the main loop for the game.
+    while True:
+        timers.curtime = pygame.time.get_ticks()
+        gf.check_events(settings, screen, enemies)
+        gf.update_pos(settings, enemies, timers)
+        gf.update_animations(enemies, timers)
+        gf.update_screen(screen, enemies, timers)
 
 
 run_game()
