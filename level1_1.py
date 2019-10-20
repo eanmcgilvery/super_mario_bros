@@ -57,18 +57,15 @@ class Level1_1:
         step2 = collider.Collider(5788, 452, 40, 44)
         step3 = collider.Collider(5831, 409, 40, 44)
         step4 = collider.Collider(5874, 366, 40, 176)
-
         step5 = collider.Collider(6001, 366, 40, 176)
         step6 = collider.Collider(6044, 408, 40, 40)
         step7 = collider.Collider(6087, 452, 40, 40)
         step8 = collider.Collider(6130, 495, 40, 40)
-
         step9 = collider.Collider(6345, 495, 40, 40)
         step10 = collider.Collider(6388, 452, 40, 40)
         step11 = collider.Collider(6431, 409, 40, 40)
         step12 = collider.Collider(6474, 366, 40, 40)
         step13 = collider.Collider(6517, 366, 40, 176)
-
         step14 = collider.Collider(6644, 366, 40, 176)
         step15 = collider.Collider(6687, 408, 40, 40)
         step16 = collider.Collider(6728, 452, 40, 40)
@@ -82,7 +79,6 @@ class Level1_1:
         step24 = collider.Collider(8017, 237, 40, 40)
         step25 = collider.Collider(8060, 194, 40, 40)
         step26 = collider.Collider(8103, 194, 40, 360)
-
         step27 = collider.Collider(8488, 495, 40, 40)
 
         self.step_group = pg.sprite.Group(step1, step2, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12, step13, step14,
