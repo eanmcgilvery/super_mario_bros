@@ -5,6 +5,11 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 700
 
+        self.screen_size = (self.screen_width, self.screen_height)
+
+        self.background_multipler = 2.679
+        self.ground_height = self.screen_height - 62
+
         # Mario Speed
         self.MAX_WALKING_SPEED = 10
         self.MAX_HEIGHT_SPEED = 5
