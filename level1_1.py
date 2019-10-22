@@ -8,6 +8,9 @@ class Level1_1:
     def __init__(self):
 
         self.setup_backgroud()
+        self.stetup_ground()
+        self.setup_pipes()
+        self.setup_steps()
 
 
     def setup_background(self):
