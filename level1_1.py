@@ -8,6 +8,9 @@ class Level1_1:
     def __init__(self):
 
         self.setup_backgroud()
+        self.stetup_ground()
+        self.setup_pipes()
+        self.setup_steps()
 
 
     def setup_background(self):
@@ -83,4 +86,24 @@ class Level1_1:
 
         self.step_group = pg.sprite.Group(step1, step2, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12, step13, step14,
                                           step15, step16,step17, step18,step19, step20, step21, step22, step23, step24, step25, step26, step27)
+
+    def setup_spritegroups(self):
+
+        self.ground_step_pipe_group = pygame.sprite.Group(self.ground_group, self.pipe_group, self.step_group)
+
+
+    def update(self, surface):
+        self.blit_everything(surface)
+
+    def update_viewport(self):
+        """camero view point"""
+        third = self.viewport.x + self.viewport.w//3
+        mario_
+
+
+    def blit_surface(self, surface):
+
+        surface.blit(self.level, (0,0), self.viewport)
+
+
 
