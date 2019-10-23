@@ -17,6 +17,10 @@ class Settings:
         # Speed of gravity in our world
         self.MAX_FALL_SPEED = 9.8
 
+        # Fall acceleration
+        self.fall_acceleration = 1
+        self.swimming_fall_acceleration = 0.5
+
         # All enemy sizes depend on screen width
         self.goomba_width = int(self.screen_height / 17.5)
         self.goomba_height = self.goomba_width
@@ -46,7 +50,7 @@ class Settings:
         # Enemy speeds
         self.goomba_speed = 2.5
         self.koopa_speed = self.goomba_speed
-        self.piranha_plant_speed = self.koopa_speed / 2
+        self.piranha_plant_speed = self.koopa_speed / 2 * -1
         self.cheep_speed = self.goomba_speed
         self.blooper_speed = self.goomba_speed * 2
         self.fake_bowser_speed = self.goomba_speed

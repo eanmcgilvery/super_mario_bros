@@ -3,8 +3,14 @@ from enemy import Enemy
 
 
 class PiranhaPlant(Enemy):
-    def __init__(self, settings, screen, x, y, etype):
+    def __init__(self, settings, screen, timers, x, y, etype):
         super(PiranhaPlant, self).__init__(settings, screen, x, y, etype)
+        self.timers = timers
+
+        self.speed = self.settings.piranha_plant_speed
+        self.move_destination = y - settings.piranha_plant_height
+        self.last_move = self.timers.curtime
+        self.last_direction_was_up = True
 
         """etype 1 is green piranha plant, 2 is blue"""
         # Rect, image, and initial position set up
@@ -16,7 +22,25 @@ class PiranhaPlant(Enemy):
         self.image = pygame.transform.scale(self.pic, (settings.piranha_plant_width, settings.piranha_plant_height))
 
     def update_pos(self):
-        self.y += self.settings.piranha_plant_speed * self.y_direction
+        if self.last_direction_was_up:
+            if self.timers.curtime - self.last_move > self.timers.piranha_plant_pipe_wait:
+                self.update_pos_helper()
+        elif not self.last_direction_was_up:
+            if self.timers.curtime - self.last_move > self.timers.piranha_plant_move_wait:
+                self.update_pos_helper()
+
+    def update_pos_helper(self):
+        self.y += self.speed
+        if self.last_direction_was_up and self.y < self.move_destination or not self.last_direction_was_up and self.y > self.move_destination:
+            self.y = self.move_destination
+            self.last_move = self.timers.curtime
+            if self.last_direction_was_up:  # Last moved upwards
+                self.move_destination = self.y + self.settings.piranha_plant_height
+                self.last_direction_was_up = False
+            else:
+                self.move_destination = self.y - self.settings.piranha_plant_height
+                self.last_direction_was_up = True
+            self.speed = self.speed * -1
         self.rect.y = self.y
 
     def update_image(self):
