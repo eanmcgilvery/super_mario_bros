@@ -25,7 +25,7 @@ class Brick(Object):
     def update_image(self):
         # Animation
         if self.otype is 1:
-            if not is_emprty:
+            if not self.is_emprty:
                 if self.frame is 1:
                     self.pic = pygame.image.load('images/question1.png')
                     self.frame = 2
@@ -35,7 +35,7 @@ class Brick(Object):
                 elif self.frame is 3:
                     self.pic = pygame.image.load('images/question3.png')
                     self.frame = 1
-            elif is_empty:
+            elif self.is_empty:
                 self.pic = pygame.image.load('images/question4.png')
 
         self.image = pygame.transform.scale(self.pic, (self.settings.brick_lenth, self.settings.brick_lenth))
