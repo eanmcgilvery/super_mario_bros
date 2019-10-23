@@ -79,6 +79,11 @@ def update_animations(enemies, timers, objects):
         for enemy in enemies:
             enemy.update_image()
 
+    if timers.curtime - timers.last_object_animation > timers.object_animation_wait:
+        timers.last_object_animation = timers.curtime
+        for object in objects:
+            object.update_image()
+
 
 def update_pos(settings, enemies, timers):
     if timers.curtime - timers.last_move > timers.move_wait:

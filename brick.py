@@ -6,7 +6,7 @@ class Brick(Object):
         super(Brick, self).__init__(settings, screen, x, y, otype)
 
         # Check if block is empty
-        self.is_empty = False
+        self.not_empty = True
 
         """Type 1: Question_brick, type 2: ground brick, type 3:breakable brick, type 4: steps..."""
         self.rect = pygame.Rect(x, y, settings.brick_lenth, settings.brick_lenth)
@@ -25,18 +25,18 @@ class Brick(Object):
     def update_image(self):
         # Animation
         if self.otype is 1:
-            if not self.is_emprty:
-                if self.frame is 1:
-                    self.pic = pygame.image.load('images/question1.png')
-                    self.frame = 2
-                elif self.frame is 2:
-                    self.pic = pygame.image.load('images/question2.png')
-                    self.frame = 3
-                elif self.frame is 3:
-                    self.pic = pygame.image.load('images/question3.png')
-                    self.frame = 1
-            elif self.is_empty:
-                self.pic = pygame.image.load('images/question4.png')
+            #if self.not_emprty:
+            if self.frame is 1:
+                self.pic = pygame.image.load('images/question1.png')
+                self.frame = 2
+            elif self.frame is 2:
+                self.pic = pygame.image.load('images/question2.png')
+                self.frame = 3
+            elif self.frame is 3:
+                self.pic = pygame.image.load('images/question3.png')
+                self.frame = 1
+            #elif not self.not_empty:
+                #self.pic = pygame.image.load('images/question4.png')
 
         self.image = pygame.transform.scale(self.pic, (self.settings.brick_lenth, self.settings.brick_lenth))
 
