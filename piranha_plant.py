@@ -6,20 +6,22 @@ class PiranhaPlant(Enemy):
     def __init__(self, settings, screen, timers, x, y, etype):
         super(PiranhaPlant, self).__init__(settings, screen, x, y, etype)
         self.timers = timers
-
+        
+        self.width = settings.piranha_plant_width
+        self.height = settings.piranha_plant_height
         self.speed = self.settings.piranha_plant_speed
-        self.move_destination = y - settings.piranha_plant_height
+        self.move_destination = y - self.height
         self.last_move = self.timers.curtime
         self.last_direction_was_up = True
 
         """etype 1 is green piranha plant, 2 is blue"""
         # Rect, image, and initial position set up
-        self.rect = pygame.Rect(x, y, settings.piranha_plant_width, settings.piranha_plant_height)
+        self.rect = pygame.Rect(x, y, self.width, self.height)
         if etype is 1:
             self.pic = pygame.image.load('images/Piranha_Plant1a1.png')
         elif etype is 2:
             self.pic = pygame.image.load('images/Piranha_Plant2a1.png')
-        self.image = pygame.transform.scale(self.pic, (settings.piranha_plant_width, settings.piranha_plant_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def update_pos(self):
         if self.last_direction_was_up:
@@ -35,10 +37,10 @@ class PiranhaPlant(Enemy):
             self.y = self.move_destination
             self.last_move = self.timers.curtime
             if self.last_direction_was_up:  # Last moved upwards
-                self.move_destination = self.y + self.settings.piranha_plant_height
+                self.move_destination = self.y + self.height
                 self.last_direction_was_up = False
             else:
-                self.move_destination = self.y - self.settings.piranha_plant_height
+                self.move_destination = self.y - self.height
                 self.last_direction_was_up = True
             self.speed = self.speed * -1
         self.rect.y = self.y
@@ -57,7 +59,7 @@ class PiranhaPlant(Enemy):
             elif self.etype is 2:
                 self.pic = pygame.image.load('images/Piranha_Plant2a1.png')
             self.frame = 1
-        self.image = pygame.transform.scale(self.pic, (self.settings.piranha_plant_width, self.settings.piranha_plant_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

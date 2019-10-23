@@ -6,14 +6,16 @@ class Goomba(Enemy):
     def __init__(self, settings, screen, x, y, etype):
         super(Goomba, self).__init__(settings, screen, x, y, etype)
 
+        self.width = settings.goomba_width
+        self.height = settings.goomba_height
         """etype 1 is brown goomba, 2 is blue goomba"""
         # Rect, image, and initial position set up
-        self.rect = pygame.Rect(x, y, settings.goomba_width, settings.goomba_height)
+        self.rect = pygame.Rect(x, y, self.width, self.height)
         if etype is 1:
             self.pic = pygame.image.load('images/Goomba1a1.png')
         elif etype is 2:
             self.pic = pygame.image.load('images/Goomba2a1.png')
-        self.image = pygame.transform.scale(self.pic, (settings.goomba_width, settings.goomba_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def update_pos(self):
         self.x += self.settings.goomba_speed * self.x_direction
@@ -36,7 +38,7 @@ class Goomba(Enemy):
         elif self.frame is 2 and self.etype is 2:
             self.frame = 1
             self.pic = pygame.image.load('images/Goomba2a1.png')
-        self.image = pygame.transform.scale(self.pic, (self.settings.goomba_width, self.settings.goomba_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

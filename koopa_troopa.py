@@ -6,9 +6,11 @@ class KoopaTroopa(Enemy):
     def __init__(self, settings, screen, x, y, etype):
         super(KoopaTroopa, self).__init__(settings, screen, x, y, etype)
 
+        self.width = settings.koopa_width
+        self.height = settings.koopa_height
         """etype 1 is green koopa troopa, 2 is blue, 3 is red, 4 is flying red, 5 is jumping green"""
         # Rect, image, and initial position set up
-        self.rect = pygame.Rect(x, y, settings.koopa_width, settings.koopa_height)
+        self.rect = pygame.Rect(x, y, self.width, self.height)
         if etype is 1:
             self.pic = pygame.image.load('images/Koopa_Troopa1a1l.png')
         elif etype is 2:
@@ -19,7 +21,7 @@ class KoopaTroopa(Enemy):
             self.pic = pygame.image.load('images/Koopa_Troopa4a1l.png')
         elif etype is 5:
             self.pic = pygame.image.load('images/Koopa_Troopa5a1l.png')
-        self.image = pygame.transform.scale(self.pic, (settings.koopa_width, settings.koopa_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def update_pos(self):
         self.x += self.settings.koopa_speed * self.x_direction
@@ -80,7 +82,7 @@ class KoopaTroopa(Enemy):
                 elif self.etype is 5:
                     self.pic = pygame.image.load('images/Koopa_Troopa5a1r.png')
                 self.frame = 1
-        self.image = pygame.transform.scale(self.pic, (self.settings.koopa_width, self.settings.koopa_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

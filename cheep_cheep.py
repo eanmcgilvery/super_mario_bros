@@ -7,16 +7,19 @@ class CheepCheep(Enemy):
     def __init__(self, settings, screen, x, y, etype):
         super(CheepCheep, self).__init__(settings, screen, x, y, etype)
 
+        self.width = settings.cheep_width
+        self.height = settings.cheep_height
+
         """etype 1 is red cheep cheep, 2 is gray, 3 is jumping (jumping cheep cheeps are just red ones facing right)"""
         # Rect, image, and initial position set up
-        self.rect = pygame.Rect(x, y, settings.cheep_width, settings.cheep_height)
+        self.rect = pygame.Rect(x, y, self.width, self.height)
         if self.etype is 1:
             self.pic = pygame.image.load('images/Cheep_cheep1a1.png')
         elif self.etype is 2:
             self.pic = pygame.image.load('images/Cheep_cheep2a1.png')
         elif self.etype is 3:
             self.pic = pygame.image.load('images/Cheep_cheep3a1.png')
-        self.image = pygame.transform.scale(self.pic, (settings.cheep_width, settings.cheep_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
         # type 3 cheep cheeps only move right
         if self.etype is 3:
@@ -56,7 +59,7 @@ class CheepCheep(Enemy):
             elif self.etype is 3:
                 self.pic = pygame.image.load('images/Cheep_cheep3a1.png')
             self.frame = 1
-        self.image = pygame.transform.scale(self.pic, (self.settings.cheep_width, self.settings.cheep_height))
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
