@@ -20,8 +20,8 @@ class CheepCheep(Enemy):
 
         # type 3 cheep cheeps only move right
         if self.etype is 3:
-            self.x_speed = random.randint(20, 30)
-            self.y_speed = random.randint(60, 70)
+            self.x_speed = random.randint(5, 12)
+            self.y_velocity = random.randint(18, 25) * -1
             self.x_direction = 1
 
     def update_pos(self):
@@ -33,7 +33,10 @@ class CheepCheep(Enemy):
             self.x += (self.settings.cheep_speed / 2) * self.x_direction
         elif self.etype is 3:   # type 3 moves with high random speeds
             self.x += self.x_speed * self.x_direction
+            self.y += self.y_velocity
+            self.y_velocity += self.settings.swimming_fall_acceleration
         self.rect.x = self.x
+        self.rect.y = self.y
 
     def update_image(self):
         # Alternate normal alive animation

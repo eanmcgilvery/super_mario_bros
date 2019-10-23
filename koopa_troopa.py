@@ -23,7 +23,10 @@ class KoopaTroopa(Enemy):
 
     def update_pos(self):
         self.x += self.settings.koopa_speed * self.x_direction
+        self.y_velocity += self.settings.fall_acceleration
+        self.y += self.y_velocity
         self.rect.x = self.x
+        self.rect.y = self.y
 
     def update_image(self):
         # Alternate normal alive animation

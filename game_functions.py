@@ -9,25 +9,16 @@ from goomba import Goomba
 from koopa_troopa import KoopaTroopa
 from piranha_plant import PiranhaPlant
 
-# Import all objects
-from brick import Brick
-from pipe import Pipe
-from hill import Hill
-from bush import Bush
-from cloud import Cloud
-from castle import Castle
-from flag_pole import Flag_Pole
 
-
-def check_events(settings, screen, enemies, objects):
+def check_events(settings, screen, enemies):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, settings, screen, enemies, objects)
+            check_keydown_events(event, settings, screen, enemies)
 
 
-def check_keydown_events(event, settings, screen, enemies, objects):
+def check_keydown_events(event, settings, screen, enemies):
     # For testing
     if event.key == pygame.K_q:
         enemies.add(Goomba(settings, screen, 40, 40, 1))
@@ -57,37 +48,23 @@ def check_keydown_events(event, settings, screen, enemies, objects):
         enemies.add(Blooper(settings, screen, 520, 400, 1))
     elif event.key == pygame.K_f:
         enemies.add(FakeBowser(settings, screen, 760, 400, 1))
-    elif event.key == pygame.K_b:
-        objects.add(Brick(settings, screen, 100, 600, 4))
-    elif event.key == pygame.K_v:
-        objects.add(Pipe(settings, screen, 300, 300, 3))
-    elif event.key == pygame.K_n:
-        objects.add(Cloud(settings, screen, 600, 600, 2))
-    elif event.key == pygame.K_m:
-        objects.add(Bush(settings, screen, 200, 100, 3))
-    elif event.key == pygame.K_c:
-        objects.add(Castle(settings, screen, 400, 200, 2))
 
 
-def update_screen(screen, enemies, timers, objects):
+def update_screen(screen, enemies, timers):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
         # Level 1-1 Background color
         screen.fill((170, 170, 255))
         for enemy in enemies:
             enemy.blitme()
-        for object in objects:
-            object.blitme()
         pygame.display.flip()
 
 
-def update_animations(enemies, timers, objects):
+def update_animations(enemies, timers):
     if timers.curtime - timers.last_enemy_animation > timers.enemy_animation_wait:
         timers.last_enemy_animation = timers.curtime
         for enemy in enemies:
             enemy.update_image()
-
-
 
 
 def update_pos(settings, enemies, timers):

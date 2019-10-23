@@ -18,3 +18,7 @@ class Timers:
         # General movement
         self.last_move = 0
         self.move_wait = 30
+
+        # Piranha Plant animations
+        self.piranha_plant_move_wait = 1500
+        self.piranha_plant_pipe_wait = 3000
