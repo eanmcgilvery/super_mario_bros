@@ -12,6 +12,9 @@ class Timers:
         self.last_enemy_animation = 0
         self.enemy_animation_wait = 500
 
+        self.last_object_animation = 0
+        self.object_animation_wait = 500
+
         # General movement
         self.last_move = 0
         self.move_wait = 30

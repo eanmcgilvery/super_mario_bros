@@ -5,10 +5,6 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 700
 
-        self.screen_size = (self.screen_width, self.screen_height)
-
-        self.background_multipler = 2.679
-        self.ground_height = self.screen_height - 62
 
         # Mario Speed
         self.MAX_WALKING_SPEED = 10
@@ -50,3 +46,42 @@ class Settings:
         self.cheep_speed = self.goomba_speed
         self.blooper_speed = self.goomba_speed * 2
         self.fake_bowser_speed = self.goomba_speed
+
+        # All bricks size depends on screen width
+        self.brick_lenth = self.goomba_width
+
+        # Object size depends on bricksize
+        self.small_cloud_width = self.brick_lenth * 2
+        self.small_cloud_height = self.brick_lenth * 2
+        self.medium_cloud_width = self.brick_lenth * 3
+        self.medium_cloud_height = self.brick_lenth * 2
+        self.large_cloud_width = self.brick_lenth * 4
+        self.large_cloud_height = self.brick_lenth * 2
+
+        self.small_pipe_width = self.brick_lenth * 2
+        self.small_pipe_height = self.brick_lenth * 2
+        self.medium_pipe_width = self.brick_lenth * 2
+        self.medium_pipe_height = self.brick_lenth * 3
+        self.large_pipe_width = self.brick_lenth * 2
+        self.large_pipe_height = self.brick_lenth * 4
+
+        self.small_hill_width = self.brick_lenth * 3
+        self.small_hill_height = self.brick_lenth + 3
+        self.large_hill_width = self.brick_lenth * 5
+        self.large_hill_height = self.brick_lenth * 2 + 3
+
+        self.small_bush_width = self.brick_lenth * 2
+        self.small_bush_height =self.brick_lenth
+        self.medium_bush_width = self.brick_lenth * 3
+        self.medium_bush_height = self.brick_lenth
+        self.large_bush_height = self.brick_lenth
+        self.large_bush_width = self.brick_lenth * 4
+
+        self.flag_pole_width = self.brick_lenth
+        self.flag_pole_height = self.brick_lenth * 11.5
+
+        self.small_castle_width = self.brick_lenth * 5
+        self.small_castle_height = self.brick_lenth * 5
+        self.castle_flag_width = self.brick_lenth
+        self.castle_flag_height = self.brick_lenth
+
