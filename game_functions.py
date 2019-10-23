@@ -9,16 +9,25 @@ from goomba import Goomba
 from koopa_troopa import KoopaTroopa
 from piranha_plant import PiranhaPlant
 
+# Import all objects
+from brick import Brick
+from bush import Bush
+from castle import Castle
+from castle_flag import CastleFlag
+from cloud import Cloud
+from hill import Hill
+from pipe import Pipe
 
-def check_events(settings, screen, enemies):
+
+def check_events(settings, screen, enemies, objects):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, settings, screen, enemies)
+            check_keydown_events(event, settings, screen, enemies, objects)
 
 
-def check_keydown_events(event, settings, screen, enemies):
+def check_keydown_events(event, settings, screen, enemies, objects):
     # For testing
     if event.key == pygame.K_q:
         enemies.add(Goomba(settings, screen, 40, 40, 1))
@@ -48,19 +57,23 @@ def check_keydown_events(event, settings, screen, enemies):
         enemies.add(Blooper(settings, screen, 520, 400, 1))
     elif event.key == pygame.K_f:
         enemies.add(FakeBowser(settings, screen, 760, 400, 1))
+    elif event.key == pygame.K_m:
+        objects.add(Brick(settings, screen, 600, 600, 1))
 
 
-def update_screen(screen, enemies, timers):
+def update_screen(screen, enemies, timers, objects):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
         # Level 1-1 Background color
         screen.fill((170, 170, 255))
         for enemy in enemies:
             enemy.blitme()
+        for object in objects:
+            object.blitme()
         pygame.display.flip()
 
 
-def update_animations(enemies, timers):
+def update_animations(enemies, timers, objects):
     if timers.curtime - timers.last_enemy_animation > timers.enemy_animation_wait:
         timers.last_enemy_animation = timers.curtime
         for enemy in enemies:
