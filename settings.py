@@ -5,6 +5,8 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 700
 
+        self.ground_level = self.screen_height - 50
+
         # Mario Speed
         self.MAX_WALKING_SPEED = 10
         self.MAX_HEIGHT_SPEED = 5
@@ -87,4 +89,9 @@ class Settings:
         self.small_castle_height = self.brick_lenth * 5
         self.castle_flag_width = self.brick_lenth
         self.castle_flag_height = self.brick_lenth
+
+        self.coin_width = self.brick_lenth
+        self.coin_height = self.brick_lenth
+        self.spin_coin_width = self.brick_lenth / 5
+        self.spin_coin_height = self.brick_lenth
 
