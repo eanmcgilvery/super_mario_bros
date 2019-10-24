@@ -49,6 +49,11 @@ def check_keydown_events(event, settings, screen, timers, enemies):
         enemies.add(Blooper(settings, screen, 520, 400, 1))
     elif event.key == pygame.K_f:
         enemies.add(FakeBowser(settings, screen, 760, 400, 1))
+    elif event.key == pygame.K_k:
+        for enemy in enemies:
+            enemy.take_damage()
+            if enemy.ename is "piranha_plant":
+                enemies.remove(enemy)
 
 
 def update_screen(screen, enemies, timers):

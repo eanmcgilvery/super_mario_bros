@@ -4,9 +4,9 @@ from enemy import Enemy
 
 class PiranhaPlant(Enemy):
     def __init__(self, settings, screen, timers, x, y, etype):
-        super(PiranhaPlant, self).__init__(settings, screen, x, y, etype)
+        super(PiranhaPlant, self).__init__(settings, screen, x, y, etype, ename="piranha_plant")
         self.timers = timers
-        
+
         self.width = settings.piranha_plant_width
         self.height = settings.piranha_plant_height
         self.speed = self.settings.piranha_plant_speed
@@ -60,6 +60,9 @@ class PiranhaPlant(Enemy):
                 self.pic = pygame.image.load('images/Piranha_Plant2a1.png')
             self.frame = 1
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
+
+    def take_damage(self):
+        self.is_dead = True
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

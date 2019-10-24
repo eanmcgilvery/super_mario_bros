@@ -4,7 +4,7 @@ from enemy import Enemy
 
 class FakeBowser(Enemy):
     def __init__(self, settings, screen, x, y, etype):
-        super(FakeBowser, self).__init__(settings, screen, x, y, etype)
+        super(FakeBowser, self).__init__(settings, screen, x, y, etype, ename="fake_bowser")
 
         # Rect, image, and initial position set up
         self.width = settings.fake_bowser_width
@@ -15,6 +15,9 @@ class FakeBowser(Enemy):
 
         # Always faces mario regardless of which direction he moves
         self.facing_left = True
+
+        # Can take a lot of hits before dying
+        self.health = 10
 
     def update_pos(self):
         self.x += self.settings.fake_bowser_speed * self.x_direction
@@ -37,6 +40,11 @@ class FakeBowser(Enemy):
                 self.pic = pygame.image.load('images/Fake_Bowsera1r.png')
                 self.frame = 1
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
+
+    def take_damage(self):
+        self.health -= 1
+        if self.health <= 0:
+            self.is_dead = True
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

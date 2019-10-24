@@ -5,7 +5,6 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 700
 
-
         # Mario Speed
         self.MAX_WALKING_SPEED = 10
         self.MAX_HEIGHT_SPEED = 5
@@ -17,7 +16,7 @@ class Settings:
         self.fall_acceleration = 1
         self.swimming_fall_acceleration = 0.5
 
-        # All enemy sizes depend on screen width
+        # All enemy sizes depend on screen height
         self.goomba_width = int(self.screen_height / 17.5)
         self.goomba_height = self.goomba_width
 
@@ -51,7 +50,7 @@ class Settings:
         self.blooper_speed = self.goomba_speed * 2
         self.fake_bowser_speed = self.goomba_speed
 
-        # All bricks size depends on screen width
+        # All bricks size depends on screen height
         self.brick_lenth = self.goomba_width
 
         # Object size depends on bricksize
