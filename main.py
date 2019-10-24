@@ -25,7 +25,7 @@ def run_game():
     # Start the main loop for the game.
     while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.check_events(settings, screen, enemies, objects)
+        gf.check_events(settings, screen, timers, enemies, objects)
         gf.update_pos(settings, enemies, timers)
         gf.update_animations(enemies, timers, objects)
         gf.update_screen(screen, enemies, timers, objects)
