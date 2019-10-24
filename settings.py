@@ -89,3 +89,8 @@ class Settings:
         self.castle_flag_width = self.brick_lenth
         self.castle_flag_height = self.brick_lenth
 
+        self.coin_width = self.brick_lenth
+        self.coin_height = self.brick_lenth
+        self.spin_coin_width = self.brick_lenth / 5
+        self.spin_coin_height = self.brick_lenth
+

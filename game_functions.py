@@ -17,6 +17,7 @@ from castle_flag import CastleFlag
 from cloud import Cloud
 from hill import Hill
 from pipe import Pipe
+from coin import Coin
 
 
 def check_events(settings, screen, enemies, objects):
@@ -59,6 +60,10 @@ def check_keydown_events(event, settings, screen, enemies, objects):
         enemies.add(FakeBowser(settings, screen, 760, 400, 1))
     elif event.key == pygame.K_m:
         objects.add(Brick(settings, screen, 600, 600, 1))
+    elif event.key == pygame.K_n:
+        objects.add(Coin(settings, screen, 500, 600, 1))
+    elif event.key == pygame.K_b:
+        objects.add(Coin(settings, screen, 400, 600, 2))
 
 
 def update_screen(screen, enemies, timers, objects):
