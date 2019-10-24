@@ -5,7 +5,7 @@ from enemy import Enemy
 
 class CheepCheep(Enemy):
     def __init__(self, settings, screen, x, y, etype):
-        super(CheepCheep, self).__init__(settings, screen, x, y, etype)
+        super(CheepCheep, self).__init__(settings, screen, x, y, etype, ename="cheep_cheep")
 
         self.width = settings.cheep_width
         self.height = settings.cheep_height
@@ -60,6 +60,9 @@ class CheepCheep(Enemy):
                 self.pic = pygame.image.load('images/Cheep_cheep3a1.png')
             self.frame = 1
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
+
+    def take_damage(self):
+        self.is_dead = True
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

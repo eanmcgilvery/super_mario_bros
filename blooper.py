@@ -4,7 +4,7 @@ from enemy import Enemy
 
 class Blooper(Enemy):
     def __init__(self, settings, screen, x, y, etype):
-        super(Blooper, self).__init__(settings, screen, x, y, etype)
+        super(Blooper, self).__init__(settings, screen, x, y, etype, ename="blooper")
 
         # Rect, image, and initial position set up
         self.width = settings.blooper_width
@@ -31,6 +31,9 @@ class Blooper(Enemy):
             self.pic = pygame.image.load('images/Bloopera1.png')
             self.image = pygame.transform.scale(self.pic, (self.width, self.height))
             self.frame = 1
+
+    def take_damage(self):
+        self.is_dead = True
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
