@@ -97,3 +97,7 @@ def update_pos(settings, enemies, timers):
             enemy.update_pos()
             if enemy.rect.right < -50 or enemy.rect.top > settings.screen_height or enemy.rect.left > settings.screen_width + 50:
                 enemies.remove(enemy)
+
+def generate_map_1_1(settings, screen, objects):
+
+    objects.add(Brick(settings, screen, 0, settings.ground_level, 2))

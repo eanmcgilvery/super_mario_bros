@@ -29,6 +29,7 @@ def run_game():
         gf.update_pos(settings, enemies, timers)
         gf.update_animations(enemies, timers, objects)
         gf.update_screen(screen, enemies, timers, objects)
+        gf.generate_map_1_1(settings, screen, objects)
 
 
 run_game()
