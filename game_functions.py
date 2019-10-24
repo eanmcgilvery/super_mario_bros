@@ -72,12 +72,14 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects):
         objects.add(Coin(settings, screen, 400, 600, 2))
 
 
-def update_screen(screen, enemies, timers, objects):
+def update_screen(screen, enemies, timers, objects, background):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
         # Level 1-1 Background color
         screen.fill((170, 170, 255))
         for object in objects:
+            object.blitme()
+        for object in background:
             object.blitme()
         for enemy in enemies:
             enemy.blitme()
@@ -111,21 +113,21 @@ def generate_ground_for_1_1(settings, screen, objects):
         objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level + settings.brick_lenth, 2))
 
 
-def generate_map_1_1(settings, screen, objects):
+def generate_map_1_1(settings, screen, objects, background):
 
     generate_ground_for_1_1(settings, screen, objects)
 
-    objects.add(Hill(settings, screen, 0, settings.ground_level - settings.large_hill_height, 2))
-    objects.add(Cloud(settings, screen, settings.brick_lenth * 9, settings.brick_lenth * 3, 1))
-    objects.add(Bush(settings, screen, settings.brick_lenth * 12, settings.ground_level - settings.brick_lenth, 3))
-    objects.add(Hill(settings, screen, settings.brick_lenth * 16, settings.ground_level - settings.brick_lenth - 2, 1))
+    background.add(Hill(settings, screen, 0, settings.ground_level - settings.large_hill_height, 2))
+    background.add(Cloud(settings, screen, settings.brick_lenth * 9, settings.brick_lenth * 3, 1))
+    background.add(Bush(settings, screen, settings.brick_lenth * 12, settings.ground_level - settings.brick_lenth, 3))
+    background.add(Hill(settings, screen, settings.brick_lenth * 16, settings.ground_level - settings.brick_lenth - 2, 1))
     objects.add(Brick(settings, screen, settings.brick_lenth * 16, settings.ground_level - settings.brick_lenth * 4, 1))
-    objects.add(Cloud(settings, screen, settings.brick_lenth * 20, settings.ground_level - settings.brick_lenth * 15, 1))
+    background.add(Cloud(settings, screen, settings.brick_lenth * 20, settings.ground_level - settings.brick_lenth * 15, 1))
     objects.add(Brick(settings, screen, settings.brick_lenth * 22, settings.ground_level - settings.brick_lenth * 8, 1))
     objects.add(Brick(settings, screen, settings.brick_lenth * 20, settings.ground_level - settings.brick_lenth * 4, 3))
     objects.add(Brick(settings, screen, settings.brick_lenth * 21, settings.ground_level - settings.brick_lenth * 4, 1))
     objects.add(Brick(settings, screen, settings.brick_lenth * 22, settings.ground_level - settings.brick_lenth * 4, 3))
     objects.add(Brick(settings, screen, settings.brick_lenth * 23, settings.ground_level - settings.brick_lenth * 4, 1))
     objects.add(Brick(settings, screen, settings.brick_lenth * 24, settings.ground_level - settings.brick_lenth * 4, 3))
-    objects.add(Bush(settings, screen, settings.brick_lenth *23.5, settings.ground_level - settings.brick_lenth, 1))
+    background.add(Bush(settings, screen, settings.brick_lenth *23.5, settings.ground_level - settings.brick_lenth, 1))
     objects.add(Pipe(settings, screen, settings.brick_lenth * 29, settings.ground_level - settings.brick_lenth * 2, 1))

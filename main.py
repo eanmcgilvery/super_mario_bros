@@ -19,10 +19,11 @@ def run_game():
     # Create a group to hold all enemies
     enemies = Group()
 
-    # Creat a group to hold all objects
+    # Creat a group to hold all objects and background
     objects = Group()
+    background = Group()
 
-    gf.generate_map_1_1(settings, screen, objects)
+    gf.generate_map_1_1(settings, screen, objects, background)
     # Start the main loop for the game.
     while True:
         timers.curtime = pygame.time.get_ticks()
@@ -30,7 +31,7 @@ def run_game():
         gf.check_events(settings, screen, timers, enemies, objects)
         gf.update_pos(settings, timers, enemies, objects)
         gf.update_animations(enemies, timers, objects)
-        gf.update_screen(screen, enemies, timers, objects)
+        gf.update_screen(screen, enemies, timers, objects, background)
 
 
 
