@@ -10,7 +10,8 @@ class Castle(Object):
         self.rect = pygame.Rect(x, y, settings.small_castle_width, settings.small_castle_height)
         self.image = pygame.transform.scale(self.pic, (settings.small_castle_width, settings.small_castle_height))
 
-
+    def update_image(self):
+        self.image = self.image
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

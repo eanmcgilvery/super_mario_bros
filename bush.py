@@ -19,7 +19,8 @@ class Bush(Object):
             self.rect = pygame.Rect(x, y, settings.large_bush_width, settings.large_bush_height)
             self.image = pygame.transform.scale(self.pic, (settings.large_bush_width, settings.large_bush_height))
 
-
+    def update_image(self):
+        self.image = self.image
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
