@@ -32,7 +32,7 @@ def check_events(settings, screen, timers, enemies, objects):
 def check_keydown_events(event, settings, screen, timers, enemies, objects):
     # For testing
     if event.key == pygame.K_q:
-        enemies.add(Goomba(settings, screen, 40, 40, 1))
+        enemies.add(Goomba(settings, screen, 1210, 300, 1))
     elif event.key == pygame.K_w:
         enemies.add(Goomba(settings, screen, 160, 40, 2))
     elif event.key == pygame.K_e:
@@ -77,10 +77,10 @@ def update_screen(screen, enemies, timers, objects):
         timers.last_display = timers.curtime
         # Level 1-1 Background color
         screen.fill((170, 170, 255))
-        for enemy in enemies:
-            enemy.blitme()
         for object in objects:
             object.blitme()
+        for enemy in enemies:
+            enemy.blitme()
         pygame.display.flip()
 
 
@@ -96,17 +96,16 @@ def update_animations(enemies, timers, objects):
             object.update_image()
 
 
-def update_pos(settings, enemies, timers):
+def update_pos(settings, timers, enemies, objects):
     if timers.curtime - timers.last_move > timers.move_wait:
         timers.last_move = timers.curtime
         for enemy in enemies:
-            enemy.update_pos()
-            if enemy.rect.right < -50 or enemy.rect.top > settings.screen_height or enemy.rect.left > settings.screen_width + 50:
+            enemy.update_pos(objects)
+            if enemy.rect.right < -200 or enemy.rect.top > settings.screen_height + 200:
                 enemies.remove(enemy)
 
+
 def generate_ground_for_1_1(settings, screen, objects):
-
-
     for x in range(69):
         objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level, 2))
         objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level + settings.brick_lenth, 2))

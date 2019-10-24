@@ -19,7 +19,7 @@ class FakeBowser(Enemy):
         # Can take a lot of hits before dying
         self.health = 10
 
-    def update_pos(self):
+    def update_pos(self, objects):
         self.x += self.settings.fake_bowser_speed * self.x_direction
         self.rect.x = self.x
 

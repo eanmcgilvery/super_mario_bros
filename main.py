@@ -28,7 +28,7 @@ def run_game():
         timers.curtime = pygame.time.get_ticks()
         #gf.generate_map_1_1(settings, screen, objects)
         gf.check_events(settings, screen, timers, enemies, objects)
-        gf.update_pos(settings, enemies, timers)
+        gf.update_pos(settings, timers, enemies, objects)
         gf.update_animations(enemies, timers, objects)
         gf.update_screen(screen, enemies, timers, objects)
 

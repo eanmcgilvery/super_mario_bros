@@ -23,7 +23,7 @@ class KoopaTroopa(Enemy):
             self.pic = pygame.image.load('images/Koopa_Troopa5a1l.png')
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
-    def update_pos(self):
+    def update_pos(self, objects):
         self.x += self.settings.koopa_speed * self.x_direction
         self.y_velocity += self.settings.fall_acceleration
         self.y += self.y_velocity
