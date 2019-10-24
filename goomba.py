@@ -45,37 +45,23 @@ class Goomba(Enemy):
 
     def check_collisions(self, objects):
         for object in objects:
-            overlap = 9999
-            repos = ""
             if self.rect.colliderect(object):
-                if self.rect.bottom > object.rect.top:
-                    if overlap > self.rect.bottom - object.rect.top:
-                        overlap = self.rect.bottom - object.rect.top
-                        repos = "top"
-                if object.rect.bottom > self.rect.top:
-                    if overlap > object.rect.bottom - self.rect.top:
-                        overlap = object.rect.bottom - self.rect.top
-                        repos = "bottom"
-                if self.rect.right > object.rect.left:
-                    if overlap > self.rect.right - object.rect.left:
-                        overlap = self.rect.right - object.rect.left
-                        repos = "left"
-                if object.rect.right > self.rect.left:
-                    if overlap > object.rect.right - self.rect.left:
-                        overlap = object.rect.right - self.rect.left
-                        repos = "right"
-                if repos is "top":
-                    self.rect.bottom -= overlap
+                if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition goomba to the top of the object
+                    self.y = object.rect.top - self.height
                     self.y_velocity = 0
-                elif repos is "bottom":
-                    self.rect.top += overlap
+                elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
+                    self.y = object.rect.bottom
                     self.y_velocity = 0
-                elif repos is "left":
-                    self.rect.right -= overlap
-                    self.x_direction *= -1
-                elif repos is "right":
-                    self.rect.left += overlap
-                    self.x_direction *= -1
+                elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
+                    if self.x_direction is 1:  # When not moving left change direction to the left
+                        self.x = object.rect.left - self.width
+                        self.x_direction = -1
+                else:  # Reposition to the right
+                    if self.x_direction is -1:  # When not moving right change direction to the right
+                        self.x = object.rect.right
+                        self.x_direction = 1
+                self.rect.x = self.x
+                self.rect.y = self.y
 
     def take_damage(self):
         self.is_dead = True

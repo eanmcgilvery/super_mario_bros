@@ -32,9 +32,9 @@ def check_events(settings, screen, timers, enemies, objects):
 def check_keydown_events(event, settings, screen, timers, enemies, objects):
     # For testing
     if event.key == pygame.K_q:
-        enemies.add(Goomba(settings, screen, 1210, 300, 1))
+        enemies.add(Goomba(settings, screen, 935, 270, 1))
     elif event.key == pygame.K_w:
-        enemies.add(Goomba(settings, screen, 160, 40, 2))
+        enemies.add(Goomba(settings, screen, 1000, 300, 2))
     elif event.key == pygame.K_e:
         enemies.add(KoopaTroopa(settings, screen, 280, 40, 1))
     elif event.key == pygame.K_r:
