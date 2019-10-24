@@ -120,4 +120,12 @@ def generate_map_1_1(settings, screen, objects):
     objects.add(Bush(settings, screen, settings.brick_lenth * 12, settings.ground_level - settings.brick_lenth, 3))
     objects.add(Hill(settings, screen, settings.brick_lenth * 16, settings.ground_level - settings.brick_lenth - 2, 1))
     objects.add(Brick(settings, screen, settings.brick_lenth * 16, settings.ground_level - settings.brick_lenth * 4, 1))
-
+    objects.add(Cloud(settings, screen, settings.brick_lenth * 20, settings.ground_level - settings.brick_lenth * 15, 1))
+    objects.add(Brick(settings, screen, settings.brick_lenth * 22, settings.ground_level - settings.brick_lenth * 8, 1))
+    objects.add(Brick(settings, screen, settings.brick_lenth * 20, settings.ground_level - settings.brick_lenth * 4, 3))
+    objects.add(Brick(settings, screen, settings.brick_lenth * 21, settings.ground_level - settings.brick_lenth * 4, 1))
+    objects.add(Brick(settings, screen, settings.brick_lenth * 22, settings.ground_level - settings.brick_lenth * 4, 3))
+    objects.add(Brick(settings, screen, settings.brick_lenth * 23, settings.ground_level - settings.brick_lenth * 4, 1))
+    objects.add(Brick(settings, screen, settings.brick_lenth * 24, settings.ground_level - settings.brick_lenth * 4, 3))
+    objects.add(Bush(settings, screen, settings.brick_lenth *23.5, settings.ground_level - settings.brick_lenth, 1))
+    objects.add(Pipe(settings, screen, settings.brick_lenth * 29, settings.ground_level - settings.brick_lenth * 2, 1))

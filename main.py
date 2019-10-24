@@ -22,10 +22,11 @@ def run_game():
     # Creat a group to hold all objects
     objects = Group()
 
+    gf.generate_map_1_1(settings, screen, objects)
     # Start the main loop for the game.
     while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.generate_map_1_1(settings, screen, objects)
+        #gf.generate_map_1_1(settings, screen, objects)
         gf.check_events(settings, screen, enemies, objects)
         gf.update_pos(settings, enemies, timers)
         gf.update_animations(enemies, timers, objects)

@@ -16,3 +16,5 @@ class Object(Sprite):
 
         # Pipe Type
         self.otype = otype
+
+        
