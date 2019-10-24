@@ -73,7 +73,7 @@ class Settings:
         self.small_hill_width = self.brick_lenth * 3
         self.small_hill_height = self.brick_lenth + 3
         self.large_hill_width = self.brick_lenth * 5
-        self.large_hill_height = self.brick_lenth * 2 + 3
+        self.large_hill_height = self.brick_lenth * 2
 
         self.small_bush_width = self.brick_lenth * 2
         self.small_bush_height =self.brick_lenth

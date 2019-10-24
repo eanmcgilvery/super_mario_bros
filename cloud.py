@@ -19,7 +19,8 @@ class Cloud(Object):
             self.rect = pygame.Rect(x, y, settings.large_cloud_width, settings.large_cloud_height)
             self.image = pygame.transform.scale(self.pic, (settings.large_cloud_width, settings.large_cloud_height))
 
-
+    def update_image(self):
+        self.image = self.image
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

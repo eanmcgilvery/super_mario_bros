@@ -104,6 +104,21 @@ def update_pos(settings, enemies, timers):
             if enemy.rect.right < -50 or enemy.rect.top > settings.screen_height or enemy.rect.left > settings.screen_width + 50:
                 enemies.remove(enemy)
 
+def generate_ground_for_1_1(settings, screen, objects):
+
+
+    for x in range(69):
+        objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level, 2))
+        objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level + settings.brick_lenth, 2))
+
+
 def generate_map_1_1(settings, screen, objects):
 
-    objects.add(Brick(settings, screen, 0, settings.ground_level, 2))
+    generate_ground_for_1_1(settings, screen, objects)
+
+    objects.add(Hill(settings, screen, 0, settings.ground_level - settings.large_hill_height, 2))
+    objects.add(Cloud(settings, screen, settings.brick_lenth * 9, settings.brick_lenth * 3, 1))
+    objects.add(Bush(settings, screen, settings.brick_lenth * 12, settings.ground_level - settings.brick_lenth, 3))
+    objects.add(Hill(settings, screen, settings.brick_lenth * 16, settings.ground_level - settings.brick_lenth - 2, 1))
+    objects.add(Brick(settings, screen, settings.brick_lenth * 16, settings.ground_level - settings.brick_lenth * 4, 1))
+
