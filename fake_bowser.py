@@ -16,6 +16,9 @@ class FakeBowser(Enemy):
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
         self.pos = self.settings.fake_bowser_pos
         self.last_move = self.timers.curtime
+        self.next_move = self.timers.curtime
+        self.last_jump = self.timers.curtime
+        self.grounded = False
 
         # Always faces mario regardless of which direction he moves
         self.facing_left = True
@@ -23,13 +26,21 @@ class FakeBowser(Enemy):
         # Can take a lot of hits before dying
         self.health = 10
 
-    def update_pos(self, objects):
-        self.x += self.settings.fake_bowser_speed * self.x_direction
-        self.pos += self.settings.fake_bowser_speed * self.x_direction
-        if self.pos < self.settings.fake_bowser_leash[0] or self.pos > self.settings.fake_bowser_leash[1]:
-            self.x_direction *= -1
-        if self.y_velocity is 0 and self.timers.curtime - self.last_move > self.timers.fake_bowser_jump_wait:
-            self.last_move = self.timers.curtime
+    def update_pos(self, enemies, objects):
+        if self.grounded and self.pos < self.settings.fake_bowser_leash[0]:
+            self.x_direction = 1
+        elif self.grounded and self.pos > self.settings.fake_bowser_leash[1]:
+            self.x_direction = -1
+        if not self.grounded or self.timers.curtime - self.last_move > self.timers.fake_bowser_move_wait:
+            self.x += self.settings.fake_bowser_speed * self.x_direction
+            self.pos += self.settings.fake_bowser_speed * self.x_direction
+            if self.timers.curtime - self.next_move > self.timers.fake_bowser_next_move_wait:
+                self.timers.fake_bowser_move_wait = random.randint(2000, 4000)
+                self.timers.fake_bowser_next_move_wait = self.timers.fake_bowser_move_wait + random.randint(1000, 3000)
+                self.last_move = self.timers.curtime
+                self.next_move = self.timers.curtime
+        if self.y_velocity is 0 and self.timers.curtime - self.last_jump > self.timers.fake_bowser_jump_wait:
+            self.last_jump = self.timers.curtime
             self.timers.fake_bowser_jump_wait = random.randint(5000, 10000)
             self.y_velocity += self.settings.enemy_jump_speed
         self.y_velocity += self.settings.fall_acceleration
@@ -57,11 +68,13 @@ class FakeBowser(Enemy):
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def check_collisions(self, objects):
+        self.grounded = False
         for object in objects:
             if self.rect.colliderect(object):
                 if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition fake bowser to the top of the object
                     self.y = object.rect.top - self.height
                     self.y_velocity = 0
+                    self.grounded = True
                 self.rect.y = self.y
 
     def take_damage(self):

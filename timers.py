@@ -21,9 +21,14 @@ class Timers:
         self.last_move = 0
         self.move_wait = 30
 
+        # Cheep cheep move animations
+        self.cheep_y_change_wait = 5000
+
         # Piranha Plant animations
         self.piranha_plant_move_wait = 1500
         self.piranha_plant_pipe_wait = 3000
 
         # Bowser move, jump, and flame frequency
+        self.fake_bowser_move_wait = random.randint(2000, 4000)  # Needs to be reset every time it is used
+        self.fake_bowser_next_move_wait = self.fake_bowser_move_wait + random.randint(1000, 3000)
         self.fake_bowser_jump_wait = random.randint(5000, 10000)  # Needs to be reset every time it is used

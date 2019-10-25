@@ -49,13 +49,14 @@ class Settings:
         self.koopa_speed = self.goomba_speed
         self.piranha_plant_speed = self.koopa_speed / 2 * -1
         self.cheep_speed = self.goomba_speed
+        self.cheep_y_speed = 0.5
         self.blooper_speed = self.goomba_speed * 2
         self.fake_bowser_speed = self.goomba_speed * 1.5
 
         self.enemy_jump_speed = -18
 
         # Fake Bowser leash range (He has to stay put in a certain area but still move)
-        self.fake_bowser_leash = [0, 500]
+        self.fake_bowser_leash = [0, 250]
         self.fake_bowser_pos = self.fake_bowser_leash[1] / 2  # Starts in the center of the leash range
 
         # All bricks size depends on screen height

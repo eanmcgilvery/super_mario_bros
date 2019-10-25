@@ -50,11 +50,11 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects):
     elif event.key == pygame.K_o:
         enemies.add(PiranhaPlant(settings, screen, timers, 40, 400, 2))
     elif event.key == pygame.K_p:
-        enemies.add(CheepCheep(settings, screen, 160, 400, 1))
+        enemies.add(CheepCheep(settings, screen, timers, 1000, 400, 1))
     elif event.key == pygame.K_a:
-        enemies.add(CheepCheep(settings, screen, 280, 400, 2))
+        enemies.add(CheepCheep(settings, screen, timers, 1000, 400, 2))
     elif event.key == pygame.K_s:
-        enemies.add(CheepCheep(settings, screen, random.randint(0, 200), settings.screen_height, 3))
+        enemies.add(CheepCheep(settings, screen, timers, random.randint(0, 200), settings.screen_height, 3))
     elif event.key == pygame.K_d:
         enemies.add(Blooper(settings, screen, 520, 400, 1))
     elif event.key == pygame.K_f:
@@ -103,7 +103,7 @@ def update_pos(settings, timers, enemies, objects):
     if timers.curtime - timers.last_move > timers.move_wait:
         timers.last_move = timers.curtime
         for enemy in enemies:
-            enemy.update_pos(objects)
+            enemy.update_pos(enemies, objects)
             if enemy.rect.right < -200 or enemy.rect.top > settings.screen_height + 200:
                 enemies.remove(enemy)
 
