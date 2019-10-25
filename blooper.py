@@ -17,7 +17,7 @@ class Blooper(Enemy):
         self.x += self.settings.blooper_speed * self.x_direction
         self.rect.x = self.x
 
-    def update_image(self):
+    def update_image(self, changeframe):
         # Animation tied into movement
         if self.frame is 1:
             self.height = self.settings.bloopera2_height

@@ -36,15 +36,15 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects):
     elif event.key == pygame.K_w:
         enemies.add(Goomba(settings, screen, 1000, 300, 2))
     elif event.key == pygame.K_e:
-        enemies.add(KoopaTroopa(settings, screen, 280, 40, 1))
+        enemies.add(KoopaTroopa(settings, screen, 935, 270, 1))
     elif event.key == pygame.K_r:
-        enemies.add(KoopaTroopa(settings, screen, 400, 40, 2))
+        enemies.add(KoopaTroopa(settings, screen, 935, 270, 2))
     elif event.key == pygame.K_t:
-        enemies.add(KoopaTroopa(settings, screen, 520, 40, 3))
+        enemies.add(KoopaTroopa(settings, screen, 935, 270, 3))
     elif event.key == pygame.K_y:
-        enemies.add(KoopaTroopa(settings, screen, 760, 40, 4))
+        enemies.add(KoopaTroopa(settings, screen, 935, 270, 4))
     elif event.key == pygame.K_u:
-        enemies.add(KoopaTroopa(settings, screen, 880, 40, 5))
+        enemies.add(KoopaTroopa(settings, screen, 950, 270, 5))
     elif event.key == pygame.K_i:
         enemies.add(PiranhaPlant(settings, screen, timers, 1000, 40, 1))
     elif event.key == pygame.K_o:
@@ -58,7 +58,7 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects):
     elif event.key == pygame.K_d:
         enemies.add(Blooper(settings, screen, 520, 400, 1))
     elif event.key == pygame.K_f:
-        enemies.add(FakeBowser(settings, screen, 760, 400, 1))
+        enemies.add(FakeBowser(settings, screen, timers, 550, 270, 1))
     elif event.key == pygame.K_k:
         for enemy in enemies:
             enemy.take_damage()
@@ -89,8 +89,9 @@ def update_screen(screen, enemies, timers, objects, background):
 def update_animations(enemies, timers, objects):
     if timers.curtime - timers.last_enemy_animation > timers.enemy_animation_wait:
         timers.last_enemy_animation = timers.curtime
+        changeframe = True
         for enemy in enemies:
-            enemy.update_image()
+            enemy.update_image(changeframe)
 
     if timers.curtime - timers.last_object_animation > timers.object_animation_wait:
         timers.last_object_animation = timers.curtime

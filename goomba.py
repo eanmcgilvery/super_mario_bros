@@ -26,7 +26,7 @@ class Goomba(Enemy):
         self.rect.y = self.y
         self.check_collisions(objects)
 
-    def update_image(self):
+    def update_image(self, changeframe):
         # Alternate normal alive animation
         if not self.is_dead:
             if self.frame is 1 and self.etype is 1:

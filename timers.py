@@ -1,3 +1,5 @@
+import random
+
 class Timers:
     """Timers used for animations, movement, screen display, etc"""
     def __init__(self):
@@ -22,3 +24,6 @@ class Timers:
         # Piranha Plant animations
         self.piranha_plant_move_wait = 1500
         self.piranha_plant_pipe_wait = 3000
+
+        # Bowser move, jump, and flame frequency
+        self.fake_bowser_jump_wait = random.randint(5000, 10000)  # Needs to be reset every time it is used

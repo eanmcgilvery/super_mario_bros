@@ -41,7 +41,7 @@ class CheepCheep(Enemy):
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def update_image(self):
+    def update_image(self, changeframe):
         # Alternate normal alive animation
         if self.frame is 1:
             if self.etype is 1:

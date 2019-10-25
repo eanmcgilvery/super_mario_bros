@@ -45,7 +45,7 @@ class PiranhaPlant(Enemy):
             self.speed = self.speed * -1
         self.rect.y = self.y
 
-    def update_image(self):
+    def update_image(self, changeframe):
         # Alternate normal alive animation
         if self.frame is 1:
             if self.etype is 1:
