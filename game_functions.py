@@ -21,15 +21,15 @@ from pipe import Pipe
 from coin import Coin
 
 
-def check_events(settings, screen, timers, enemies, objects):
+def check_events(settings, screen, timers, enemies, objects, background):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, settings, screen, timers, enemies, objects)
+            check_keydown_events(event, settings, screen, timers, enemies, objects, background)
 
 
-def check_keydown_events(event, settings, screen, timers, enemies, objects):
+def check_keydown_events(event, settings, screen, timers, enemies, objects, background):
     # For testing
     if event.key == pygame.K_q:
         enemies.add(Goomba(settings, screen, 935, 270, 1))
@@ -73,7 +73,8 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects):
     elif event.key == pygame.K_c:
         for object in objects:
             object.update_pos()
-            object.blitme()
+        for object in background:
+            object.update_pos()
 
 
 def update_screen(screen, enemies, timers, objects, background):
@@ -96,11 +97,12 @@ def update_animations(enemies, timers, objects):
         changeframe = True
         for enemy in enemies:
             enemy.update_image(changeframe)
-
     if timers.curtime - timers.last_object_animation > timers.object_animation_wait:
         timers.last_object_animation = timers.curtime
         for object in objects:
             object.update_image()
+
+
 
 
 def update_pos(settings, timers, enemies, objects):

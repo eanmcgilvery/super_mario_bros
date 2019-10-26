@@ -22,5 +22,7 @@ class Pipe(Object):
     def update_image(self):
         self.image = self.image
 
+
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)

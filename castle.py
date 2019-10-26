@@ -13,8 +13,7 @@ class Castle(Object):
     def update_image(self):
         self.image = self.image
 
-    def update_pos(self):
-        self.x -= 1
+
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
