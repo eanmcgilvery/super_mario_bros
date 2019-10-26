@@ -13,11 +13,11 @@ class Blooper(Enemy):
         self.pic = pygame.image.load('images/Bloopera1.png')
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
-    def update_pos(self, objects):
+    def update_pos(self, enemies, objects):
         self.x += self.settings.blooper_speed * self.x_direction
         self.rect.x = self.x
 
-    def update_image(self):
+    def update_image(self, changeframe):
         # Animation tied into movement
         if self.frame is 1:
             self.height = self.settings.bloopera2_height

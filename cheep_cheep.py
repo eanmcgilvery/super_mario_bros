@@ -4,11 +4,13 @@ from enemy import Enemy
 
 
 class CheepCheep(Enemy):
-    def __init__(self, settings, screen, x, y, etype):
+    def __init__(self, settings, screen, timers, x, y, etype):
         super(CheepCheep, self).__init__(settings, screen, x, y, etype, ename="cheep_cheep")
+        self.timers = timers
 
         self.width = settings.cheep_width
         self.height = settings.cheep_height
+        self.last_y_change = self.timers.curtime
 
         """etype 1 is red cheep cheep, 2 is gray, 3 is jumping (jumping cheep cheeps are just red ones facing right)"""
         # Rect, image, and initial position set up
@@ -21,27 +23,44 @@ class CheepCheep(Enemy):
             self.pic = pygame.image.load('images/Cheep_cheep3a1.png')
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
-        # type 3 cheep cheeps only move right
-        if self.etype is 3:
+        if self.etype is 1 or self.etype is 2:
+            self.y_dir = random.randint(0, 2)
+        elif self.etype is 3:  # type 3 cheep cheeps only move right
             self.x_speed = random.randint(5, 12)
             self.y_velocity = random.randint(18, 25) * -1
             self.x_direction = 1
 
-    def update_pos(self, objects):
+    def update_pos(self, enemies, objects):
         """Each type of cheep cheep moves differently"""
-        # type 1 moves left and randomly up or down
+        # type 1 and 2 moves left and randomly up or down
+        if self.etype is 1 or self.etype is 2:
+            if self.timers.curtime - self.last_y_change > self.timers.cheep_y_change_wait:
+                self.y_dir = random.randint(0, 2)
+                self.last_y_change = self.timers.curtime
+            if self.y_dir is 0:
+                if self.etype is 1:
+                    self.y_velocity = self.settings.cheep_y_speed
+                else:
+                    self.y_velocity = self.settings.cheep_y_speed / 2
+            elif self.y_dir is 1:
+                self.y_velocity = 0
+            elif self.y_dir is 2:
+                if self.etype is 1:
+                    self.y_velocity = self.settings.cheep_y_speed * -1
+                else:
+                    self.y_velocity = (self.settings.cheep_y_speed * -1) / 2
         if self.etype is 1:
             self.x += self.settings.cheep_speed * self.x_direction
         elif self.etype is 2:   # type 2 moves the same as 1 but at half the speed
             self.x += (self.settings.cheep_speed / 2) * self.x_direction
         elif self.etype is 3:   # type 3 moves with high random speeds
             self.x += self.x_speed * self.x_direction
-            self.y += self.y_velocity
             self.y_velocity += self.settings.swimming_fall_acceleration
+        self.y += self.y_velocity
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def update_image(self):
+    def update_image(self, changeframe):
         # Alternate normal alive animation
         if self.frame is 1:
             if self.etype is 1:

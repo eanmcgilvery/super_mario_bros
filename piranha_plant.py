@@ -23,7 +23,7 @@ class PiranhaPlant(Enemy):
             self.pic = pygame.image.load('images/Piranha_Plant2a1.png')
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
-    def update_pos(self, objects):
+    def update_pos(self, enemies, objects):
         if self.last_direction_was_up:
             if self.timers.curtime - self.last_move > self.timers.piranha_plant_pipe_wait:
                 self.update_pos_helper()
@@ -45,7 +45,7 @@ class PiranhaPlant(Enemy):
             self.speed = self.speed * -1
         self.rect.y = self.y
 
-    def update_image(self):
+    def update_image(self, changeframe):
         # Alternate normal alive animation
         if self.frame is 1:
             if self.etype is 1:
