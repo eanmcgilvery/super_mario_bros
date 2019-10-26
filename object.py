@@ -18,5 +18,5 @@ class Object(Sprite):
         self.otype = otype
 
     def update_pos(self):
-        self.x -= 5
+        self.x -= 200
         self.rect.x = self.x

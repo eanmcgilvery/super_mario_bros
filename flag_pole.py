@@ -7,8 +7,8 @@ class Flag_Pole(Object):
 
         # Rect, image, and initial position set up
         self.pic = pygame.image.load('images/flag_pole1.png')
-        self.rect = pygame.Rect(x, y, settings.flag_pole_width, settings.flag_pole_height)
-        self.image = pygame.transform.scale(self.pic, (settings.flag_pole_width, settings.flag_pole_height))
+        self.rect = pygame.Rect(x, y, int(self.settings.flag_pole_width), int(self.settings.flag_pole_height))
+        self.image = pygame.transform.scale(self.pic, (int(self.settings.flag_pole_width), int(self.settings.flag_pole_height)))
 
     def update_image(self):
         # Animation
@@ -25,7 +25,7 @@ class Flag_Pole(Object):
             self.pic = pygame.image.load('images/flag_pole5.png')
             self.frame = 5
 
-        self.image = pygame.transform.scale(self.pic, (self.settings.flag_pole_width, self.settings.flag_pole_height))
+        self.image = pygame.transform.scale(self.pic, (int(self.settings.flag_pole_width), int(self.settings.flag_pole_height)))
 
 
     def blitme(self):
