@@ -25,3 +25,7 @@ class Enemy(Sprite):
 
         # Must use update_image when an enemy dies
         self.is_dead = False
+
+    def move_with_screen(self, screen_x_move):
+        self.x -= screen_x_move
+        self.rect.x = self.x

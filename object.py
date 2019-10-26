@@ -17,6 +17,6 @@ class Object(Sprite):
         # Pipe Type
         self.otype = otype
 
-    def update_pos(self):
-        self.x -= 200
+    def update_pos(self, screen_x_move):
+        self.x -= screen_x_move
         self.rect.x = self.x

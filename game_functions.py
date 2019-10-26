@@ -72,10 +72,7 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
     elif event.key == pygame.K_b:
         objects.add(Coin(settings, screen, 400, 600, 2))
     elif event.key == pygame.K_c:
-        for object in objects:
-            object.update_pos()
-        for object in background:
-            object.update_pos()
+        screen_move(enemies, objects, background, 200)
 
 
 def update_screen(screen, enemies, timers, objects, background):
@@ -104,8 +101,6 @@ def update_animations(enemies, timers, objects):
             object.update_image()
 
 
-
-
 def update_pos(settings, timers, enemies, objects):
     if timers.curtime - timers.last_move > timers.move_wait:
         timers.last_move = timers.curtime
@@ -113,12 +108,15 @@ def update_pos(settings, timers, enemies, objects):
             enemy.update_pos(enemies, objects)
             if enemy.rect.right < -200 or enemy.rect.top > settings.screen_height + 200:
                 enemies.remove(enemy)
-    if timers.curtime - timers.last_move > timers.move_wait:
-        timers.last_move = timers.curtime
-        for object in objects:
-            object.update_pos()
 
 
+def screen_move(enemies, objects, background, screen_x_move):
+    for object in objects:
+        object.update_pos(screen_x_move)
+    for object in background:
+        object.update_pos(screen_x_move)
+    for enemy in enemies:
+        enemy.move_with_screen(screen_x_move)
 
 
 def generate_ground_for_1_1(settings, screen, objects):
