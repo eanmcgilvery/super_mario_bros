@@ -33,5 +33,4 @@ def run_game():
         gf.update_screen(screen, enemies, timers, objects, background)
 
 
-
 run_game()

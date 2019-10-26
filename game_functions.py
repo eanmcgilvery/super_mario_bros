@@ -65,6 +65,11 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
             enemy.take_damage()
             if enemy.ename is "piranha_plant":
                 enemies.remove(enemy)
+    elif event.key == pygame.K_l:
+        for enemy in enemies:
+            enemy.eliminate()
+            if enemy.ename is "piranha_plant":
+                enemies.remove(enemy)
     elif event.key == pygame.K_m:
         objects.add(Brick(settings, screen, 600, 600, 1))
     elif event.key == pygame.K_n:

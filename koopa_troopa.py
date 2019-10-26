@@ -24,13 +24,18 @@ class KoopaTroopa(Enemy):
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def update_pos(self, enemies, objects):
-        if not self.is_dead:
-            self.x += self.settings.koopa_speed * self.x_direction
-        self.y_velocity += self.settings.fall_acceleration
-        self.y += self.y_velocity
-        self.rect.x = self.x
-        self.rect.y = self.y
-        self.check_collisions(enemies, objects)
+        if not self.eliminated:
+            if not self.is_dead:
+                self.x += self.settings.koopa_speed * self.x_direction
+            self.y_velocity += self.settings.fall_acceleration
+            self.y += self.y_velocity
+            self.rect.x = self.x
+            self.rect.y = self.y
+            self.check_collisions(enemies, objects)
+        else:
+            self.y_velocity += self.settings.fall_acceleration
+            self.y += self.y_velocity
+            self.rect.y = self.y
 
     def update_image(self, changeframe):
         if not self.is_dead:
@@ -91,29 +96,30 @@ class KoopaTroopa(Enemy):
             self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def check_collisions(self, enemies, objects):
-        changeframe = False
-        for object in objects:
-            if self.rect.colliderect(object):
-                if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition koopa troopa to the top of the object
-                    self.y = object.rect.top - self.height
-                    self.y_velocity = 0
-                    if self.etype is 5:
-                        self.y_velocity = self.settings.enemy_jump_speed
-                elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
-                    self.y = object.rect.bottom
-                    self.y_velocity = 0
-                elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
-                    if self.x_direction is 1:  # When not moving left change direction to the left
-                        self.x = object.rect.left - self.width
-                        self.x_direction = -1
-                        self.update_image(changeframe)
-                else:  # Reposition to the right
-                    if self.x_direction is -1:  # When not moving right change direction to the right
-                        self.x = object.rect.right
-                        self.x_direction = 1
-                        self.update_image(changeframe)
-                self.rect.x = self.x
-                self.rect.y = self.y
+        if not self.eliminated:
+            changeframe = False
+            for object in objects:
+                if self.rect.colliderect(object):
+                    if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition koopa troopa to the top of the object
+                        self.y = object.rect.top - self.height
+                        self.y_velocity = 0
+                        if self.etype is 5:
+                            self.y_velocity = self.settings.enemy_jump_speed
+                    elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
+                        self.y = object.rect.bottom
+                        self.y_velocity = 0
+                    elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
+                        if self.x_direction is 1:  # When not moving left change direction to the left
+                            self.x = object.rect.left - self.width
+                            self.x_direction = -1
+                            self.update_image(changeframe)
+                    else:  # Reposition to the right
+                        if self.x_direction is -1:  # When not moving right change direction to the right
+                            self.x = object.rect.right
+                            self.x_direction = 1
+                            self.update_image(changeframe)
+                    self.rect.x = self.x
+                    self.rect.y = self.y
 
         # Collide with enemies as well
         for enemy in enemies:  # Only reposition to the sides
@@ -152,6 +158,22 @@ class KoopaTroopa(Enemy):
             self.update_image(changeframe)
         if self.y_velocity < 0:
             self.y_velocity = 0
+
+    def eliminate(self):
+        self.is_dead = True
+        self.eliminated = True
+        if self.y_velocity < 0:
+            self.y_velocity = 0
+        if self.etype is 1 or self.etype is 5:
+            self.pic = pygame.image.load('images/Koopa_Troopa1d3.png')
+        elif self.etype is 2:
+            self.pic = pygame.image.load('images/Koopa_Troopa2d3.png')
+        elif self.etype is 3 or self.etype is 4:
+            self.pic = pygame.image.load('images/Koopa_Troopa3d3.png')
+        self.width = self.settings.dead_koopa_width
+        self.height = self.settings.dead_koopa_height
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

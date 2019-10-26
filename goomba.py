@@ -18,7 +18,7 @@ class Goomba(Enemy):
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def update_pos(self, enemies, objects):
-        if not self.is_dead:
+        if not self.is_dead and not self.eliminated:
             self.x += self.settings.goomba_speed * self.x_direction
         self.y_velocity += self.settings.fall_acceleration
         self.y += self.y_velocity
@@ -28,7 +28,7 @@ class Goomba(Enemy):
 
     def update_image(self, changeframe):
         # Alternate normal alive animation
-        if not self.is_dead:
+        if not self.is_dead and not self.eliminated:
             if self.frame is 1 and self.etype is 1:
                 self.frame = 2
                 self.pic = pygame.image.load('images/Goomba1a2.png')
@@ -44,37 +44,38 @@ class Goomba(Enemy):
             self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def check_collisions(self, enemies, objects):
-        for object in objects:
-            if self.rect.colliderect(object):
-                if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition goomba to the top of the object
-                    self.y = object.rect.top - self.height
-                    self.y_velocity = 0
-                elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
-                    self.y = object.rect.bottom
-                    self.y_velocity = 0
-                elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
-                    if self.x_direction is 1:  # When not moving left change direction to the left
-                        self.x = object.rect.left - self.width
-                        self.x_direction = -1
-                else:  # Reposition to the right
-                    if self.x_direction is -1:  # When not moving right change direction to the right
-                        self.x = object.rect.right
-                        self.x_direction = 1
-                self.rect.x = self.x
-                self.rect.y = self.y
+        if not self.eliminated:
+            for object in objects:
+                if self.rect.colliderect(object):
+                    if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition goomba to the top of the object
+                        self.y = object.rect.top - self.height
+                        self.y_velocity = 0
+                    elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
+                        self.y = object.rect.bottom
+                        self.y_velocity = 0
+                    elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
+                        if self.x_direction is 1:  # When not moving left change direction to the left
+                            self.x = object.rect.left - self.width
+                            self.x_direction = -1
+                    else:  # Reposition to the right
+                        if self.x_direction is -1:  # When not moving right change direction to the right
+                            self.x = object.rect.right
+                            self.x_direction = 1
+                    self.rect.x = self.x
+                    self.rect.y = self.y
 
         # Collide with enemies as well
-        for enemy in enemies:  # Only reposition to the sides
-            if self.rect.colliderect(enemy) and self is not enemy:
-                if self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
-                    if self.x_direction is 1:  # When not moving left change direction to the left
-                        self.x = enemy.rect.left - self.width
-                        self.x_direction = -1
-                else:  # Reposition to the right
-                    if self.x_direction is -1:  # When not moving right change direction to the right
-                        self.x = enemy.rect.right
-                        self.x_direction = 1
-                self.rect.x = self.x
+            for enemy in enemies:  # Only reposition to the sides
+                if self.rect.colliderect(enemy) and self is not enemy:
+                    if self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
+                        if self.x_direction is 1:  # When not moving left change direction to the left
+                            self.x = enemy.rect.left - self.width
+                            self.x_direction = -1
+                    else:  # Reposition to the right
+                        if self.x_direction is -1:  # When not moving right change direction to the right
+                            self.x = enemy.rect.right
+                            self.x_direction = 1
+                    self.rect.x = self.x
 
     def take_damage(self):
         self.is_dead = True
@@ -82,6 +83,15 @@ class Goomba(Enemy):
             self.pic = pygame.image.load('images/Goomba1d.png')
         elif self.is_dead and self.etype is 2:
             self.pic = pygame.image.load('images/Goomba2d.png')
+        self.image = pygame.transform.scale(self.pic, (self.width, self.height))
+
+    def eliminate(self):
+        self.is_dead = True
+        self.eliminated = True
+        if self.etype is 1:
+            self.pic = pygame.image.load('images/Goomba1d2.png')
+        elif self.etype is 2:
+            self.pic = pygame.image.load('images/Goomba2d2.png')
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):

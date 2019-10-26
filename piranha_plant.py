@@ -64,5 +64,9 @@ class PiranhaPlant(Enemy):
     def take_damage(self):
         self.is_dead = True
 
+    def eliminate(self):
+        self.is_dead = True
+        self.eliminated = True
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)
