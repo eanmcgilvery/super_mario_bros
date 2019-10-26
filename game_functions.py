@@ -70,6 +70,10 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects):
         objects.add(Coin(settings, screen, 500, 600, 1))
     elif event.key == pygame.K_b:
         objects.add(Coin(settings, screen, 400, 600, 2))
+    elif event.key == pygame.K_c:
+        for object in objects:
+            object.update_pos()
+            object.blitme()
 
 
 def update_screen(screen, enemies, timers, objects, background):
@@ -105,6 +109,12 @@ def update_pos(settings, timers, enemies, objects):
             enemy.update_pos(objects)
             if enemy.rect.right < -200 or enemy.rect.top > settings.screen_height + 200:
                 enemies.remove(enemy)
+    if timers.curtime - timers.last_move > timers.move_wait:
+        timers.last_move = timers.curtime
+        for object in objects:
+            object.update_pos()
+
+
 
 
 def generate_ground_for_1_1(settings, screen, objects):
@@ -131,3 +141,8 @@ def generate_map_1_1(settings, screen, objects, background):
     objects.add(Brick(settings, screen, settings.brick_lenth * 24, settings.ground_level - settings.brick_lenth * 4, 3))
     background.add(Bush(settings, screen, settings.brick_lenth *23.5, settings.ground_level - settings.brick_lenth, 1))
     objects.add(Pipe(settings, screen, settings.brick_lenth * 29, settings.ground_level - settings.brick_lenth * 2, 1))
+
+#def redrawWindow(screen, map, bgx, bgx2):
+ #   screen.blit(bg, (bgx, 0))
+  #  screen.blit(bg, (bgx2, 0))
+   # pygame.display.update()

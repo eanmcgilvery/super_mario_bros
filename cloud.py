@@ -22,5 +22,10 @@ class Cloud(Object):
     def update_image(self):
         self.image = self.image
 
+    def update_pos(self):
+        self.x -= self.settings.goomba_speed * self.x_direction
+        self.rect.x = self.x
+        self.rect.y = self.y
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)

@@ -40,6 +40,8 @@ class Brick(Object):
 
         self.image = pygame.transform.scale(self.pic, (self.settings.brick_lenth, self.settings.brick_lenth))
 
+    def update_pos(self):
+        self.x -= 1
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

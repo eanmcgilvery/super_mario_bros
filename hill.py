@@ -19,5 +19,10 @@ class Hill(Object):
     def update_image(self):
         self.image = self.image
 
+    def update_pos(self):
+        self.x -= 1
+        self.rect = pygame.Rect(x-1, y, settings.small_cloud_width, settings.small_cloud_height)
+        self.screen.blit(self.image, self.rect)
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)

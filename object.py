@@ -16,3 +16,6 @@ class Object(Sprite):
 
         # Pipe Type
         self.otype = otype
+
+    def update_pos(self):
+        self.x -= 1

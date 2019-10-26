@@ -13,5 +13,9 @@ class CastleFlag(Object):
     def update_image(self):
         self.image = self.image
 
+    def update_pos(self):
+        self.x -= 1
+        self.rect = pygame.Rect(x, y, settings.small_cloud_width, settings.small_cloud_height)
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)

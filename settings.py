@@ -2,10 +2,13 @@ class Settings:
     def __init__(self):
         """FEEL FREE TO CHANGE SCREEN WIDTH AND SCREEN HEIGHT"""
         # Screen settings
+        self.map_width = 5000
+        self.map_height = 700
+
         self.screen_width = 1200
         self.screen_height = 700
 
-        self.ground_level = self.screen_height - 50
+        self.ground_level = self.map_height - 50
 
         # Mario Speed
         self.MAX_WALKING_SPEED = 10
@@ -95,3 +98,4 @@ class Settings:
         self.spin_coin_width = self.brick_lenth / 5
         self.spin_coin_height = self.brick_lenth
 
+        self.ground_level = self.map_height - self.brick_lenth * 1.5

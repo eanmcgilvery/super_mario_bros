@@ -27,5 +27,8 @@ class Flag_Pole(Object):
 
         self.image = pygame.transform.scale(self.pic, (self.settings.flag_pole_width, self.settings.flag_pole_height))
 
+    def update_pos(self):
+        self.x -= 1
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)
