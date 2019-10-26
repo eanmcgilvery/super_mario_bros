@@ -144,8 +144,7 @@ def generate_map_1_1(settings, screen, objects, background):
     objects.add(Brick(settings, screen, settings.brick_lenth * 24, settings.ground_level - settings.brick_lenth * 4, 3))
     background.add(Bush(settings, screen, settings.brick_lenth *23.5, settings.ground_level - settings.brick_lenth, 1))
     objects.add(Pipe(settings, screen, settings.brick_lenth * 29, settings.ground_level - settings.brick_lenth * 2, 1))
+    objects.add(Pipe(settings, screen, settings.brick_lenth * 29, settings.ground_level - settings.brick_lenth * 2, 1))
+    objects.add(Pipe(settings, screen, settings.brick_lenth * 29, settings.ground_level - settings.brick_lenth * 2, 1))
 
-#def redrawWindow(screen, map, bgx, bgx2):
- #   screen.blit(bg, (bgx, 0))
-  #  screen.blit(bg, (bgx2, 0))
-   # pygame.display.update()
+
