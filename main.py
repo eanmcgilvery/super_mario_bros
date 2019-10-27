@@ -27,7 +27,7 @@ def run_game():
     # Create first level
     levels = [Level1_1(settings, screen)]
     levels[0].active = True
-    levels[0].generate_map_1_1(settings, screen, objects, background)
+    levels[0].generate_map(settings, screen, objects, background)
     levels[0].enemy_spawn_triggers(enemies)
 
     while True:

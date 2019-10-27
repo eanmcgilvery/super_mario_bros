@@ -1,3 +1,5 @@
+from levels import Level
+
 # Import all objects
 from brick import Brick
 from bush import Bush
@@ -13,22 +15,30 @@ from flag_pole import Flag_Pole
 from goomba import Goomba
 from koopa_troopa import KoopaTroopa
 
-class Level1_1:
-    def __init__(self, settings, screen):
-        self.settings = settings
-        self.screen = screen
 
-        self.bg_color = (170, 170, 255)
-        self.active = False
+class Level1_1(Level):
+    def __init__(self, settings, screen):
+        super(Level1_1, self).__init__(settings, screen, bg_color=(170, 170, 255))
 
         # Keep track of which enemies have spawned
         self.goomba1 = False
         self.goomba2 = False
         self.goomba3 = False
         self.goomba4 = False
+        self.goomba5 = False
+        self.goomba6 = False
+        self.goomba7 = False
+        self.goomba8 = False
+        self.goomba9 = False
+        self.goomba10 = False
+        self.goomba11 = False
+        self.goomba12 = False
+        self.goomba13 = False
+        self.goomba14 = False
+        self.goomba15 = False
         self.koopa1 = False
 
-    def generate_ground_for_1_1(self, settings, screen, objects):
+    def generate_ground(self, settings, screen, objects):
         for x in range(70):
             objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level, 2))
             objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level + settings.brick_lenth, 2))
@@ -42,10 +52,9 @@ class Level1_1:
             objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level, 2))
             objects.add(Brick(settings, screen, settings.brick_lenth * x, settings.ground_level + settings.brick_lenth, 2))
 
+    def generate_map(self, settings, screen, objects, background):
 
-    def generate_map_1_1(self, settings, screen, objects, background):
-
-        self.generate_ground_for_1_1(settings, screen, objects)
+        self.generate_ground(settings, screen, objects)
 
         background.add(Hill(settings, screen, 0, settings.ground_level - settings.large_hill_height, 2))
         background.add(Cloud(settings, screen, settings.brick_lenth * 9, settings.brick_lenth * 3, 1))
@@ -235,12 +244,49 @@ class Level1_1:
         if not self.goomba1:
             self.goomba1 = True
             enemies.add(Goomba(self.settings, self.screen, self.settings.brick_lenth * 25, self.settings.ground_level - self.settings.goomba_height, 1))
-        if not self.goomba2 and self.settings.screen_pos + self.settings.screen_width + 200 > self.settings.brick_lenth * 42:
+        if not self.goomba2 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 42:
             self.goomba2 = True
-            enemies.add(Goomba(self.settings, self.screen, self.settings.screen_width + 200, self.settings.ground_level - self.settings.goomba_height, 1))
-        if not self.goomba3 and self.settings.screen_pos + self.settings.screen_width + 200 > self.settings.brick_lenth * 56:
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba3 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 56:
             self.goomba3 = True
-            enemies.add(Goomba(self.settings, self.screen, self.settings.screen_width + 200, self.settings.ground_level - self.settings.goomba_height, 1))
-        if not self.goomba4 and self.settings.screen_pos + self.settings.screen_width + 200 > self.settings.brick_lenth * 57:
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba4 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 57:
             self.goomba4 = True
-            enemies.add(Goomba(self.settings, self.screen, self.settings.screen_width + 200, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba5 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 82:
+            self.goomba5 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.brick_lenth * 8 - self.settings.goomba_height, 1))
+        if not self.goomba6 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 84:
+            self.goomba6 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.brick_lenth * 8 - self.settings.goomba_height, 1))
+        if not self.goomba7 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 100:
+            self.goomba7 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba8 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 101:
+            self.goomba8 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.koopa1 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 109:
+            self.koopa1 = True
+            enemies.add(KoopaTroopa(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.koopa_height, 1))
+        if not self.goomba9 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 118:
+            self.goomba9 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba10 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 119:
+            self.goomba10 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba11 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 128:
+            self.goomba11 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba12 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 129:
+            self.goomba12 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba13 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 131:
+            self.goomba13 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba14 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 175:
+            self.goomba14 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba15 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 176:
+            self.goomba15 = True
+            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+

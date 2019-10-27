@@ -79,11 +79,14 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
     elif event.key == pygame.K_b:
         objects.add(Coin(settings, screen, 400, 600, 2))
     elif event.key == pygame.K_c:
+        screen_x_move = 200
+        screen_move(settings, enemies, objects, background, levels, screen_x_move)
+    elif event.key == pygame.K_x:
         settings.move_screen = True
 
 
 def check_keyup_events(event, settings, screen, timers, enemies, objects, background, levels):
-    if event.key == pygame.K_c:
+    if event.key == pygame.K_x:
         settings.move_screen = False
 
 
@@ -93,12 +96,12 @@ def update_screen(screen, enemies, timers, objects, background, levels):
         for level in levels:
             if level.active:
                 screen.fill(level.bg_color)
-        for object in objects:
-            object.blitme()
         for object in background:
             object.blitme()
         for enemy in enemies:
             enemy.blitme()
+        for object in objects:
+            object.blitme()
         pygame.display.flip()
 
 
@@ -122,9 +125,8 @@ def update_pos(settings, timers, enemies, objects, background, levels):
             if enemy.rect.right < -200 or enemy.rect.top > settings.screen_height + 200:
                 enemies.remove(enemy)
         if settings.move_screen:
-            screen_x_move = 5
+            screen_x_move = 10
             screen_move(settings, enemies, objects, background, levels, screen_x_move)
-
 
 
 def screen_move(settings, enemies, objects, background, levels, screen_x_move):
