@@ -47,6 +47,8 @@ class Blooper(Enemy):
         if self.y_velocity < 0:
             self.y_velocity = 0
         self.pic = pygame.image.load('images/Blooperd.png')
+        self.height = self.settings.bloopera2_height
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):

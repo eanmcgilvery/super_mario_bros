@@ -29,13 +29,12 @@ class KoopaTroopa(Enemy):
                 self.x += self.settings.koopa_speed * self.x_direction
             self.y_velocity += self.settings.fall_acceleration
             self.y += self.y_velocity
-            self.rect.x = self.x
-            self.rect.y = self.y
             self.check_collisions(enemies, objects)
         else:
             self.y_velocity += self.settings.fall_acceleration
             self.y += self.y_velocity
-            self.rect.y = self.y
+        self.rect.x = self.x
+        self.rect.y = self.y
 
     def update_image(self, changeframe):
         if not self.is_dead:
@@ -122,19 +121,19 @@ class KoopaTroopa(Enemy):
                     self.rect.y = self.y
 
         # Collide with enemies as well
-        for enemy in enemies:  # Only reposition to the sides
-            if self.rect.colliderect(enemy) and self is not enemy:
-                if self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
-                    if self.x_direction is 1:  # When not moving left change direction to the left
-                        self.x = enemy.rect.left - self.width
-                        self.x_direction = -1
-                        self.update_image(changeframe)
-                else:  # Reposition to the right
-                    if self.x_direction is -1:  # When not moving right change direction to the right
-                        self.x = enemy.rect.right
-                        self.x_direction = 1
-                        self.update_image(changeframe)
-                self.rect.x = self.x
+            for enemy in enemies:  # Only reposition to the sides
+                if self.rect.colliderect(enemy) and self is not enemy:
+                    if self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
+                        if self.x_direction is 1:  # When not moving left change direction to the left
+                            self.x = enemy.rect.left - self.width
+                            self.x_direction = -1
+                            self.update_image(changeframe)
+                    else:  # Reposition to the right
+                        if self.x_direction is -1:  # When not moving right change direction to the right
+                            self.x = enemy.rect.right
+                            self.x_direction = 1
+                            self.update_image(changeframe)
+                    self.rect.x = self.x
 
     def take_damage(self):
         changeframe = False

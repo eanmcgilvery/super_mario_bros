@@ -3,6 +3,7 @@ import game_functions as gf
 from pygame.sprite import Group
 from settings import Settings
 from timers import Timers
+from level1_1 import Level1_1
 
 
 def run_game():
@@ -23,11 +24,14 @@ def run_game():
     objects = Group()
     background = Group()
 
-    gf.generate_map_1_1(settings, screen, objects, background)
-    while True:
+    # Create first level
+    levels = [Level1_1(settings, screen)]
+    levels[0].active = True
+    levels[0].generate_map_1_1(settings, screen, objects, background)
 
+    while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.check_events(settings, screen, timers, enemies, objects, background)
+        gf.check_events(settings, screen, timers, enemies, objects, background, levels)
         gf.update_pos(settings, timers, enemies, objects)
         gf.update_animations(enemies, timers, objects)
         gf.update_screen(screen, enemies, timers, objects, background)

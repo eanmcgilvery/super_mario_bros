@@ -8,6 +8,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 700
 
+        self.screen_pos = 0
         self.ground_level = self.map_height - 50
 
         # Mario Speed
@@ -86,7 +87,7 @@ class Settings:
         self.large_hill_height = self.brick_lenth * 2
 
         self.small_bush_width = self.brick_lenth * 2
-        self.small_bush_height =self.brick_lenth
+        self.small_bush_height = self.brick_lenth
         self.medium_bush_width = self.brick_lenth * 3
         self.medium_bush_height = self.brick_lenth
         self.large_bush_height = self.brick_lenth
