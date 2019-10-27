@@ -290,3 +290,6 @@ class Level1_1(Level):
             self.goomba15 = True
             enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
 
+
+    def background_sound(self, settings):
+        settings.background_sound.play()

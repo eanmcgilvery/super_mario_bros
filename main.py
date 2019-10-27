@@ -40,6 +40,7 @@ def run_game():
     levels[0].active = True
     levels[0].generate_map(settings, screen, objects, background)
     levels[0].enemy_spawn_triggers(enemies)
+    levels[0].background_sound(settings)
 
     while True:
         timers.curtime = pygame.time.get_ticks()
