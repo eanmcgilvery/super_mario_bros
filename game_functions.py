@@ -140,6 +140,7 @@ def generate_ground_for_1_1(settings, screen, objects):
 
 def generate_map_1_1(settings, screen, objects, background):
 
+    settings.background_sound.play(-1)
     generate_ground_for_1_1(settings, screen, objects)
 
     background.add(Hill(settings, screen, 0, settings.ground_level - settings.large_hill_height, 2))

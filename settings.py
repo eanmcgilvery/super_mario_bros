@@ -1,3 +1,5 @@
+import pygame
+
 class Settings:
     def __init__(self):
         """FEEL FREE TO CHANGE SCREEN WIDTH AND SCREEN HEIGHT"""
@@ -106,3 +108,5 @@ class Settings:
         self.spin_coin_height = self.brick_lenth
 
         self.ground_level = self.map_height - self.brick_lenth * 1.5
+
+        self.background_sound = pygame.mixer.Sound('sounds/main_theme.ogg')
