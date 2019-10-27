@@ -23,7 +23,7 @@ class Flag_Pole(Object):
             self.frame = 4
         elif self.frame is 4:
             self.pic = pygame.image.load('images/flag_pole5.png')
-            self.frame = 5
+            self.frame = 1
 
         self.image = pygame.transform.scale(self.pic, (int(self.settings.flag_pole_width), int(self.settings.flag_pole_height)))
 
