@@ -4,6 +4,7 @@ from pygame.sprite import Group
 from settings import Settings
 from timers import Timers
 from level1_1 import Level1_1
+from sub_level1_1 import SubLevel1_1
 
 
 def run_game():
@@ -11,6 +12,16 @@ def run_game():
     # Initialize pygame, settings, and screen object.
     pygame.init()
     settings = Settings()
+
+    ''' If you want fullscreen use this
+    full_screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    screen = pygame.Surface((settings.screen_width, settings.screen_height))
+    
+    After everything has been blit onto screen use:
+    full_screen.blit(pygame.transform.scale(screen, (1980, 1080)), (0, 0))
+    pygame.display.flip()
+    '''
+
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     pygame.display.set_caption("Super Mario Bros")
 
@@ -25,7 +36,7 @@ def run_game():
     background = Group()
 
     # Create first level
-    levels = [Level1_1(settings, screen)]
+    levels = [Level1_1(settings, screen), SubLevel1_1(settings, screen)]
     levels[0].active = True
     levels[0].generate_map(settings, screen, objects, background)
     levels[0].enemy_spawn_triggers(enemies)

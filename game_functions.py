@@ -33,8 +33,10 @@ def check_events(settings, screen, timers, enemies, objects, background, levels)
 
 
 def check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels):
+    if event.key == pygame.K_ESCAPE:
+        sys.exit()
     # For testing
-    if event.key == pygame.K_q:
+    elif event.key == pygame.K_q:
         enemies.add(Goomba(settings, screen, 935, 270, 1))
     elif event.key == pygame.K_w:
         enemies.add(Goomba(settings, screen, 1000, 300, 2))
