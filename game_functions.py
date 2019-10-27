@@ -28,6 +28,8 @@ def check_events(settings, screen, timers, enemies, objects, background, levels)
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels)
+        elif event.type == pygame.KEYUP:
+            check_keyup_events(event, settings, screen, timers, enemies, objects, background, levels)
 
 
 def check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels):
@@ -77,15 +79,20 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
     elif event.key == pygame.K_b:
         objects.add(Coin(settings, screen, 400, 600, 2))
     elif event.key == pygame.K_c:
-        screen_x_move = 200
-        screen_move(settings, enemies, objects, background, levels, screen_x_move)
+        settings.move_screen = True
 
 
-def update_screen(screen, enemies, timers, objects, background):
+def check_keyup_events(event, settings, screen, timers, enemies, objects, background, levels):
+    if event.key == pygame.K_c:
+        settings.move_screen = False
+
+
+def update_screen(screen, enemies, timers, objects, background, levels):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
-        # Level 1-1 Background color
-        screen.fill((170, 170, 255))
+        for level in levels:
+            if level.active:
+                screen.fill(level.bg_color)
         for object in objects:
             object.blitme()
         for object in background:
@@ -107,13 +114,17 @@ def update_animations(enemies, timers, objects):
             object.update_image()
 
 
-def update_pos(settings, timers, enemies, objects):
+def update_pos(settings, timers, enemies, objects, background, levels):
     if timers.curtime - timers.last_move > timers.move_wait:
         timers.last_move = timers.curtime
         for enemy in enemies:
             enemy.update_pos(enemies, objects)
             if enemy.rect.right < -200 or enemy.rect.top > settings.screen_height + 200:
                 enemies.remove(enemy)
+        if settings.move_screen:
+            screen_x_move = 5
+            screen_move(settings, enemies, objects, background, levels, screen_x_move)
+
 
 
 def screen_move(settings, enemies, objects, background, levels, screen_x_move):

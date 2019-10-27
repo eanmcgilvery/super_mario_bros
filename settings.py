@@ -111,3 +111,6 @@ class Settings:
         self.ground_level = self.map_height - self.brick_lenth * 1.5
 
         self.background_sound = pygame.mixer.Sound('sounds/main_theme.ogg')
+
+        # FOR TESTING
+        self.move_screen = False

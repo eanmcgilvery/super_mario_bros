@@ -28,13 +28,14 @@ def run_game():
     levels = [Level1_1(settings, screen)]
     levels[0].active = True
     levels[0].generate_map_1_1(settings, screen, objects, background)
+    levels[0].enemy_spawn_triggers(enemies)
 
     while True:
         timers.curtime = pygame.time.get_ticks()
         gf.check_events(settings, screen, timers, enemies, objects, background, levels)
-        gf.update_pos(settings, timers, enemies, objects)
+        gf.update_pos(settings, timers, enemies, objects, background, levels)
         gf.update_animations(enemies, timers, objects)
-        gf.update_screen(screen, enemies, timers, objects, background)
+        gf.update_screen(screen, enemies, timers, objects, background, levels)
 
 
 run_game()

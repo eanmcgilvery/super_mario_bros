@@ -1,5 +1,3 @@
-import pygame
-
 # Import all objects
 from brick import Brick
 from bush import Bush
@@ -26,6 +24,8 @@ class Level1_1:
         # Keep track of which enemies have spawned
         self.goomba1 = False
         self.goomba2 = False
+        self.goomba3 = False
+        self.goomba4 = False
         self.koopa1 = False
 
     def generate_ground_for_1_1(self, settings, screen, objects):
@@ -232,6 +232,15 @@ class Level1_1:
 
     def enemy_spawn_triggers(self, enemies):
         # Screen position should have the position of the left side of the screen saved
-        if not self.goomba1 and self.settings.screen_pos + self.settings.screen_width + 200 > self.settings.brick_lenth * 22:
+        if not self.goomba1:
             self.goomba1 = True
+            enemies.add(Goomba(self.settings, self.screen, self.settings.brick_lenth * 25, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba2 and self.settings.screen_pos + self.settings.screen_width + 200 > self.settings.brick_lenth * 42:
+            self.goomba2 = True
+            enemies.add(Goomba(self.settings, self.screen, self.settings.screen_width + 200, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba3 and self.settings.screen_pos + self.settings.screen_width + 200 > self.settings.brick_lenth * 56:
+            self.goomba3 = True
+            enemies.add(Goomba(self.settings, self.screen, self.settings.screen_width + 200, self.settings.ground_level - self.settings.goomba_height, 1))
+        if not self.goomba4 and self.settings.screen_pos + self.settings.screen_width + 200 > self.settings.brick_lenth * 57:
+            self.goomba4 = True
             enemies.add(Goomba(self.settings, self.screen, self.settings.screen_width + 200, self.settings.ground_level - self.settings.goomba_height, 1))
