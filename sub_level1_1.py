@@ -6,8 +6,8 @@ from coin import Coin
 
 
 class SubLevel1_1(Level):
-    def __init__(self, settings, screen):
-        super(SubLevel1_1, self).__init__(settings, screen, bg_color=(0, 0, 0))
+    def __init__(self, settings, screen, timers):
+        super(SubLevel1_1, self).__init__(settings, screen, timers, bg_color=(0, 0, 0))
 
     def generate_map(self, settings, screen, objects, background):
         pass

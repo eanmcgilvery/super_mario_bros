@@ -17,8 +17,8 @@ from koopa_troopa import KoopaTroopa
 
 
 class Level1_1(Level):
-    def __init__(self, settings, screen):
-        super(Level1_1, self).__init__(settings, screen, bg_color=(170, 170, 255))
+    def __init__(self, settings, screen, timers):
+        super(Level1_1, self).__init__(settings, screen, timers, bg_color=(170, 170, 255))
 
         # Keep track of which enemies have spawned
         self.goomba1 = False
@@ -243,52 +243,52 @@ class Level1_1(Level):
         # Screen position should have the position of the left side of the screen saved
         if not self.goomba1:
             self.goomba1 = True
-            enemies.add(Goomba(self.settings, self.screen, self.settings.brick_lenth * 25, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.settings.brick_lenth * 25, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba2 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 42:
             self.goomba2 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba3 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 56:
             self.goomba3 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba4 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 57:
             self.goomba4 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba5 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 82:
             self.goomba5 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.brick_lenth * 8 - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.brick_lenth * 8 - self.settings.goomba_height, 1))
         if not self.goomba6 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 84:
             self.goomba6 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.brick_lenth * 8 - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.brick_lenth * 8 - self.settings.goomba_height, 1))
         if not self.goomba7 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 100:
             self.goomba7 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba8 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 101:
             self.goomba8 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.koopa1 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 109:
             self.koopa1 = True
-            enemies.add(KoopaTroopa(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.koopa_height, 1))
+            enemies.add(KoopaTroopa(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.koopa_height, 1))
         if not self.goomba9 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 118:
             self.goomba9 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba10 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 119:
             self.goomba10 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba11 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 128:
             self.goomba11 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba12 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 129:
             self.goomba12 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba13 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 131:
             self.goomba13 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba14 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 175:
             self.goomba14 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
         if not self.goomba15 and self.settings.screen_pos + self.x_spawn_point > self.settings.brick_lenth * 176:
             self.goomba15 = True
-            enemies.add(Goomba(self.settings, self.screen, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
+            enemies.add(Goomba(self.settings, self.screen, self.timers, self.x_spawn_point, self.settings.ground_level - self.settings.goomba_height, 1))
 
 
     def background_sound(self, settings):

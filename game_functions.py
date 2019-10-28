@@ -37,19 +37,19 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
         sys.exit()
     # For testing
     elif event.key == pygame.K_q:
-        enemies.add(Goomba(settings, screen, 935, 270, 1))
+        enemies.add(Goomba(settings, screen, timers, 935, 270, 1))
     elif event.key == pygame.K_w:
-        enemies.add(Goomba(settings, screen, 1000, 300, 2))
+        enemies.add(Goomba(settings, screen, timers, 1000, 300, 2))
     elif event.key == pygame.K_e:
-        enemies.add(KoopaTroopa(settings, screen, 935, 270, 1))
+        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 1))
     elif event.key == pygame.K_r:
-        enemies.add(KoopaTroopa(settings, screen, 935, 270, 2))
+        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 2))
     elif event.key == pygame.K_t:
-        enemies.add(KoopaTroopa(settings, screen, 935, 270, 3))
+        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 3))
     elif event.key == pygame.K_y:
-        enemies.add(KoopaTroopa(settings, screen, 935, 270, 4))
+        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 4))
     elif event.key == pygame.K_u:
-        enemies.add(KoopaTroopa(settings, screen, 950, 270, 5))
+        enemies.add(KoopaTroopa(settings, screen, timers, 950, 270, 5))
     elif event.key == pygame.K_i:
         enemies.add(PiranhaPlant(settings, screen, timers, 1000, 40, 1))
     elif event.key == pygame.K_o:
@@ -61,7 +61,7 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
     elif event.key == pygame.K_s:
         enemies.add(CheepCheep(settings, screen, timers, random.randint(0, 200), settings.screen_height, 3))
     elif event.key == pygame.K_d:
-        enemies.add(Blooper(settings, screen, 520, 400, 1))
+        enemies.add(Blooper(settings, screen, timers, 520, 400, 1))
     elif event.key == pygame.K_f:
         enemies.add(FakeBowser(settings, screen, timers, 550, 270, 1))
     elif event.key == pygame.K_k:
@@ -117,6 +117,12 @@ def update_animations(enemies, timers, objects):
         timers.last_object_animation = timers.curtime
         for object in objects:
             object.update_image()
+    for enemy in enemies:
+        if enemy.ename is "goomba" and enemy.is_dead and not enemy.eliminated:
+            if timers.curtime - enemy.moment_of_death > timers.goomba_death_wait:
+                enemies.remove(enemy)
+        if enemy.ename is "koopa_troopa" and enemy.is_dead and not enemy.eliminated:
+            enemy.reanimate()
 
 
 def update_pos(settings, timers, enemies, objects, background, levels):

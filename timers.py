@@ -21,6 +21,14 @@ class Timers:
         self.last_move = 0
         self.move_wait = 30
 
+        # Goomba squish animation time
+        self.goomba_death_wait = 1000
+
+        # Koopa returning back to life animation
+        self.koopa_reanimate_wait = 5000
+        self.koopa_come_back_wait = self.koopa_reanimate_wait + 2000
+        self.koopa_legs_wait = 250
+
         # Cheep cheep move animations
         self.cheep_y_change_wait = 5000
 
