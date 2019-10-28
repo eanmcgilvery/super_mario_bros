@@ -9,6 +9,7 @@ from fake_bowser import FakeBowser
 from goomba import Goomba
 from koopa_troopa import KoopaTroopa
 from piranha_plant import PiranhaPlant
+from mario import Mario
 
 # Import all objects
 from brick import Brick
@@ -22,17 +23,17 @@ from coin import Coin
 from flag_pole import Flag_Pole
 
 
-def check_events(settings, screen, timers, enemies, objects, background, levels):
+def check_events(settings, screen, timers, enemies, objects, background, levels, mario):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels)
+            check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, settings, screen, timers, enemies, objects, background, levels)
 
 
-def check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels):
+def check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario):
     if event.key == pygame.K_ESCAPE:
         sys.exit()
     # For testing
@@ -58,10 +59,12 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
         enemies.add(CheepCheep(settings, screen, timers, 1000, 400, 1))
     elif event.key == pygame.K_a:
         enemies.add(CheepCheep(settings, screen, timers, 1000, 400, 2))
+        mario.walk(settings)
     elif event.key == pygame.K_s:
         enemies.add(CheepCheep(settings, screen, timers, random.randint(0, 200), settings.screen_height, 3))
     elif event.key == pygame.K_d:
         enemies.add(Blooper(settings, screen, timers, 520, 400, 1))
+        mario.walk(settings)
     elif event.key == pygame.K_f:
         enemies.add(FakeBowser(settings, screen, timers, 550, 270, 1))
     elif event.key == pygame.K_k:
@@ -92,9 +95,11 @@ def check_keyup_events(event, settings, screen, timers, enemies, objects, backgr
         settings.move_screen = False
 
 
-def update_screen(screen, enemies, timers, objects, background, levels):
+def update_screen(screen, enemies, timers, objects, background, levels, mario):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
+
+        mario.blitme()
         for level in levels:
             if level.active:
                 screen.fill(level.bg_color)
@@ -107,7 +112,10 @@ def update_screen(screen, enemies, timers, objects, background, levels):
         pygame.display.flip()
 
 
-def update_animations(enemies, timers, objects):
+def update_animations(enemies, timers, objects, mario, settings):
+
+    mario.walk(settings)
+
     if timers.curtime - timers.last_enemy_animation > timers.enemy_animation_wait:
         timers.last_enemy_animation = timers.curtime
         changeframe = True
@@ -148,3 +156,11 @@ def screen_move(settings, enemies, objects, background, levels, screen_x_move):
     for level in levels:
         if level.active:
             level.enemy_spawn_triggers(enemies)
+
+def check_keydown(event, mario):
+    if event.key == pygame.K_d:
+        mario.facing_right = True
+    elif event.key == pygame.K_a:
+        mario.facing_right = False
+    if event.key == pygame.K_SPACE:
+        mario.jump()

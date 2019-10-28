@@ -5,7 +5,7 @@ from settings import Settings
 from timers import Timers
 from level1_1 import Level1_1
 from sub_level1_1 import SubLevel1_1
-
+from mario import Mario
 
 def run_game():
 
@@ -31,6 +31,9 @@ def run_game():
     # Create a group to hold all enemies
     enemies = Group()
 
+    # Create our Hero
+    mario = Mario(settings, screen)
+
     # Create a group to hold all objects and background
     objects = Group()
     background = Group()
@@ -44,10 +47,10 @@ def run_game():
 
     while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.check_events(settings, screen, timers, enemies, objects, background, levels)
+        gf.check_events(settings, screen, timers, enemies, objects, background, levels, mario)
         gf.update_pos(settings, timers, enemies, objects, background, levels)
-        gf.update_animations(enemies, timers, objects)
-        gf.update_screen(screen, enemies, timers, objects, background, levels)
+        gf.update_animations(enemies, timers, objects, mario, settings)
+        gf.update_screen(screen, enemies, timers, objects, background, levels, mario)
 
 
 run_game()
