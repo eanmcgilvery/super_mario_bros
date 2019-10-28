@@ -13,13 +13,6 @@ class Settings:
         self.screen_pos = 0
         self.ground_level = self.map_height - 50
 
-        # Mario Speed
-        self.MAX_WALKING_SPEED = 10
-        self.MAX_HEIGHT_SPEED = 5
-
-        # Speed of gravity in our world
-        self.MAX_FALL_SPEED = 9.8
-
         # Fall acceleration
         self.fall_acceleration = 1
         self.swimming_fall_acceleration = 0.5
@@ -122,3 +115,36 @@ class Settings:
 
         # FOR TESTING
         self.move_screen = False
+
+        # Mario Settings
+        self.mario_small_width = self.goomba_width
+        self.mario_small_height = self.goomba_height
+
+        # MARIO FORCES
+        self.WALK_ACCEL = .15
+        self.RUN_ACCEL = 20
+        self.SMALL_TURNAROUND = .35
+
+        self.GRAVITY = 1.01
+        self.JUMP_GRAVITY = .31
+        self.JUMP_VEL = -10
+        self.FAST_JUMP_VEL = -12.5
+        self.MAX_Y_VEL = 11
+
+        self.MAX_RUN_SPEED = 800
+        self.MAX_WALK_SPEED = 6
+
+        # Mario States
+        self.STAND = 'standing'
+        self.WALK = 'walk'
+        self.JUMP = 'jump'
+        self.FALL = 'fall'
+        self.SMALL_TO_BIG = 'small to big'
+        self.BIG_TO_FIRE = 'big to fire'
+        self.BIG_TO_SMALL = 'big to small'
+        self.FLAGPOLE = 'flag pole'
+        self.WALKING_TO_CASTLE = 'walking to castle'
+        self.END_OF_LEVEL_FALL = 'end of level fall'
+
+        # Speed of gravity in our world
+        self.FALL_SPEED = -9.8
