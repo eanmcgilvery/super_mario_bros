@@ -3,11 +3,13 @@ from enemy import Enemy
 
 
 class Goomba(Enemy):
-    def __init__(self, settings, screen, x, y, etype):
-        super(Goomba, self).__init__(settings, screen, x, y, etype, ename="goomba")
+    def __init__(self, settings, screen, timers,  x, y, etype):
+        super(Goomba, self).__init__(settings, screen, timers, x, y, etype, ename="goomba")
 
         self.width = settings.goomba_width
         self.height = settings.goomba_height
+        self.moment_of_death = 0
+
         """etype 1 is brown goomba, 2 is blue goomba"""
         # Rect, image, and initial position set up
         self.rect = pygame.Rect(x, y, self.width, self.height)
@@ -79,6 +81,7 @@ class Goomba(Enemy):
 
     def take_damage(self):
         self.is_dead = True
+        self.moment_of_death = self.timers.curtime
         if self.is_dead and self.etype is 1:
             self.pic = pygame.image.load('images/Goomba1d.png')
         elif self.is_dead and self.etype is 2:

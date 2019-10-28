@@ -3,11 +3,14 @@ from enemy import Enemy
 
 
 class KoopaTroopa(Enemy):
-    def __init__(self, settings, screen, x, y, etype):
-        super(KoopaTroopa, self).__init__(settings, screen, x, y, etype, ename="koopa_troopa")
+    def __init__(self, settings, screen, timers, x, y, etype):
+        super(KoopaTroopa, self).__init__(settings, screen, timers, x, y, etype, ename="koopa_troopa")
 
         self.width = settings.koopa_width
         self.height = settings.koopa_height
+        self.moment_of_death = 0
+        self.last_leg_kick = 0
+
         """etype 1 is green koopa troopa, 2 is blue, 3 is red, 4 is flying red, 5 is jumping green"""
         # Rect, image, and initial position set up
         self.rect = pygame.Rect(x, y, self.width, self.height)
@@ -141,6 +144,8 @@ class KoopaTroopa(Enemy):
         changeframe = False
         if self.etype is 1 or self.etype is 2 or self.etype is 3:
             self.is_dead = True
+            self.moment_of_death = self.timers.curtime
+            self.frame = 2
             if self.etype is 1:
                 self.pic = pygame.image.load('images/Koopa_Troopa1d1.png')
             elif self.etype is 2:
@@ -159,6 +164,37 @@ class KoopaTroopa(Enemy):
             self.update_image(changeframe)
         if self.y_velocity < 0:
             self.y_velocity = 0
+
+    def reanimate(self):
+        if self.is_dead and not self.eliminated:
+            if self.timers.curtime - self.moment_of_death > self.timers.koopa_reanimate_wait:
+                if self.timers.curtime - self.moment_of_death > self.timers.koopa_come_back_wait:
+                    changeframe = False
+                    self.frame = 1
+                    self.height = self.settings.koopa_height
+                    self.y -= self.settings.koopa_height / 3
+                    self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+                    self.is_dead = False
+                    self.update_image(changeframe)
+                elif self.timers.curtime - self.last_leg_kick > self.timers.koopa_legs_wait:
+                    self.last_leg_kick = self.timers.curtime
+                    if self.frame is 1:
+                        self.frame = 2
+                        if self.etype is 1:
+                            self.pic = pygame.image.load('images/Koopa_Troopa1d1.png')
+                        elif self.etype is 2:
+                            self.pic = pygame.image.load('images/Koopa_Troopa2d1.png')
+                        elif self.etype is 3:
+                            self.pic = pygame.image.load('images/Koopa_Troopa3d1.png')
+                    elif self.frame is 2:
+                        self.frame = 1
+                        if self.etype is 1:
+                            self.pic = pygame.image.load('images/Koopa_Troopa1d2.png')
+                        elif self.etype is 2:
+                            self.pic = pygame.image.load('images/Koopa_Troopa2d2.png')
+                        elif self.etype is 3:
+                            self.pic = pygame.image.load('images/Koopa_Troopa3d2.png')
+                    self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def eliminate(self):
         self.is_dead = True
