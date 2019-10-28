@@ -82,6 +82,12 @@ class Settings:
         self.medium_pipe_height = self.brick_lenth * 3
         self.large_pipe_width = self.brick_lenth * 2
         self.large_pipe_height = self.brick_lenth * 4
+        self.pipe1_1_width = self.brick_lenth * 2
+        self.pipe1_1_height = self.brick_lenth * 2
+        self.pipe1_2_width = self.brick_lenth * 2
+        self.pipe1_2_height = self.brick_lenth * 2
+        self.pipe1_3_width = self.brick_lenth * 2
+        self.pipe1_3_height = self.brick_lenth
 
         self.small_hill_width = self.brick_lenth * 3
         self.small_hill_height = self.brick_lenth + 3
@@ -112,6 +118,7 @@ class Settings:
 
         # Music
         self.background_sound = pygame.mixer.Sound('sounds/main_theme.ogg')
+        self.underground_sound = pygame.mixer.Sound('sounds/underground.wav')
 
         # FOR TESTING
         self.move_screen = False

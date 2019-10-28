@@ -4,7 +4,7 @@ from pygame.sprite import Group
 from settings import Settings
 from timers import Timers
 from level1_1 import Level1_1
-
+from level1_1_hidden import Level1_1_hidden
 
 def run_game():
 
@@ -25,11 +25,14 @@ def run_game():
     background = Group()
 
     # Create first level
-    levels = [Level1_1(settings, screen)]
-    levels[0].active = True
-    levels[0].generate_map(settings, screen, objects, background)
-    levels[0].enemy_spawn_triggers(enemies)
-    levels[0].background_sound(settings)
+    levels = [Level1_1(settings, screen), Level1_1_hidden(settings, screen)]
+    #levels[0].active = True
+    #levels[0].generate_map(settings, screen, objects, background)
+    #levels[0].enemy_spawn_triggers(enemies)
+    #levels[0].background_sound(settings)
+
+    levels[1].generate_map(settings, screen, objects, background)
+    levels[1].background_sound(settings)
 
     while True:
         timers.curtime = pygame.time.get_ticks()
