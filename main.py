@@ -7,6 +7,7 @@ from timers import Timers
 from level1_1 import Level1_1
 from sub_level1_1 import SubLevel1_1
 from mario import Mario
+from mushroom import Mushroom
 
 
 def run_game():
@@ -40,13 +41,14 @@ def run_game():
     # Create a group to hold all objects and background
     objects = Group()
     background = Group()
+    item = Group()
 
     # Create first level
     levels = [Level1_1(settings, screen, timers), SubLevel1_1(settings, screen, timers)]
-    levels[0].active = True
-    levels[0].generate_map(settings, screen, objects, background)
-    levels[0].enemy_spawn_triggers(enemies)
-    levels[0].background_sound(settings)
+    #levels[1].active = True
+    levels[1].generate_map(settings, screen, objects, background)
+    #levels[1].enemy_spawn_triggers(enemies)
+    #levels[1].background_sound(settings)
 
     while True:
         timers.curtime = pygame.time.get_ticks()

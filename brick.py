@@ -8,7 +8,8 @@ class Brick(Object):
         # Check if block is empty
         self.not_empty = True
 
-        """Type 1: Question_brick, type 2: ground brick, type 3:breakable brick, type 4: steps..."""
+        """Type 1: Question_brick, type 2: ground brick, type 3:breakable brick, type 4: steps, type 5: 1-2 ground brick
+                type 6: 1-2 breakable brick"""
         self.rect = pygame.Rect(x, y, settings.brick_lenth, settings.brick_lenth)
         if self.otype is 1:
             self.pic = pygame.image.load('images/question1.png')
@@ -18,6 +19,10 @@ class Brick(Object):
             self.pic = pygame.image.load('images/brick.png')
         elif self.otype is 4:
             self.pic = pygame.image.load('images/step.png')
+        elif self.otype is 5:
+            self.pic = pygame.image.load('images/ground2_1.png')
+        elif self.otype is 6:
+            self.pic = pygame.image.load('images/brick2_2.png')
 
         self.image = pygame.transform.scale(self.pic, (settings.brick_lenth, settings.brick_lenth))
 
