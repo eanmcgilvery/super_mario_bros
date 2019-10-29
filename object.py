@@ -11,6 +11,12 @@ class Object(Sprite):
         self.x = x
         self.y = y
 
+        # Initial movement direction is left
+        self.x_direction = -1
+
+        # Initially standing on ground
+        self.y_velocity = 0
+
         # Place in animation
         self.frame = 1
 

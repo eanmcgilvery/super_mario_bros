@@ -109,6 +109,14 @@ class Settings:
 
         self.ground_level = self.map_height - self.brick_lenth * 1.5
 
+        # Items
+        self.mushroom_width = self.brick_lenth
+        self.mushroom_height = self.brick_lenth
+        self.star_width = self.brick_lenth
+        self.star_height = self.brick_lenth
+        self.flower_width = self.brick_lenth
+        self.flower_height = self.brick_lenth
+
         # Music
         self.background_sound = pygame.mixer.Sound('sounds/main_theme.ogg')
         self.underground_sound = pygame.mixer.Sound('sounds/underground.wav')

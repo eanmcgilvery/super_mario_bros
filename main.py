@@ -4,8 +4,9 @@ from pygame.sprite import Group
 from settings import Settings
 from timers import Timers
 from level1_1 import Level1_1
-from level1_1_hidden import Level1_1_hidden
+from sub_level1_1 import SubLevel1_1
 from mario import Mario
+from mushroom import Mushroom
 
 def run_game():
 
@@ -37,9 +38,10 @@ def run_game():
     # Create a group to hold all objects and background
     objects = Group()
     background = Group()
+    item = Group()
 
     # Create first level
-    levels = [Level1_1(settings, screen, timers), Level1_1_hidden(settings, screen, timers)]
+    levels = [Level1_1(settings, screen, timers), SubLevel1_1(settings, screen, timers)]
     #levels[1].active = True
     levels[1].generate_map(settings, screen, objects, background)
     #levels[1].enemy_spawn_triggers(enemies)
