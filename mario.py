@@ -138,7 +138,10 @@ class Mario(pg.sprite.Sprite):
         if not self.death:
             # Constantly add a downward gravity force
             self.y_velocity += self.settings.fall_acceleration
-            self.y += self.y_velocity
+
+            if not self.jump_:
+                self.y += self.y_velocity
+
             self.rect.x = self.x
             self.rect.y = self.y
 
@@ -150,7 +153,9 @@ class Mario(pg.sprite.Sprite):
 
             # Jump with spacebar
             if self.jump_:
-                self.upTime()
+                if self.jumpCount >= -10 :
+                    self.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5
+                    self.jumpCount -= 1
             self.check_collisions(enemies, objects)
 
     def blitme(self):

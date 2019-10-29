@@ -111,7 +111,7 @@ def check_keyup_events(event, settings, screen, timers, enemies, objects, backgr
     if event.key == pygame.K_s:
         mario.crouch = False
     if event.key == pygame.K_SPACE:
-        mario.jump = False
+        mario.jump_ = False
 
 
 def update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items):
