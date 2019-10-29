@@ -15,6 +15,7 @@ class Enemy(Sprite):
         # Identify which type the enemy is
         self.etype = etype
         self.ename = ename
+
         # Initial movement direction is left
         self.x_direction = -1
 

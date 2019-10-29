@@ -55,6 +55,13 @@ class Settings:
 
         self.enemy_jump_speed = -18
 
+        # Point values
+        self.goomba_points = 100
+        self.koopa_points = self.goomba_points
+        self.shell_kick_points = self.goomba_points * 4
+        self.coin_points = self.goomba_points * 2
+        self.mushroom_points = self.goomba_points * 10
+
         # Fake Bowser leash range (He has to stay put in a certain area but still move)
         self.fake_bowser_leash = [0, 250]
         self.fake_bowser_pos = self.fake_bowser_leash[1] / 2  # Starts in the center of the leash range

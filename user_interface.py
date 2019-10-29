@@ -24,16 +24,15 @@ class UserInterface:
         self.lives_text = "LIVES"
         self.lives = 3
 
-        self.text = [self.score_text, self.time_text, self.world_text, self.coins_text, self.lives_text]
-        self.info_text = [self.score, self.time, self.world, self.coins, self.lives]
-
     def blitme(self):
+        text = [self.score_text, self.time_text, self.world_text, self.coins_text, self.lives_text]
+        info_text = [self.score, self.time, self.world, self.coins, self.lives]
         for x in range(5):
-            textobj = self.font.render(self.text[x], 1, self.white)
+            textobj = self.font.render(text[x], 1, self.white)
             textrect = textobj.get_rect()
             textrect.topleft = 40 + ((self.settings.screen_width / 5) * x), 40
             self.screen.blit(textobj, textrect)
-            textobj = self.font.render(str(self.info_text[x]), 1, self.white)
+            textobj = self.font.render(str(info_text[x]), 1, self.white)
             textrect = textobj.get_rect()
             textrect.topleft = 40 + ((self.settings.screen_width / 5) * x), 80
             self.screen.blit(textobj, textrect)
