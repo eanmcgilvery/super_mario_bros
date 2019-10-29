@@ -46,6 +46,7 @@ class Settings:
         # Enemy speeds
         self.goomba_speed = 2.5
         self.koopa_speed = self.goomba_speed
+        self.koopa_shell_speed = self.koopa_speed * 6
         self.piranha_plant_speed = self.koopa_speed / 2 * -1
         self.cheep_speed = self.goomba_speed
         self.cheep_y_speed = 0.5

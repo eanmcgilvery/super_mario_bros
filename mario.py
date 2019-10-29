@@ -5,7 +5,7 @@ from settings import Settings as sy
 
 # Class that holds all of the attributes of our hero, Mario
 class Mario(pg.sprite.Sprite):
-    def __init__(self, settings, screen):
+    def __init__(self, settings, screen, timers):
         pg.sprite.Sprite.__init__(self)
 
         self.jump_ = False
@@ -13,7 +13,8 @@ class Mario(pg.sprite.Sprite):
         self.move_left = False
         self.crouch = False
         self.max_x_vel = 100
-        self.curtime = pg.time.get_ticks()
+        self.curtime = pg.time.get_ticks()  # This should not be used
+        self.timers = timers
 
         self.allow_jump = True
         self.screen = screen
@@ -98,18 +99,51 @@ class Mario(pg.sprite.Sprite):
         if not self.death:
             for object in objects:
                 if self.rect.colliderect(object):
-                    if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition goomba to the top of the object
+                    if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition Mario to the top of the object
                         self.y = object.rect.top - self.height
                         self.y_velocity = 0
                     elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
                         self.y = object.rect.bottom
                         self.y_velocity = 0
                     elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
+                        self.x = object.rect.left - self.width
                         self.move_right = False
                     else:  # Reposition to the right
+                        self.x = object.rect.right
                         self.move_left = False
                     self.rect.x = self.x
                     self.rect.y = self.y
+
+            # Mario collision with enemy behaviors
+            for enemy in enemies:
+                if self.rect.colliderect(enemy):
+                    if not enemy.eliminated:
+                        if enemy.ename is "koopa_troopa" and enemy.is_dead and not enemy.moving:
+                            if self.rect.centerx < enemy.rect.centerx:
+                                enemy.x_direction = 1
+                            else:
+                                enemy.x_direction = -1
+                            enemy.moving = True
+                        elif self.rect.bottom > enemy.rect.top and self.y_velocity >= self.rect.bottom - enemy.rect.top:  # Bounce off the top (in most cases)
+                            if enemy.ename is "goomba" and not enemy.is_dead or enemy.ename is "koopa_troopa" and not enemy.is_dead:
+                                self.y = enemy.rect.top - self.height
+                                self.y_velocity = self.settings.enemy_jump_speed / 2
+                                enemy.take_damage()
+                            elif enemy.ename is "koopa_troopa" and enemy.is_dead and enemy.moving:
+                                self.y = enemy.rect.top - self.height
+                                self.y_velocity = self.settings.enemy_jump_speed / 2
+                                enemy.moving = False
+                                enemy.take_damage()
+                        else:  # Touching sides or bottom of enemies
+                            if enemy.ename is "koopa_troopa" and enemy.moving:
+                                # Mario takes damage
+                                pass
+                            elif enemy.is_dead:
+                                # Do nothing
+                                pass
+                            else:
+                                # Mario takes damage
+                                pass
 
     def animation_speed(self):
         """Used to make walking animation speed be in relation to
@@ -146,7 +180,7 @@ class Mario(pg.sprite.Sprite):
             self.rect.x = self.x
             self.rect.y = self.y
 
-           # Move right or left
+            # Move right or left
             if self.move_right:
                 self.x += settings.WALK_SPEED
             elif self.move_left and self.rect.left > 0:
