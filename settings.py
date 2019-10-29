@@ -135,7 +135,7 @@ class Settings:
 
         self.GRAVITY = 1.01
         self.JUMP_GRAVITY = .31
-        self.JUMP_VEL = -10
+        self.JUMP_VEL = 10
         self.FAST_JUMP_VEL = -12.5
         self.MAX_Y_VEL = 11
 

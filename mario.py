@@ -8,11 +8,14 @@ class Mario(pg.sprite.Sprite):
     def __init__(self, settings, screen):
         pg.sprite.Sprite.__init__(self)
 
+        self.jump_ = False
         self.move_right = False
         self.move_left = False
+        self.crouch = False
         self.max_x_vel = 100
         self.curtime = pg.time.get_ticks()
-        self.allow_jump = False
+
+        self.allow_jump = True
         self.screen = screen
         self.settings = settings
 
@@ -67,6 +70,10 @@ class Mario(pg.sprite.Sprite):
 
         self.center = float(self.rect.centerx)
 
+        # Jumping attributes
+        self.isJump = False
+        self.jumpCount = 10
+
         self.facing_right = True
         self.crouching = False
         self.fire = False
@@ -82,7 +89,10 @@ class Mario(pg.sprite.Sprite):
 
         # Regular mario facing left
         elif not self.facing_right and not self.invincible and not self.fire and not self.super_size:
-            self.image = self.left_frames[self.index]
+            self.image = pg.transform.scale(self.left_frames[self.index], (self.width, self.height))
+
+    def death(self):
+        pass
 
     def check_collisions(self, enemies, objects):
         if not self.death:
@@ -95,13 +105,9 @@ class Mario(pg.sprite.Sprite):
                         self.y = object.rect.bottom
                         self.y_velocity = 0
                     elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
-                        if self.x_direction is 1:  # When not moving left change direction to the left
-                            self.x = object.rect.left - self.width
-                            self.x_direction = -1
+                        self.move_right = False
                     else:  # Reposition to the right
-                        if self.x_direction is -1:  # When not moving right change direction to the right
-                            self.x = object.rect.right
-                            self.x_direction = 1
+                        self.move_left = False
                     self.rect.x = self.x
                     self.rect.y = self.y
 
@@ -117,45 +123,36 @@ class Mario(pg.sprite.Sprite):
 
         return animation_speed
 
-    def blitme(self):
-        """Draw the alien at its current location."""
-        self.screen.blit(self.image, self.rect)
-
-    def jumping(self, keys, fire_group):
+    def upTime(self):
         """Called when Mario is in a JUMP state."""
-        pass
-        self.index = 3
-
-        self.gravity = sy.FALL_SPEED
-        self.y_velocity += self.gravity
-
-        # self.check_to_allow_fireball(keys)
-
-        if 0 <= self.y_velocity < self.max_y_vel:
-            self.gravity = c.GRAVITY
-            self.state = c.FALL
-
-        if not self.facing_right:
-            if self.x_velocity > (self.max_x_vel * - 1):
-                self.x_velocity -= self.x_accel
-
-        elif self.facing_right:
-            if self.x_velocity < self.max_x_vel:
-                self.x_velocity += self.x_accel
-
+        if self.jumpCount >= -10:
+            if self.jumpCount < 0:
+                neg = -1
+                self.y -= self.jumpCount**2 * 0.1 * neg
+                self.jumpCount -= 1
+            else:
+                self.isJump = False
+                self.jumpCount = 10
 
     def update_pos(self, enemies, objects, settings):
         if not self.death:
+            # Constantly add a downward gravity force
             self.y_velocity += self.settings.fall_acceleration
             self.y += self.y_velocity
             self.rect.x = self.x
             self.rect.y = self.y
+
+            # Move right or left
             if self.move_right:
                 self.x += settings.WALK_SPEED
             elif self.move_left and self.rect.left > 0:
                 self.x -= settings.WALK_SPEED
-            if self.allow_jump:
-                self.y += self.y_velocity
-            if not self.allow_jump:
-                self.y += settings.GRAVITY
+
+            # Jump with spacebar
+            if self.jump_:
+                self.upTime()
             self.check_collisions(enemies, objects)
+
+    def blitme(self):
+        """Draw the alien at its current location."""
+        self.screen.blit(self.image, self.rect)
