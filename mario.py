@@ -83,14 +83,14 @@ class Mario(pg.sprite.Sprite):
         self.jump_denied = False
         self.death = False
 
-    def animation(self):
+    def animation(self, index_):
         """Return the correct images of Mario to animate through"""
         if self.facing_right and not self.invincible and not self.fire and not self.super_size:
-            self.image = self.right_frames[self.index]
+            self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
 
         # Regular mario facing left
         elif not self.facing_right and not self.invincible and not self.fire and not self.super_size:
-            self.image = pg.transform.scale(self.left_frames[self.index], (self.width, self.height))
+            self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
 
     def death(self):
         pass

@@ -63,7 +63,7 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
 
     elif event.key == pygame.K_a:
         mario.move_right = False
-        mario.facing_right = True
+        mario.facing_right = False
         mario.move_left = True
     elif event.key == pygame.K_s:
         mario.crouch = True
@@ -71,7 +71,7 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
         mario.move_left = False
     elif event.key == pygame.K_d:
         mario.move_right = True
-        mario.facing_right = False
+        mario.facing_right = True
         mario.move_left = False
     elif event.key == pygame.K_SPACE:
         mario.jump_ = True
@@ -139,6 +139,9 @@ def update_animations(enemies, timers, objects, mario, settings, items):
     if timers.curtime - timers.last_enemy_animation > timers.enemy_animation_wait:
         timers.last_enemy_animation = timers.curtime
         changeframe = True
+
+        mario.animation(timers.curtime % 4)
+
         for enemy in enemies:
             enemy.update_image(changeframe)
     if timers.curtime - timers.last_object_animation > timers.object_animation_wait:
