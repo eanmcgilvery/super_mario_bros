@@ -3,8 +3,8 @@ from enemy import Enemy
 
 
 class Blooper(Enemy):
-    def __init__(self, settings, screen, timers, x, y, etype):
-        super(Blooper, self).__init__(settings, screen, timers, x, y, etype, ename="blooper")
+    def __init__(self, settings, screen, ui, timers, x, y, etype):
+        super(Blooper, self).__init__(settings, screen, ui, timers, x, y, etype, ename="blooper")
 
         # Rect, image, and initial position set up
         self.width = settings.blooper_width

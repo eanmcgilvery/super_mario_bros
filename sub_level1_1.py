@@ -6,8 +6,8 @@ from coin import Coin
 
 
 class SubLevel1_1(Level):
-    def __init__(self, settings, screen, timers):
-        super(SubLevel1_1, self).__init__(settings, screen, timers, bg_color=(0, 0, 0))
+    def __init__(self, settings, screen, ui, timers):
+        super(SubLevel1_1, self).__init__(settings, screen, ui, timers, bg_color=(0, 0, 0))
 
     def generate_ground(self, settings, screen, objects):
         for x in range(17):
@@ -96,7 +96,6 @@ class SubLevel1_1(Level):
         objects.add(Pipe(settings, screen, settings.brick_lenth * 15, settings.ground_level - settings.pipe1_3_height * 9, 6))
         objects.add(Pipe(settings, screen, settings.brick_lenth * 15, settings.ground_level - settings.pipe1_3_height * 10, 6))
         objects.add(Pipe(settings, screen, settings.brick_lenth * 15, settings.ground_level - settings.pipe1_3_height * 11, 6))
-
 
     def background_sound(self, settings):
         settings.underground_sound.play()

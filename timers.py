@@ -1,5 +1,6 @@
 import random
 
+
 class Timers:
     """Timers used for animations, movement, screen display, etc"""
     def __init__(self):
@@ -9,6 +10,10 @@ class Timers:
         # Display refresh rate
         self.last_display = 0
         self.display_wait = 30
+
+        # Game timer counting down one second at a time
+        self.last_game_countdown = 0
+        self.game_countdown_wait = 1000
 
         # Enemies animate together
         self.last_enemy_animation = 0

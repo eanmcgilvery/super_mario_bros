@@ -3,8 +3,8 @@ from enemy import Enemy
 
 
 class KoopaTroopa(Enemy):
-    def __init__(self, settings, screen, timers, x, y, etype):
-        super(KoopaTroopa, self).__init__(settings, screen, timers, x, y, etype, ename="koopa_troopa")
+    def __init__(self, settings, screen, ui, timers, x, y, etype):
+        super(KoopaTroopa, self).__init__(settings, screen, ui, timers, x, y, etype, ename="koopa_troopa")
 
         self.width = settings.koopa_width
         self.height = settings.koopa_height
@@ -147,6 +147,7 @@ class KoopaTroopa(Enemy):
 
     def take_damage(self):
         changeframe = False
+        self.ui.score += self.settings.koopa_points
         if self.etype is 1 or self.etype is 2 or self.etype is 3:
             self.is_dead = True
             self.moment_of_death = self.timers.curtime
@@ -202,6 +203,8 @@ class KoopaTroopa(Enemy):
                     self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def eliminate(self):
+        if not self.eliminated:
+            self.ui.score += self.settings.koopa_points
         self.is_dead = True
         self.eliminated = True
         if self.y_velocity < 0:

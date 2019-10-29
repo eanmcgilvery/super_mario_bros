@@ -5,7 +5,7 @@ from settings import Settings as sy
 
 # Class that holds all of the attributes of our hero, Mario
 class Mario(pg.sprite.Sprite):
-    def __init__(self, settings, screen, timers):
+    def __init__(self, settings, screen, ui, timers):
         pg.sprite.Sprite.__init__(self)
 
         self.jump_ = False
@@ -15,6 +15,7 @@ class Mario(pg.sprite.Sprite):
         self.max_x_vel = 100
         self.curtime = pg.time.get_ticks()  # This should not be used
         self.timers = timers
+        self.ui = ui
 
         self.allow_jump = True
         self.screen = screen
@@ -123,6 +124,7 @@ class Mario(pg.sprite.Sprite):
                                 enemy.x_direction = 1
                             else:
                                 enemy.x_direction = -1
+                            self.ui.score += self.settings.shell_kick_points
                             enemy.moving = True
                         elif self.rect.bottom > enemy.rect.top and self.y_velocity >= self.rect.bottom - enemy.rect.top:  # Bounce off the top (in most cases)
                             if enemy.ename is "goomba" and not enemy.is_dead or enemy.ename is "koopa_troopa" and not enemy.is_dead:

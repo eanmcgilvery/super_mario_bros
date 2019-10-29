@@ -4,8 +4,8 @@ from enemy import Enemy
 
 
 class FakeBowser(Enemy):
-    def __init__(self, settings, screen, timers, x, y, etype):
-        super(FakeBowser, self).__init__(settings, screen, timers, x, y, etype, ename="fake_bowser")
+    def __init__(self, settings, screen, ui, timers, x, y, etype):
+        super(FakeBowser, self).__init__(settings, screen, ui, timers, x, y, etype, ename="fake_bowser")
 
         # Rect, image, and initial position set up
         self.width = settings.fake_bowser_width
