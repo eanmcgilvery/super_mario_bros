@@ -126,6 +126,7 @@ class Mario(pg.sprite.Sprite):
                                 enemy.x_direction = -1
                             self.ui.score += self.settings.shell_kick_points
                             enemy.moving = True
+                            pg.mixer.Sound('sounds/kick.ogg').play()
                         elif self.rect.bottom > enemy.rect.top and self.y_velocity >= self.rect.bottom - enemy.rect.top:  # Bounce off the top (in most cases)
                             if enemy.ename is "goomba" and not enemy.is_dead or enemy.ename is "koopa_troopa" and not enemy.is_dead:
                                 self.y = enemy.rect.top - self.height

@@ -120,18 +120,24 @@ class KoopaTroopa(Enemy):
                             self.x = object.rect.left - self.width
                             self.x_direction = -1
                             self.update_image(changeframe)
+                            if self.moving:
+                                pygame.mixer.Sound('sounds/bump.ogg').play()
                     else:  # Reposition to the right
                         if self.x_direction is -1:  # When not moving right change direction to the right
                             self.x = object.rect.right
                             self.x_direction = 1
                             self.update_image(changeframe)
+                            if self.moving:
+                                pygame.mixer.Sound('sounds/bump.ogg').play()
                     self.rect.x = self.x
                     self.rect.y = self.y
 
         # Collide with enemies as well
             for enemy in enemies:  # Only reposition to the sides
                 if self.rect.colliderect(enemy) and self is not enemy:
-                    if self.moving:
+                    if enemy.eliminated:
+                        pass
+                    elif self.moving:
                         enemy.eliminate()
                     elif self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
                         if self.x_direction is 1:  # When not moving left change direction to the left
@@ -148,6 +154,7 @@ class KoopaTroopa(Enemy):
     def take_damage(self):
         changeframe = False
         self.ui.score += self.settings.koopa_points
+        pygame.mixer.Sound('sounds/stomp.ogg').play()
         if self.etype is 1 or self.etype is 2 or self.etype is 3:
             self.is_dead = True
             self.moment_of_death = self.timers.curtime

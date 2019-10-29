@@ -84,6 +84,7 @@ class Goomba(Enemy):
             self.ui.score += self.settings.goomba_points
         self.is_dead = True
         self.moment_of_death = self.timers.curtime
+        pygame.mixer.Sound('sounds/stomp.ogg').play()
         if self.is_dead and self.etype is 1:
             self.pic = pygame.image.load('images/Goomba1d.png')
         elif self.is_dead and self.etype is 2:
@@ -95,6 +96,7 @@ class Goomba(Enemy):
             self.ui.score += self.settings.goomba_points
         self.is_dead = True
         self.eliminated = True
+        pygame.mixer.Sound('sounds/kick.ogg').play()
         if self.etype is 1:
             self.pic = pygame.image.load('images/Goomba1d2.png')
         elif self.etype is 2:
