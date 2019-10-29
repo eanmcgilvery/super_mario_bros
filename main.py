@@ -34,7 +34,7 @@ def run_game():
     enemies = Group()
 
     # Create our Hero
-    mario = Mario(settings, screen)
+    mario = Mario(settings, screen, timers)
 
     # Create a group to hold all objects and background
     objects = Group()

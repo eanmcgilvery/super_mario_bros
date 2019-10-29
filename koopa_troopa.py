@@ -10,6 +10,7 @@ class KoopaTroopa(Enemy):
         self.height = settings.koopa_height
         self.moment_of_death = 0
         self.last_leg_kick = 0
+        self.moving = False
 
         """etype 1 is green koopa troopa, 2 is blue, 3 is red, 4 is flying red, 5 is jumping green"""
         # Rect, image, and initial position set up
@@ -30,6 +31,8 @@ class KoopaTroopa(Enemy):
         if not self.eliminated:
             if not self.is_dead:
                 self.x += self.settings.koopa_speed * self.x_direction
+            elif self.is_dead and self.moving:
+                self.x += self.settings.koopa_shell_speed * self.x_direction
             self.y_velocity += self.settings.fall_acceleration
             self.y += self.y_velocity
             self.rect.x = self.x
@@ -128,7 +131,9 @@ class KoopaTroopa(Enemy):
         # Collide with enemies as well
             for enemy in enemies:  # Only reposition to the sides
                 if self.rect.colliderect(enemy) and self is not enemy:
-                    if self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
+                    if self.moving:
+                        enemy.eliminate()
+                    elif self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
                         if self.x_direction is 1:  # When not moving left change direction to the left
                             self.x = enemy.rect.left - self.width
                             self.x_direction = -1
@@ -166,7 +171,7 @@ class KoopaTroopa(Enemy):
             self.y_velocity = 0
 
     def reanimate(self):
-        if self.is_dead and not self.eliminated:
+        if self.is_dead and not self.eliminated and not self.moving:
             if self.timers.curtime - self.moment_of_death > self.timers.koopa_reanimate_wait:
                 if self.timers.curtime - self.moment_of_death > self.timers.koopa_come_back_wait:
                     changeframe = False
