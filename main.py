@@ -28,7 +28,7 @@ def run_game():
     # Create our timers
     timers = Timers()
 
-    # Create a group to hold all enemies
+    # Create a group to hold all enemie
     enemies = Group()
 
     # Create our Hero

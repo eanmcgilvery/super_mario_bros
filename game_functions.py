@@ -74,7 +74,6 @@ def check_keyup_events(event, settings, screen, timers, enemies, objects, backgr
     elif event.key == pygame.K_SPACE:
         mario.allow_jump = False
 
-
 def update_screen(screen, enemies, timers, objects, background, levels, mario):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime

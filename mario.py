@@ -129,6 +129,7 @@ class Mario(pg.sprite.Sprite):
     def check_collisions(self, enemies, objects):
         if not self.death:
             for object in objects:
+
                 if self.rect.colliderect(object):
                     if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition mario to the top of the object
                         self.y = object.rect.top - self.height

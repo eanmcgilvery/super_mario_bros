@@ -2,7 +2,7 @@ import pygame
 
 class Settings:
     def __init__(self):
-        """FEEL FREE TO CHANGE SCREEN WIDTH AND SCREEN HEIGHT"""
+        """FEEL FREE TO CHANGE SCREEN WIDTH AN SCREEN HEIGHT"""
         # Screen settings
         self.map_width = 5000
         self.map_height = 700
