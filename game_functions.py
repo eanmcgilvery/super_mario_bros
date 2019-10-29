@@ -163,10 +163,10 @@ def update_pos(settings, timers, enemies, objects, background, levels, items, ma
         for object in items:
             object.update_pos(enemies, objects)
         mario.update_pos(enemies, objects, settings)
-        if settings.move_screen:
-            screen_x_move = 10
+        if mario.x >= settings.screen_width / 2 and mario.move_right:
+            screen_x_move = settings.WALK_SPEED
             screen_move(settings, enemies, objects, background, levels, screen_x_move)
-
+            mario.move_with_screen(screen_x_move)
 
 def screen_move(settings, enemies, objects, background, levels, screen_x_move):
     settings.screen_pos += screen_x_move

@@ -15,8 +15,7 @@ def run_game():
     # Initialize pygame, settings, and screen object.
     pygame.init()
     settings = Settings()
-
-    ''' If you want fullscreen use this
+    '''
     full_screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     screen = pygame.Surface((settings.screen_width, settings.screen_height))
     
@@ -24,7 +23,6 @@ def run_game():
     full_screen.blit(pygame.transform.scale(screen, (1980, 1080)), (0, 0))
     pygame.display.flip()
     '''
-
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     ui = UserInterface(settings, screen)
     pygame.display.set_caption("Super Mario Bros")

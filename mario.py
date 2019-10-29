@@ -162,7 +162,7 @@ class Mario(pg.sprite.Sprite):
         if self.jumpCount >= -10:
             if self.jumpCount < 0:
                 neg = -1
-                self.y -= self.jumpCount**2 * 0.1 * neg
+                self.y -= self.jumpCount ** 2 * 0.1 * neg
                 self.jumpCount -= 1
             else:
                 self.isJump = False
@@ -185,7 +185,6 @@ class Mario(pg.sprite.Sprite):
                 self.x += settings.WALK_SPEED
             elif self.move_left and self.rect.left > 0:
                 self.x -= settings.WALK_SPEED
-
             # Jump with spacebar
             if self.jump_:
                 if self.jumpCount > -1:
@@ -196,3 +195,7 @@ class Mario(pg.sprite.Sprite):
     def blitme(self):
         """Draw the alien at its current location."""
         self.screen.blit(self.image, self.rect)
+
+    def move_with_screen(self, screen_x_move):
+        self.x -= screen_x_move
+        self.rect.x = self.x
