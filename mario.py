@@ -141,11 +141,12 @@ class Mario(pg.sprite.Sprite):
 
             if not self.jump_:
                 self.y += self.y_velocity
+                self.jumpCount = 12
 
             self.rect.x = self.x
             self.rect.y = self.y
 
-            # Move right or left
+           # Move right or left
             if self.move_right:
                 self.x += settings.WALK_SPEED
             elif self.move_left and self.rect.left > 0:
@@ -153,9 +154,9 @@ class Mario(pg.sprite.Sprite):
 
             # Jump with spacebar
             if self.jump_:
-                if self.jumpCount >= -10 :
+                if self.jumpCount > -1:
                     self.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5
-                    self.jumpCount -= 1
+                    self.jumpCount -= 2
             self.check_collisions(enemies, objects)
 
     def blitme(self):
