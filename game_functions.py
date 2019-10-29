@@ -21,19 +21,20 @@ from hill import Hill
 from pipe import Pipe
 from coin import Coin
 from flag_pole import Flag_Pole
+from mushroom import Mushroom
 
 
-def check_events(settings, screen, timers, enemies, objects, background, levels, mario):
+def check_events(settings, screen, timers, enemies, objects, background, levels, mario, items):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario)
+            check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario, items)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, settings, screen, timers, enemies, objects, background, levels)
 
 
-def check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario):
+def check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario, items):
     if event.key == pygame.K_ESCAPE:
         sys.exit()
     # For testing
@@ -82,7 +83,7 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
     elif event.key == pygame.K_n:
         objects.add(Coin(settings, screen, 500, 600, 1))
     elif event.key == pygame.K_b:
-        objects.add(Coin(settings, screen, 400, 600, 2))
+        items.add(Mushroom(settings, screen, 300, 600, 2))
     elif event.key == pygame.K_c:
         screen_x_move = 200
         screen_move(settings, enemies, objects, background, levels, screen_x_move)
@@ -95,7 +96,7 @@ def check_keyup_events(event, settings, screen, timers, enemies, objects, backgr
         settings.move_screen = False
 
 
-def update_screen(screen, enemies, timers, objects, background, levels, mario):
+def update_screen(screen, enemies, timers, objects, background, levels, mario, items):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
 
@@ -109,10 +110,12 @@ def update_screen(screen, enemies, timers, objects, background, levels, mario):
             enemy.blitme()
         for object in objects:
             object.blitme()
+        for object in items:
+            object.blitme()
         pygame.display.flip()
 
 
-def update_animations(enemies, timers, objects, mario, settings):
+def update_animations(enemies, timers, objects, mario, settings, items):
 
     mario.walk(settings)
 
@@ -133,13 +136,15 @@ def update_animations(enemies, timers, objects, mario, settings):
             enemy.reanimate()
 
 
-def update_pos(settings, timers, enemies, objects, background, levels):
+def update_pos(settings, timers, enemies, objects, background, levels, items):
     if timers.curtime - timers.last_move > timers.move_wait:
         timers.last_move = timers.curtime
         for enemy in enemies:
             enemy.update_pos(enemies, objects)
             if enemy.rect.right < -200 or enemy.rect.top > settings.screen_height + 200:
                 enemies.remove(enemy)
+        for object in items:
+            object.update_pos(enemies,objects)
         if settings.move_screen:
             screen_x_move = 10
             screen_move(settings, enemies, objects, background, levels, screen_x_move)
@@ -148,9 +153,9 @@ def update_pos(settings, timers, enemies, objects, background, levels):
 def screen_move(settings, enemies, objects, background, levels, screen_x_move):
     settings.screen_pos += screen_x_move
     for object in objects:
-        object.update_pos(screen_x_move)
+        object.move_with_screen(screen_x_move)
     for object in background:
-        object.update_pos(screen_x_move)
+        object.move_with_screen(screen_x_move)
     for enemy in enemies:
         enemy.move_with_screen(screen_x_move)
     for level in levels:

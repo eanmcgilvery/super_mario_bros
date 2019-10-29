@@ -5,6 +5,9 @@ class Mushroom(Object):
     def __init__(self, settings, screen, x, y, otype):
         super(Mushroom, self).__init__(settings, screen, x, y, otype)
 
+        self.width = settings.goomba_width
+        self.height = settings.goomba_height
+
         self.pic = pygame.image.load('images/mushroom.png')
         self.rect = pygame.Rect(x, y, settings.mushroom_width, settings.mushroom_height)
         self.image = pygame.transform.scale(self.pic, (settings.mushroom_width, settings.mushroom_height))
@@ -12,7 +15,16 @@ class Mushroom(Object):
     def update_image(self):
         self.image = self.image
 
-    def check_collisions(self, enemies, objects):
+    def update_pos(self, enemies, objects):
+
+        self.x += self.settings.goomba_speed * self.x_direction
+        self.y_velocity += self.settings.fall_acceleration
+        self.y += self.y_velocity
+        self.rect.x = self.x
+        self.rect.y = self.y
+        self.check_collisions(objects)
+
+    def check_collisions(self, objects):
         if not self.eliminated:
             for object in objects:
                 if self.rect.colliderect(object):
@@ -32,19 +44,6 @@ class Mushroom(Object):
                             self.x_direction = 1
                     self.rect.x = self.x
                     self.rect.y = self.y
-
-        # Collide with enemies as well
-            for enemy in enemies:  # Only reposition to the sides
-                if self.rect.colliderect(enemy) and self is not enemy:
-                    if self.rect.right - enemy.rect.left < enemy.rect.right - self.rect.left:  # Reposition to the left
-                        if self.x_direction is 1:  # When not moving left change direction to the left
-                            self.x = enemy.rect.left - self.width
-                            self.x_direction = -1
-                    else:  # Reposition to the right
-                        if self.x_direction is -1:  # When not moving right change direction to the right
-                            self.x = enemy.rect.right
-                            self.x_direction = 1
-                    self.rect.x = self.x
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

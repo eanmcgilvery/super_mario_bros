@@ -38,21 +38,21 @@ def run_game():
     # Create a group to hold all objects and background
     objects = Group()
     background = Group()
-    item = Group()
+    items = Group()
 
     # Create first level
     levels = [Level1_1(settings, screen, timers), SubLevel1_1(settings, screen, timers)]
-    #levels[1].active = True
-    levels[1].generate_map(settings, screen, objects, background)
-    #levels[1].enemy_spawn_triggers(enemies)
-    #levels[1].background_sound(settings)
+    levels[0].active = True
+    levels[0].generate_map(settings, screen, objects, background)
+    levels[0].enemy_spawn_triggers(enemies)
+    levels[0].background_sound(settings)
 
     while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.check_events(settings, screen, timers, enemies, objects, background, levels, mario)
-        gf.update_pos(settings, timers, enemies, objects, background, levels)
-        gf.update_animations(enemies, timers, objects, mario, settings)
-        gf.update_screen(screen, enemies, timers, objects, background, levels, mario)
+        gf.check_events(settings, screen, timers, enemies, objects, background, levels, mario, items)
+        gf.update_pos(settings, timers, enemies, objects, background, levels, items)
+        gf.update_animations(enemies, timers, objects, mario, settings, items)
+        gf.update_screen(screen, enemies, timers, objects, background, levels, mario, items)
 
 
 run_game()
