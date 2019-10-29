@@ -95,7 +95,7 @@ def check_keyup_events(event, settings, screen, timers, enemies, objects, backgr
         settings.move_screen = False
 
 
-def update_screen(screen, enemies, timers, objects, background, levels, mario):
+def update_screen(screen, ui, enemies, timers, objects, background, levels, mario):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
 
@@ -109,6 +109,7 @@ def update_screen(screen, enemies, timers, objects, background, levels, mario):
             enemy.blitme()
         for object in objects:
             object.blitme()
+        ui.blitme()
         pygame.display.flip()
 
 

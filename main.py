@@ -2,10 +2,12 @@ import pygame
 import game_functions as gf
 from pygame.sprite import Group
 from settings import Settings
+from user_interface import UserInterface
 from timers import Timers
 from level1_1 import Level1_1
 from sub_level1_1 import SubLevel1_1
 from mario import Mario
+
 
 def run_game():
 
@@ -23,6 +25,7 @@ def run_game():
     '''
 
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
+    ui = UserInterface(settings, screen)
     pygame.display.set_caption("Super Mario Bros")
 
     # Create our timers
@@ -50,7 +53,7 @@ def run_game():
         gf.check_events(settings, screen, timers, enemies, objects, background, levels, mario)
         gf.update_pos(settings, timers, enemies, objects, background, levels)
         gf.update_animations(enemies, timers, objects, mario, settings)
-        gf.update_screen(screen, enemies, timers, objects, background, levels, mario)
+        gf.update_screen(screen, ui, enemies, timers, objects, background, levels, mario)
 
 
 run_game()
