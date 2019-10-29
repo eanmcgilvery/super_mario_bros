@@ -25,40 +25,40 @@ from flag_pole import Flag_Pole
 from mushroom import Mushroom
 
 
-def check_events(settings, screen, timers, enemies, objects, background, levels, mario, items):
+def check_events(settings, screen, ui, timers, enemies, objects, background, levels, mario, items):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario, items)
+            check_keydown_events(event, settings, screen, ui, timers, enemies, objects, background, levels, mario, items)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, settings, screen, timers, enemies, objects, background, levels, mario)
 
 
-def check_keydown_events(event, settings, screen, timers, enemies, objects, background, levels, mario, items):
+def check_keydown_events(event, settings, screen, ui, timers, enemies, objects, background, levels, mario, items):
     if event.key == pygame.K_ESCAPE:
         sys.exit()
     # For testing
     elif event.key == pygame.K_q:
-        enemies.add(Goomba(settings, screen, timers, 935, 270, 1))
+        enemies.add(Goomba(settings, screen, ui, timers, 935, 270, 1))
     elif event.key == pygame.K_w:
-        enemies.add(Goomba(settings, screen, timers, 1000, 300, 2))
+        enemies.add(Goomba(settings, screen, ui, timers, 1000, 300, 2))
     elif event.key == pygame.K_e:
-        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 1))
+        enemies.add(KoopaTroopa(settings, screen, ui, timers, 935, 270, 1))
     elif event.key == pygame.K_r:
-        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 2))
+        enemies.add(KoopaTroopa(settings, screen, ui, timers, 935, 270, 2))
     elif event.key == pygame.K_t:
-        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 3))
+        enemies.add(KoopaTroopa(settings, screen, ui, timers, 935, 270, 3))
     elif event.key == pygame.K_y:
-        enemies.add(KoopaTroopa(settings, screen, timers, 935, 270, 4))
+        enemies.add(KoopaTroopa(settings, screen, ui, timers, 935, 270, 4))
     elif event.key == pygame.K_u:
-        enemies.add(KoopaTroopa(settings, screen, timers, 950, 270, 5))
+        enemies.add(KoopaTroopa(settings, screen, ui, timers, 950, 270, 5))
     elif event.key == pygame.K_i:
-        enemies.add(PiranhaPlant(settings, screen, timers, 1000, 40, 1))
+        enemies.add(PiranhaPlant(settings, screen, ui, timers, 1000, 40, 1))
     elif event.key == pygame.K_o:
-        enemies.add(PiranhaPlant(settings, screen, timers, 40, 400, 2))
+        enemies.add(PiranhaPlant(settings, screen, ui, timers, 40, 400, 2))
     elif event.key == pygame.K_p:
-        enemies.add(CheepCheep(settings, screen, timers, 1000, 400, 1))
+        enemies.add(CheepCheep(settings, screen, ui, timers, 1000, 400, 1))
 
 
     elif event.key == pygame.K_a:
@@ -77,7 +77,7 @@ def check_keydown_events(event, settings, screen, timers, enemies, objects, back
         mario.jump_ = True
 
     elif event.key == pygame.K_f:
-        enemies.add(FakeBowser(settings, screen, timers, 550, 270, 1))
+        enemies.add(FakeBowser(settings, screen, ui, timers, 550, 270, 1))
     elif event.key == pygame.K_k:
         for enemy in enemies:
             enemy.take_damage()
@@ -167,6 +167,17 @@ def update_pos(settings, timers, enemies, objects, background, levels, items, ma
             screen_x_move = settings.WALK_SPEED
             screen_move(settings, enemies, objects, background, levels, screen_x_move)
             mario.move_with_screen(screen_x_move)
+
+
+def update_level_timer(ui, timers, mario):
+    if timers.curtime - timers.last_game_countdown > timers.game_countdown_wait:
+        timers.last_game_countdown = timers.curtime
+        if ui.time <= 0:
+            # Kill mario
+            pass
+        else:
+            ui.time -= 1
+
 
 def screen_move(settings, enemies, objects, background, levels, screen_x_move):
     settings.screen_pos += screen_x_move

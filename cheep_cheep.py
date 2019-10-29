@@ -4,8 +4,8 @@ from enemy import Enemy
 
 
 class CheepCheep(Enemy):
-    def __init__(self, settings, screen, timers, x, y, etype):
-        super(CheepCheep, self).__init__(settings, screen, timers, x, y, etype, ename="cheep_cheep")
+    def __init__(self, settings, screen, ui, timers, x, y, etype):
+        super(CheepCheep, self).__init__(settings, screen, ui, timers, x, y, etype, ename="cheep_cheep")
 
         self.width = settings.cheep_width
         self.height = settings.cheep_height

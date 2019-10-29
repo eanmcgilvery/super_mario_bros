@@ -3,8 +3,8 @@ from enemy import Enemy
 
 
 class Goomba(Enemy):
-    def __init__(self, settings, screen, timers,  x, y, etype):
-        super(Goomba, self).__init__(settings, screen, timers, x, y, etype, ename="goomba")
+    def __init__(self, settings, screen, ui, timers,  x, y, etype):
+        super(Goomba, self).__init__(settings, screen, ui, timers, x, y, etype, ename="goomba")
 
         self.width = settings.goomba_width
         self.height = settings.goomba_height
@@ -80,6 +80,8 @@ class Goomba(Enemy):
                     self.rect.x = self.x
 
     def take_damage(self):
+        if not self.is_dead or not self.eliminated:
+            self.ui.score += self.settings.goomba_points
         self.is_dead = True
         self.moment_of_death = self.timers.curtime
         if self.is_dead and self.etype is 1:
@@ -89,6 +91,8 @@ class Goomba(Enemy):
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def eliminate(self):
+        if not self.is_dead or not self.eliminated:
+            self.ui.score += self.settings.goomba_points
         self.is_dead = True
         self.eliminated = True
         if self.etype is 1:

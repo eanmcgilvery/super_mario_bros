@@ -3,8 +3,8 @@ from enemy import Enemy
 
 
 class PiranhaPlant(Enemy):
-    def __init__(self, settings, screen, timers, x, y, etype):
-        super(PiranhaPlant, self).__init__(settings, screen, timers, x, y, etype, ename="piranha_plant")
+    def __init__(self, settings, screen, ui, timers, x, y, etype):
+        super(PiranhaPlant, self).__init__(settings, screen, ui, timers, x, y, etype, ename="piranha_plant")
 
         self.width = settings.piranha_plant_width
         self.height = settings.piranha_plant_height

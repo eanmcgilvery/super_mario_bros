@@ -34,7 +34,7 @@ def run_game():
     enemies = Group()
 
     # Create our Hero
-    mario = Mario(settings, screen, timers)
+    mario = Mario(settings, screen, ui, timers)
 
     # Create a group to hold all objects and background
     objects = Group()
@@ -42,7 +42,7 @@ def run_game():
     items = Group()
 
     # Create first level
-    levels = [Level1_1(settings, screen, timers), SubLevel1_1(settings, screen, timers)]
+    levels = [Level1_1(settings, screen, ui, timers), SubLevel1_1(settings, screen, ui, timers)]
     levels[0].active = True
     levels[0].generate_map(settings, screen, objects, background)
     levels[0].enemy_spawn_triggers(enemies)
@@ -50,9 +50,10 @@ def run_game():
 
     while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.check_events(settings, screen, timers, enemies, objects, background, levels, mario, items)
+        gf.check_events(settings, screen, ui, timers, enemies, objects, background, levels, mario, items)
         gf.update_pos(settings, timers, enemies, objects, background, levels, items, mario)
         gf.update_animations(enemies, timers, objects, mario, settings, items)
+        gf.update_level_timer(ui, timers, mario)
         gf.update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items)
 
 
