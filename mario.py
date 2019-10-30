@@ -172,6 +172,7 @@ class Mario(pg.sprite.Sprite):
                                 enemy.x_direction = -1
                             self.ui.score += self.settings.shell_kick_points
                             enemy.moving = True
+                            self.timers.last_shell_kick = self.timers.curtime
                             pg.mixer.Sound('sounds/kick.ogg').play()
                         elif self.rect.bottom > enemy.rect.top and self.y_velocity >= self.rect.bottom - enemy.rect.top:
                             # Bounce off the top (in most cases)
@@ -189,9 +190,14 @@ class Mario(pg.sprite.Sprite):
                             if enemy.ename is "koopa_troopa" or enemy.ename is "goomba":
                                 # Mario takes damage
                                 if not self.super_size and not self.invincible:
-                                    self.is_dead = True
-                                    self.fire = False
-                                    self.death_sequence()
+                                    if enemy.ename is "goomba" and enemy.is_dead:
+                                        pass
+                                    elif not (enemy.ename is "koopa_troopa" and enemy.moving and (self.timers.curtime - self.timers.last_shell_kick > self.timers.shell_kick_wait)):
+                                        pass
+                                    else:
+                                        self.is_dead = True
+                                        self.fire = False
+                                        self.death_sequence()
                                 elif self.invincible:
                                     pass
                                 else:
@@ -274,6 +280,8 @@ class Mario(pg.sprite.Sprite):
 
                 # self.allow_jump = False
             self.check_collisions(enemies, objects, ui)
+            self.rect.x = self.x
+            self.rect.y = self.y
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

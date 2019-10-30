@@ -34,6 +34,10 @@ class Timers:
         self.koopa_come_back_wait = self.koopa_reanimate_wait + 2000
         self.koopa_legs_wait = 250
 
+        # Koopa kick invincibility
+        self.last_shell_kick = 0
+        self.shell_kick_wait = 250
+
         # Cheep cheep move animations
         self.cheep_y_change_wait = 5000
 
