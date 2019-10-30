@@ -4,10 +4,10 @@ from pygame.sprite import Group
 from settings import Settings
 from user_interface import UserInterface
 from timers import Timers
-from level1_1 import Level1_1
+from level1_1 import Level1_1, generate_map
 from sub_level1_1 import SubLevel1_1
 from mario import Mario
-from mushroom import Mushroom
+from level1_1 import background_sound
 
 
 def run_game():
@@ -42,9 +42,9 @@ def run_game():
     # Create first level
     levels = [Level1_1(settings, screen, ui, timers), SubLevel1_1(settings, screen, ui, timers)]
     levels[0].active = True
-    levels[0].generate_map(settings, screen, objects, background)
+    generate_map(settings, screen, objects, background)
     levels[0].enemy_spawn_triggers(enemies)
-    levels[0].background_sound(settings)
+    background_sound(settings)
 
     while True:
         timers.curtime = pygame.time.get_ticks()

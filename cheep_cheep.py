@@ -29,7 +29,7 @@ class CheepCheep(Enemy):
             self.y_velocity = random.randint(18, 25) * -1
             self.x_direction = 1
 
-    def update_pos(self, enemies, objects):
+    def update_pos(self):
         """Each type of cheep cheep moves differently"""
         # type 1 and 2 moves left and randomly up or down
         if self.eliminated:

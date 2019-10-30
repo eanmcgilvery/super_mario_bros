@@ -25,7 +25,7 @@ class FakeBowser(Enemy):
         # Can take a lot of hits before dying
         self.health = 10
 
-    def update_pos(self, enemies, objects):
+    def update_pos(self, objects):
         if not self.eliminated:
             if self.grounded and self.pos < self.settings.fake_bowser_leash[0]:
                 self.x_direction = 1
@@ -53,7 +53,7 @@ class FakeBowser(Enemy):
             self.y += self.y_velocity
             self.rect.y = self.y
 
-    def update_image(self, changeframe):
+    def update_image(self):
         if not self.eliminated:
             # Alternate normal alive animation
             if self.facing_left:
@@ -75,10 +75,11 @@ class FakeBowser(Enemy):
     def check_collisions(self, objects):
         if not self.eliminated:
             self.grounded = False
-            for object in objects:
-                if self.rect.colliderect(object):
-                    if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition fake bowser to the top of the object
-                        self.y = object.rect.top - self.height
+            for object_ in objects:
+                if self.rect.colliderect(object_):
+                    if self.rect.bottom > object_.rect.top and self.y_velocity >= self.rect.bottom - object_.rect.top:
+                        # Reposition fake bowser to the top of the object
+                        self.y = object_.rect.top - self.height
                         self.y_velocity = 0
                         self.grounded = True
                     self.rect.y = self.y

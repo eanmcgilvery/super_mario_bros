@@ -26,18 +26,13 @@ def check_keydown_events(event, mario_, ):
         mario_.crouch = True
         mario_.move_right = False
         mario_.move_left = False
+        mario_.jump_ = False
+
     elif event.key == pygame.K_d:
         mario_.idle = False
         mario_.move_right = True
         mario_.facing_right = True
         mario_.move_left = False
-
-    elif event.key == pygame.K_c:
-        mario_.crouch = True
-        mario_.idle = False
-        mario_.move_left = False
-        mario_.move_right = False
-        mario_.jump_ = False
 
     if event.key == pygame.K_SPACE:
         pygame.mixer.Sound('sounds/small_jump.ogg').play()
