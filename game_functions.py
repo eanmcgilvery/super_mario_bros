@@ -91,7 +91,7 @@ def update_animations(enemies, timers, objects, mario_):
     if timers.curtime - timers.last_enemy_animation > timers.enemy_animation_wait:
         timers.last_enemy_animation = timers.curtime
         changeframe = True
-        mario_.animation(timers.last_enemy_animation % 3)
+        mario_.animation((timers.last_enemy_animation * 2) % 3)
 
         for enemy in enemies:
             enemy.update_image(changeframe)

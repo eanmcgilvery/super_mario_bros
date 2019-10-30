@@ -1,5 +1,6 @@
 import pygame
 
+
 class Mario_Timer:
     def __init__(self, frames, wait=100, frameindex=0, step=1, looponce=False):  # imagerect frames
         self.frames = frames

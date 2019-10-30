@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 class Object(Sprite):
     def __init__(self, settings, screen, x, y, otype):
         super(Object, self).__init__()
+        self.rect = None
         self.settings = settings
         self.screen = screen
 

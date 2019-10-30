@@ -1,6 +1,7 @@
 import pygame
 from object import Object
 
+
 class Pipe(Object):
     def __init__(self, settings, screen, x, y, otype):
         super(Pipe, self).__init__(settings, screen, x, y, otype)
@@ -33,8 +34,6 @@ class Pipe(Object):
 
     def update_image(self):
         self.image = self.image
-
-
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
