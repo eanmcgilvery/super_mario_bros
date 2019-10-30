@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 class Enemy(Sprite):
     def __init__(self, settings, screen, ui, timers, x, y, etype, ename):
         super(Enemy, self).__init__()
+        self.rect = None
         self.settings = settings
         self.screen = screen
         self.ui = ui

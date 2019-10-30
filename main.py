@@ -48,9 +48,9 @@ def run_game():
 
     while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.check_events(settings, screen, ui, timers, enemies, objects, background, levels, mario, items)
+        gf.check_events(settings, mario)
         gf.update_pos(settings, timers, enemies, objects, background, levels, items, mario)
-        gf.update_animations(enemies, timers, objects, mario, settings, items)
+        gf.update_animations(enemies, timers, objects, mario)
         gf.update_level_timer(ui, timers, mario)
         gf.update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items)
         if ui.lives == 0:

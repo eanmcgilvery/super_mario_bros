@@ -1,5 +1,6 @@
 import pygame as pg
 
+
 # Class that holds all of the attributes of our hero, Mario
 class Mario(pg.sprite.Sprite):
     def __init__(self, settings, screen, ui, timers):
@@ -47,13 +48,13 @@ class Mario(pg.sprite.Sprite):
             image = pg.transform.flip(frame, True, False)
             self.left_frames.append(image)
 
-        self.small_right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/0.png'),
+        self.right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/0.png'),
                                   pg.image.load('images/mario_images/small_fire_right/1.png'),
                                   pg.image.load('images/mario_images/small_fire_right/2.png'),
                                   pg.image.load('images/mario_images/small_fire_right/3.png')]
 
         self.left_fire_frames = []
-        for frame in self.small_right_fire_frames:
+        for frame in self.right_fire_frames:
             image = pg.transform.flip(frame, True, False)
             self.left_fire_frames.append(image)
 
@@ -91,47 +92,65 @@ class Mario(pg.sprite.Sprite):
 
     def animation(self, index_):
         """Return the correct images of Mario to animate through"""
-
+        # Right facing images
         if self.facing_right and not self.idle:
+            # Small mario facing right
             if not self.super_size:
-                if not self.invincible and not self.fire:
-                    # Small regular mario
-                    self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
-                elif self.fire and not self.invincible:
-                    # Small fire mario
-                    self.image = pg.transform.scale(self.small_right_fire_frames[index_], (self.width, self.height))
-                # elif self
-            # else:
+                # Small regular mario
+                self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
+            # Big Mario facing right
+            else:
+                # Fire Mario
+                if self.fire and not self.invincible:
+                    self.image = pg.transform.scale(self.right_fire_frames[index_], (self.width, self.height))
+                # Normal Super Mario
+                elif not self.invincible and not self.fire:
+                    self.image = pg.transform.scale(self.right_big_normal_frames[index_], (self.width, self.height))
 
+        # Left facing images
         elif not self.facing_right and not self.idle:
-            # Regular mario facing left
+            # Small mario facing right
             if not self.super_size:
-                if not self.invincible and not self.fire:
-                    self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
-                # elif not self
-        elif self.idle and self.facing_right:
+                # Small regular mario
+                self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
+            # Big Mario facing right
+            else:
+                # Fire Mario
+                if self.fire and not self.invincible:
+                    self.image = pg.transform.scale(self.left_fire_frames[index_], (self.width, self.height))
+                # Normal Super Mario
+                elif not self.invincible and not self.fire:
+                    self.image = pg.transform.scale(self.left_big_normal_frames[index_], (self.width, self.height))
+
+        # Standing still right
+        elif self.facing_right and self.idle:
             if not self.super_size:
                 self.image = pg.transform.scale(self.small_right_idle, (self.width, self.height))
-        elif self.idle and not self.facing_right:
+        # Standing still left
+        else:
             if not self.super_size:
                 self.image = pg.transform.scale(self.small_left_idle, (self.width, self.height))
 
     def check_collisions(self, enemies, objects):
         if not self.death:
-            for object in objects:
-                if self.rect.colliderect(object):
-                    if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition Mario to the top of the object
-                        self.y = object.rect.top - self.height
+            for object_ in objects:
+                if self.rect.colliderect(object_):
+                    # Reposition Mario to the top of the object
+                    if self.rect.bottom > object_.rect.top and self.y_velocity >= self.rect.bottom - object_.rect.top:
+                        self.y = object_.rect.top - self.height
                         self.y_velocity = 0
                         self.allow_jump = True
-                    elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
-                        self.y = object.rect.bottom
+                        # Reposition to the bottom
+                    elif object_.rect.bottom > self.rect.top and self.y_velocity * -1 >= object_.rect.bottom - \
+                            self.rect.top:
+                        self.y = object_.rect.bottom
                         self.y_velocity = 0
-                    elif self.rect.right - object.rect.left < object.rect.right - self.rect.left:  # Reposition to the left
-                        self.x = object.rect.left - self.width
+                    elif self.rect.right - object_.rect.left < object_.rect.right - self.rect.left:  # Reposition to
+                        # the left
+                        self.x = object_.rect.left - self.width
                         self.move_right = False
                     else:  # Reposition to the right
-                        self.x = object.rect.right
+                        self.x = object_.rect.right
                         self.move_left = False
                     self.rect.x = self.x
                     self.rect.y = self.y
@@ -148,8 +167,10 @@ class Mario(pg.sprite.Sprite):
                             self.ui.score += self.settings.shell_kick_points
                             enemy.moving = True
                             pg.mixer.Sound('sounds/kick.ogg').play()
-                        elif self.rect.bottom > enemy.rect.top and self.y_velocity >= self.rect.bottom - enemy.rect.top:  # Bounce off the top (in most cases)
-                            if enemy.ename is "goomba" and not enemy.is_dead or enemy.ename is "koopa_troopa" and not enemy.is_dead:
+                        elif self.rect.bottom > enemy.rect.top and self.y_velocity >= self.rect.bottom - enemy.rect.top:
+                            # Bounce off the top (in most cases)
+                            if enemy.ename is "goomba" and not enemy.is_dead or enemy.ename is "koopa_troopa" and not \
+                                    enemy.is_dead:
                                 self.y = enemy.rect.top - self.height
                                 self.y_velocity = self.settings.enemy_jump_speed / 2
                                 enemy.take_damage()
@@ -191,7 +212,6 @@ class Mario(pg.sprite.Sprite):
             # Mario falls through the floor
             while self.y < self.settings.screen_height:
                 self.y += self.settings.fall_acceleration - .8
-
 
     def animation_speed(self):
         """Used to make walking animation speed be in relation to
@@ -238,7 +258,7 @@ class Mario(pg.sprite.Sprite):
                 else:
                     self.image = pg.image.load("images/mario_images/mario_big_jump.png")
                     self.image = pg.transform.scale(self.image, (self.width, self.height))
-                   # Force added to jump
+                # Force added to jump
                 if self.jumpCount > -1:
                     self.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5
                     self.jumpCount -= 2
