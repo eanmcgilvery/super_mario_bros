@@ -152,7 +152,7 @@ class Mario(pg.sprite.Sprite):
 
     def death_sequence(self):
         if self.is_dead:
-        #pg.mixer.Sound('sounds/kick.ogg').play()
+            pg.mixer.Sound('sounds/death.wav').play()
             self.image = pg.image.load('images/mario_images/mario_death.png')
             self.image = pg.transform.scale(self.image, (self.width, self.height))
 
@@ -198,9 +198,10 @@ class Mario(pg.sprite.Sprite):
                 self.x -= settings.WALK_SPEED
             # Jump with spacebar
             if self.jump_ and self.allow_jump:
-                if self.jumpCount > -1:
-                    self.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5
-                    self.jumpCount -= 2
+                if self.x_velocity > 4.5 or self.x_velocity < -4.5:
+                    self.y_velocity = settings.JUMP_VEL - .5
+                else:
+                    self.y_velocity = settings.JUMP_VEL
 
                 # self.allow_jump = False
             self.check_collisions(enemies, objects)
