@@ -75,6 +75,7 @@ def check_keydown_events(event, settings, screen, ui, timers, enemies, objects, 
         mario.move_left = False
     elif event.key == pygame.K_SPACE:
         mario.jump_ = True
+        mario.allow_jump = True
 
     elif event.key == pygame.K_f:
         enemies.add(FakeBowser(settings, screen, ui, timers, 550, 270, 1))
@@ -112,7 +113,6 @@ def check_keyup_events(event, settings, screen, timers, enemies, objects, backgr
         mario.crouch = False
     if event.key == pygame.K_SPACE:
         mario.jump_ = False
-
 
 def update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items):
     if timers.curtime - timers.last_display > timers.display_wait:
@@ -176,7 +176,7 @@ def update_level_timer(ui, timers, mario):
     if timers.curtime - timers.last_game_countdown > timers.game_countdown_wait:
         timers.last_game_countdown = timers.curtime
         if ui.time <= 0:
-            # Kill mario
+            mario.death()
             pass
         else:
             ui.time -= 1

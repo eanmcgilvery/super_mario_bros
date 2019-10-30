@@ -8,6 +8,7 @@ class Mario(pg.sprite.Sprite):
     def __init__(self, settings, screen, ui, timers):
         pg.sprite.Sprite.__init__(self)
 
+        self.is_dead = False
         self.jump_ = False
         self.move_right = False
         self.move_left = False
@@ -86,15 +87,14 @@ class Mario(pg.sprite.Sprite):
 
     def animation(self, index_):
         """Return the correct images of Mario to animate through"""
-        if self.facing_right and not self.invincible and not self.fire and not self.super_size:
+        if self.facing_right and not self.super_size:
             self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
-
         # Regular mario facing left
         elif not self.facing_right and not self.invincible and not self.fire and not self.super_size:
             self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
 
-    def death(self):
-        pass
+        # elif self.facing_right and  self.super_size:
+
 
     def check_collisions(self, enemies, objects):
         if not self.death:
@@ -103,6 +103,7 @@ class Mario(pg.sprite.Sprite):
                     if self.rect.bottom > object.rect.top and self.y_velocity >= self.rect.bottom - object.rect.top:  # Reposition Mario to the top of the object
                         self.y = object.rect.top - self.height
                         self.y_velocity = 0
+                        self.allow_jump = True
                     elif object.rect.bottom > self.rect.top and self.y_velocity * -1 >= object.rect.bottom - self.rect.top:  # Reposition to the bottom
                         self.y = object.rect.bottom
                         self.y_velocity = 0
@@ -138,15 +139,22 @@ class Mario(pg.sprite.Sprite):
                                 enemy.moving = False
                                 enemy.take_damage()
                         else:  # Touching sides or bottom of enemies
-                            if enemy.ename is "koopa_troopa" and enemy.moving:
+                            if enemy.ename is "koopa_troopa" or enemy.ename is "goomba":
                                 # Mario takes damage
-                                pass
+                                self.is_dead = True
+                                self.death_sequence()
                             elif enemy.is_dead:
                                 # Do nothing
                                 pass
                             else:
                                 # Mario takes damage
                                 pass
+
+    def death_sequence(self):
+        if self.is_dead:
+        #pg.mixer.Sound('sounds/kick.ogg').play()
+            self.image = pg.image.load('images/mario_images/mario_death.png')
+            self.image = pg.transform.scale(self.image, (self.width, self.height))
 
     def animation_speed(self):
         """Used to make walking animation speed be in relation to
@@ -189,10 +197,12 @@ class Mario(pg.sprite.Sprite):
             elif self.move_left and self.rect.left > 0:
                 self.x -= settings.WALK_SPEED
             # Jump with spacebar
-            if self.jump_:
+            if self.jump_ and self.allow_jump:
                 if self.jumpCount > -1:
                     self.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5
                     self.jumpCount -= 2
+
+                # self.allow_jump = False
             self.check_collisions(enemies, objects)
 
     def blitme(self):
