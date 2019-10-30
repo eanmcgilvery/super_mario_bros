@@ -30,7 +30,8 @@ def check_events(settings, screen, ui, timers, enemies, objects, background, lev
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, settings, screen, ui, timers, enemies, objects, background, levels, mario, items)
+            check_keydown_events(event, settings, screen, ui, timers, enemies, objects, background, levels, mario,
+                                 items)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, settings, screen, timers, enemies, objects, background, levels, mario)
 
@@ -62,6 +63,7 @@ def check_keydown_events(event, settings, screen, ui, timers, enemies, objects, 
 
 
     elif event.key == pygame.K_a:
+        mario.idle = False
         mario.move_right = False
         mario.facing_right = False
         mario.move_left = True
@@ -70,21 +72,25 @@ def check_keydown_events(event, settings, screen, ui, timers, enemies, objects, 
         mario.move_right = False
         mario.move_left = False
     elif event.key == pygame.K_d:
+        mario.idle = False
         mario.move_right = True
         mario.facing_right = True
         mario.move_left = False
-    elif event.key == pygame.K_SPACE:
+    if event.key == pygame.K_SPACE:
+        mario.idle = False
         mario.jump_ = True
         mario.allow_jump = True
+    if event.key == pygame.K_v:
+        mario.run = True
 
     elif event.key == pygame.K_f:
         enemies.add(FakeBowser(settings, screen, ui, timers, 550, 270, 1))
-    elif event.key == pygame.K_k:
+    if event.key == pygame.K_k:
         for enemy in enemies:
             enemy.take_damage()
             if enemy.ename is "piranha_plant":
                 enemies.remove(enemy)
-    elif event.key == pygame.K_l:
+    if event.key == pygame.K_l:
         for enemy in enemies:
             enemy.eliminate()
             if enemy.ename is "piranha_plant":
@@ -106,15 +112,21 @@ def check_keyup_events(event, settings, screen, timers, enemies, objects, backgr
     if event.key == pygame.K_x:
         settings.move_screen = False
     if event.key == pygame.K_d:
+        mario.idle = True
         mario.move_right = False
     if event.key == pygame.K_a:
         mario.move_left = False
     if event.key == pygame.K_s:
+        mario.idle = True
         mario.crouch = False
     if event.key == pygame.K_SPACE:
+        mario.idle = True
         mario.jump_ = False
+    elif event.key == pygame.K_v:
+        mario.run = False
 
-def update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items):
+
+def update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items, menu):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
 
@@ -125,6 +137,7 @@ def update_screen(screen, ui, enemies, timers, objects, background, levels, mari
             object.blitme()
         for enemy in enemies:
             enemy.blitme()
+
         for object in objects:
             object.blitme()
         ui.blitme()
@@ -140,7 +153,7 @@ def update_animations(enemies, timers, objects, mario, settings, items):
         timers.last_enemy_animation = timers.curtime
         changeframe = True
 
-        mario.animation(timers.curtime % 4)
+        mario.animation(timers.curtime % 3)
 
         for enemy in enemies:
             enemy.update_image(changeframe)
@@ -167,7 +180,10 @@ def update_pos(settings, timers, enemies, objects, background, levels, items, ma
             object.update_pos(enemies, objects)
         mario.update_pos(enemies, objects, settings)
         if mario.x >= settings.screen_width / 2 and mario.move_right:
-            screen_x_move = settings.WALK_SPEED
+            if not mario.run:
+                screen_x_move = settings.WALK_SPEED
+            else:
+                screen_x_move = settings.RUN_SPEED
             screen_move(settings, enemies, objects, background, levels, screen_x_move)
             mario.move_with_screen(screen_x_move)
 
