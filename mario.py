@@ -38,20 +38,24 @@ class Mario(pg.sprite.Sprite):
             image = pg.transform.flip(frame, True, False)
             self.left_frames.append(image)
 
-        self.right_big_normal_frames = [pg.image.load('images/mario_images/big_right/0.png'),
-                                        pg.image.load('images/mario_images/big_right/1.png'),
+        self.right_big_normal_frames = [pg.image.load('images/mario_images/big_right/1.png'),
                                         pg.image.load('images/mario_images/big_right/2.png'),
                                         pg.image.load('images/mario_images/big_right/3.png')]
+
+        self.big_right_idle = pg.image.load('images/mario_images/big_right/0.png')
+        self.big_left_idle = pg.transform.flip(self.big_right_idle, True, False)
 
         self.left_big_normal_frames = []
         for frame in self.right_big_normal_frames:
             image = pg.transform.flip(frame, True, False)
             self.left_frames.append(image)
 
-        self.right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/0.png'),
-                                  pg.image.load('images/mario_images/small_fire_right/1.png'),
+        self.right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/1.png'),
                                   pg.image.load('images/mario_images/small_fire_right/2.png'),
                                   pg.image.load('images/mario_images/small_fire_right/3.png')]
+
+        self.idle_right_fire = pg.image.load('images/mario_images/small_fire_right/0.png')
+        self.idle_left_fire = pg.transform.flip(self.idle_right_fire, True, False)
 
         self.left_fire_frames = []
         for frame in self.right_fire_frames:
@@ -91,44 +95,61 @@ class Mario(pg.sprite.Sprite):
 
     def animation(self, index_):
         """Return the correct images of Mario to animate through"""
-        # Right facing images
+        # Right moving images
         if self.facing_right and not self.idle:
-            # Small mario facing right
             if not self.super_size:
-                # Small regular mario
                 self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
-            # Big Mario facing right
             else:
-                # Fire Mario
-                if self.fire and not self.invincible:
-                    self.image = pg.transform.scale(self.right_fire_frames[index_], (self.width, self.height))
-                # Normal Super Mario
-                elif not self.invincible and not self.fire:
+                # Regular Super Mario
+                if not self.fire and not self.invincible:
                     self.image = pg.transform.scale(self.right_big_normal_frames[index_], (self.width, self.height))
-
-        # Left facing images
-        elif not self.facing_right and not self.idle:
-            # Small mario facing right
-            if not self.super_size:
-                # Small regular mario
-                self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
-            # Big Mario facing right
-            else:
                 # Fire Mario
-                if self.fire and not self.invincible:
-                    self.image = pg.transform.scale(self.left_fire_frames[index_], (self.width, self.height))
-                # Normal Super Mario
-                elif not self.invincible and not self.fire:
-                    self.image = pg.transform.scale(self.left_big_normal_frames[index_], (self.width, self.height))
-
-        # Standing still right
+                elif self.fire and not self.invincible:
+                    self.image = pg.transform.scale((self.right_fire_frames[index_]), (self.width, self.height))
+                elif self.invincible:
+                    pass
+        # Idle right images
         elif self.facing_right and self.idle:
+            # Small right idle
             if not self.super_size:
                 self.image = pg.transform.scale(self.small_right_idle, (self.width, self.height))
-        # Standing still left
-        elif self.idle and not self.facing_right:
+            else:
+                # Super Mario idle
+                if not self.fire and not self.invincible:
+                    self.image = pg.transform.scale(self.big_right_idle, (self.width, self.height))
+                # Fire idle
+                elif self.fire and not self.invincible:
+                    self.image = pg.transform.scale(self.idle_right_fire, (self.width, self.height))
+                elif self.invincible:
+                    pass
+
+        elif not self.facing_right and self.idle:
             if not self.super_size:
-                self.image = pg.transform.scale(self.small_left_idle, (self.width, self.height))
+                self.image = pg.transform.scale(self.left_frames, (self.width, self.height))
+            else:
+                # Regular Super Mario
+                if not self.fire and not self.invincible:
+                    self.image = pg.transform.scale(self.big_left_idle, (self.width, self.height))
+                # Fire Mario
+                elif self.fire and not self.invincible:
+                    self.image = pg.transform.scale(self.idle_left_fire, (self.width, self.height))
+                # Invincible Mario
+                elif self.invincible:
+                    pass
+        # Moving left
+        elif not self.facing_right and not self.idle:
+            if not self.super_size:
+                self.image = pg.transform.scale((self.left_frames[index_]), (self.width, self.height))
+            else:
+                # Regular Super Mario
+                if not self.fire and not self.invincible:
+                    self.image = pg.transform.scale((self.left_big_normal_frames[index_]), (self.width, self.height))
+                # Fire Mario
+                elif self.fire and not self.invincible:
+                    self.image = pg.transform.scale((self.left_fire_frames[index_]), (self.width, self.height))
+                # Invincible Mario
+                elif self.invincible:
+                    pass
 
     def check_collisions(self, enemies, objects):
         if not self.death:
@@ -137,7 +158,10 @@ class Mario(pg.sprite.Sprite):
                     '''if object_.name == 'mushroom':
                         self.super_size = True
                     if object_.name == 'coin':
-                        ui.score += 10'''
+                        ui.coins += 10
+                        if ui.coins % 100 == 0:
+                            ui.lives += 1
+                    '''
                     # Reposition Mario to the top of the object
                     if self.rect.bottom > object_.rect.top and self.y_velocity >= self.rect.bottom - object_.rect.top:
                         self.y = object_.rect.top - self.height
@@ -191,7 +215,8 @@ class Mario(pg.sprite.Sprite):
                                 if not self.super_size and not self.invincible:
                                     if enemy.ename is "goomba" and enemy.is_dead:
                                         pass
-                                    elif not (enemy.ename is "koopa_troopa" and enemy.moving and (self.timers.curtime - self.timers.last_shell_kick > self.timers.shell_kick_wait)):
+                                    elif not (enemy.ename is "koopa_troopa" and enemy.moving and (
+                                            self.timers.curtime - self.timers.last_shell_kick > self.timers.shell_kick_wait)):
                                         pass
                                     else:
                                         self.is_dead = True
