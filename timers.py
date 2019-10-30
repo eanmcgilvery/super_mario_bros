@@ -1,5 +1,5 @@
 import random
-
+import pygame
 
 class Timers:
     """Timers used for animations, movement, screen display, etc"""
@@ -45,3 +45,5 @@ class Timers:
         self.fake_bowser_move_wait = random.randint(2000, 4000)  # Needs to be reset every time it is used
         self.fake_bowser_next_move_wait = self.fake_bowser_move_wait + random.randint(1000, 3000)
         self.fake_bowser_jump_wait = random.randint(5000, 10000)  # Needs to be reset every time it is used
+
+
