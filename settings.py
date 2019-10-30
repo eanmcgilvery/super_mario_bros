@@ -141,7 +141,7 @@ class Settings:
         self.mario_small_height = self.goomba_height
 
         # MARIO FORCES
-        self.WALK_SPEED = 7
+        self.WALK_SPEED = 5
         self.WALK_ACCEL = 2
 
         self.RUN_SPEED = 15

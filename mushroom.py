@@ -7,7 +7,7 @@ class Mushroom(Object):
 
         self.width = settings.goomba_width
         self.height = settings.goomba_height
-
+        self.name = "mushroom"
         self.pic = pygame.image.load('images/mushroom.png')
         self.rect = pygame.Rect(x, y, settings.mushroom_width, settings.mushroom_height)
         self.image = pygame.transform.scale(self.pic, (settings.mushroom_width, settings.mushroom_height))

@@ -113,7 +113,7 @@ def update_animations(enemies, timers, objects, mario_):
             enemy.reanimate()
 
 
-def update_pos(settings, timers, enemies, objects, background, levels, items, mario_):
+def update_pos(settings, timers, enemies, objects, background, levels, items, mario_, ui):
     if timers.curtime - timers.last_move > timers.move_wait:
         timers.last_move = timers.curtime
         for enemy in enemies:
@@ -122,7 +122,9 @@ def update_pos(settings, timers, enemies, objects, background, levels, items, ma
                 enemies.remove(enemy)
         for object_ in items:
             object_.update_pos(enemies, objects)
-        mario_.update_pos(enemies, objects, settings)
+
+        # Move camera with Mario
+        mario_.update_pos(enemies, objects, settings, ui)
         if mario_.x >= settings.screen_width / 2 and mario_.move_right:
             if not mario_.run:
                 screen_x_move = settings.WALK_SPEED

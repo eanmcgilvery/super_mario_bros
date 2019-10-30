@@ -4,7 +4,7 @@ from object import Object
 class Coin(Object):
     def __init__(self, settings, screen, x, y, otype):
         super(Coin, self).__init__(settings, screen, x, y, otype)
-
+        self.name = "coin"
         """otype 1: blinking coin, otype 2: spinning coin..."""
 
         if self.otype is 1:

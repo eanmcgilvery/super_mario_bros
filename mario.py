@@ -131,10 +131,14 @@ class Mario(pg.sprite.Sprite):
             if not self.super_size:
                 self.image = pg.transform.scale(self.small_left_idle, (self.width, self.height))
 
-    def check_collisions(self, enemies, objects):
+    def check_collisions(self, enemies, objects, ui):
         if not self.death:
             for object_ in objects:
                 if self.rect.colliderect(object_):
+                    '''if object_.name == 'mushroom':
+                        self.super_size = True
+                    if object_.name == 'coin':
+                        ui.score += 10'''
                     # Reposition Mario to the top of the object
                     if self.rect.bottom > object_.rect.top and self.y_velocity >= self.rect.bottom - object_.rect.top:
                         self.y = object_.rect.top - self.height
@@ -145,6 +149,8 @@ class Mario(pg.sprite.Sprite):
                             self.rect.top:
                         self.y = object_.rect.bottom
                         self.y_velocity = 0
+                        if self.super_size:
+                            self.break_bricks()
                     elif self.rect.right - object_.rect.left < object_.rect.right - self.rect.left:  # Reposition to
                         # the left
                         self.x = object_.rect.left - self.width
@@ -224,11 +230,23 @@ class Mario(pg.sprite.Sprite):
             animation_speed = 130 - (self.x_velocity * 13 * -1)
         return animation_speed
 
-    def update_pos(self, enemies, objects, settings):
+    def movement(self, settings):
+        # Move right or left
+        if self.move_right:
+            if self.run:
+                self.x += settings.RUN_SPEED
+            else:
+                self.x += settings.WALK_SPEED
+        elif self.move_left and self.rect.left > 0:
+            if self.run:
+                self.x -= settings.RUN_SPEED
+            else:
+                self.x -= settings.WALK_SPEED
+
+    def update_pos(self, enemies, objects, settings, ui):
         if not self.death:
             # Constantly add a downward gravity force
             self.y_velocity += self.settings.fall_acceleration
-
             if not self.jump_:
                 self.y += self.y_velocity
                 self.jumpCount = 12
@@ -236,17 +254,8 @@ class Mario(pg.sprite.Sprite):
             self.rect.x = self.x
             self.rect.y = self.y
 
-            # Move right or left
-            if self.move_right:
-                if self.run:
-                    self.x += settings.RUN_SPEED
-                else:
-                    self.x += settings.WALK_SPEED
-            elif self.move_left and self.rect.left > 0:
-                if self.run:
-                    self.x -= settings.RUN_SPEED
-                else:
-                    self.x -= settings.WALK_SPEED
+            # Check movement
+            self.movement(settings)
 
             # Jump with spacebar
             if self.jump_ and self.jump_monitor == 0:
@@ -264,7 +273,7 @@ class Mario(pg.sprite.Sprite):
                     self.jumpCount -= 2
 
                 # self.allow_jump = False
-            self.check_collisions(enemies, objects)
+            self.check_collisions(enemies, objects, ui)
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
@@ -272,3 +281,6 @@ class Mario(pg.sprite.Sprite):
     def move_with_screen(self, screen_x_move):
         self.x -= screen_x_move
         self.rect.x = self.x
+
+    def break_bricks(self):
+        pass
