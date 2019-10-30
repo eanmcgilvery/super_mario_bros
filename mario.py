@@ -24,30 +24,30 @@ class Mario(pg.sprite.Sprite):
 
         # Setup containers to hold the differing animations
 
-        self.right_frames = [pg.image.load('images/mario_images/small_right/0.png').convert_alpha(),
-                             pg.image.load('images/mario_images/small_right/1.png').convert_alpha(),
-                             pg.image.load('images/mario_images/small_right/2.png').convert_alpha(),
-                             pg.image.load('images/mario_images/small_right/3.png').convert_alpha()]
+        self.right_frames = [pg.image.load('images/mario_images/small_right/0.png'),
+                             pg.image.load('images/mario_images/small_right/1.png'),
+                             pg.image.load('images/mario_images/small_right/2.png'),
+                             pg.image.load('images/mario_images/small_right/3.png')]
 
         self.left_frames = []
         for frame in self.right_frames:
             image = pg.transform.flip(frame, True, False)
             self.left_frames.append(image)
 
-        self.right_big_normal_frames = [pg.image.load('images/mario_images/big_right/0.png').convert_alpha(),
-                                        pg.image.load('images/mario_images/big_right/1.png').convert_alpha(),
-                                        pg.image.load('images/mario_images/big_right/2.png').convert_alpha(),
-                                        pg.image.load('images/mario_images/big_right/3.png').convert_alpha()]
+        self.right_big_normal_frames = [pg.image.load('images/mario_images/big_right/0.png'),
+                                        pg.image.load('images/mario_images/big_right/1.png'),
+                                        pg.image.load('images/mario_images/big_right/2.png'),
+                                        pg.image.load('images/mario_images/big_right/3.png')]
 
         self.left_big_normal_frames = []
         for frame in self.right_big_normal_frames:
             image = pg.transform.flip(frame, True, False)
             self.left_frames.append(image)
 
-        self.right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/0.png').convert_alpha(),
-                                  pg.image.load('images/mario_images/small_fire_right/1.png').convert_alpha(),
-                                  pg.image.load('images/mario_images/small_fire_right/2.png').convert_alpha(),
-                                  pg.image.load('images/mario_images/small_fire_right/3.png').convert_alpha()]
+        self.right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/0.png'),
+                                  pg.image.load('images/mario_images/small_fire_right/1.png'),
+                                  pg.image.load('images/mario_images/small_fire_right/2.png'),
+                                  pg.image.load('images/mario_images/small_fire_right/3.png')]
 
         self.left_fire_frames = []
         for frame in self.right_fire_frames:
@@ -68,8 +68,9 @@ class Mario(pg.sprite.Sprite):
         self.image = pg.transform.scale(self.right_frames[self.index], (self.width, self.height))
         self.rect = pg.Rect(100, 500, self.width, self.height)
 
+        # Start Mario on the Ground
         self.x = self.rect.x = 100
-        self.y = self.rect.y = self.settings.screen_height - 500
+        self.y = self.rect.y = self.settings.ground_level - self.height
 
         self.center = float(self.rect.centerx)
 
@@ -94,7 +95,6 @@ class Mario(pg.sprite.Sprite):
             self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
 
         # elif self.facing_right and  self.super_size:
-
 
     def check_collisions(self, enemies, objects):
         if not self.death:
