@@ -99,8 +99,12 @@ class Goomba(Enemy):
         pygame.mixer.Sound('sounds/kick.ogg').play()
         if self.etype is 1:
             self.pic = pygame.image.load('images/Goomba1d2.png')
+            self.width = self.settings.goomba_width_death
+            self.height = self.settings.goomba_height_death
         elif self.etype is 2:
             self.pic = pygame.image.load('images/Goomba2d2.png')
+            self.width = self.settings.goomba_width_death
+            self.height = self.settings.goomba_height_death
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
     def blitme(self):

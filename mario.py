@@ -1,18 +1,18 @@
 import pygame as pg
-import spritesheet
-from settings import Settings as sy
-
 
 # Class that holds all of the attributes of our hero, Mario
 class Mario(pg.sprite.Sprite):
     def __init__(self, settings, screen, ui, timers):
         pg.sprite.Sprite.__init__(self)
 
+        self.jump_monitor = 0
+        self.idle = True
         self.is_dead = False
         self.jump_ = False
         self.move_right = False
         self.move_left = False
         self.crouch = False
+        self.run = False
         self.max_x_vel = 100
         self.curtime = pg.time.get_ticks()  # This should not be used
         self.timers = timers
@@ -24,10 +24,13 @@ class Mario(pg.sprite.Sprite):
 
         # Setup containers to hold the differing animations
 
-        self.right_frames = [pg.image.load('images/mario_images/small_right/0.png'),
-                             pg.image.load('images/mario_images/small_right/1.png'),
+        self.right_frames = [pg.image.load('images/mario_images/small_right/1.png'),
                              pg.image.load('images/mario_images/small_right/2.png'),
                              pg.image.load('images/mario_images/small_right/3.png')]
+
+        # If small mario is standing still
+        self.small_right_idle = pg.image.load('images/mario_images/small_right/0.png')
+        self.small_left_idle = pg.transform.flip(self.small_right_idle, True, False)
 
         self.left_frames = []
         for frame in self.right_frames:
@@ -44,13 +47,13 @@ class Mario(pg.sprite.Sprite):
             image = pg.transform.flip(frame, True, False)
             self.left_frames.append(image)
 
-        self.right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/0.png'),
+        self.small_right_fire_frames = [pg.image.load('images/mario_images/small_fire_right/0.png'),
                                   pg.image.load('images/mario_images/small_fire_right/1.png'),
                                   pg.image.load('images/mario_images/small_fire_right/2.png'),
                                   pg.image.load('images/mario_images/small_fire_right/3.png')]
 
         self.left_fire_frames = []
-        for frame in self.right_fire_frames:
+        for frame in self.small_right_fire_frames:
             image = pg.transform.flip(frame, True, False)
             self.left_fire_frames.append(image)
 
@@ -88,13 +91,30 @@ class Mario(pg.sprite.Sprite):
 
     def animation(self, index_):
         """Return the correct images of Mario to animate through"""
-        if self.facing_right and not self.super_size:
-            self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
-        # Regular mario facing left
-        elif not self.facing_right and not self.invincible and not self.fire and not self.super_size:
-            self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
 
-        # elif self.facing_right and  self.super_size:
+        if self.facing_right and not self.idle:
+            if not self.super_size:
+                if not self.invincible and not self.fire:
+                    # Small regular mario
+                    self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
+                elif self.fire and not self.invincible:
+                    # Small fire mario
+                    self.image = pg.transform.scale(self.small_right_fire_frames[index_], (self.width, self.height))
+                # elif self
+            # else:
+
+        elif not self.facing_right and not self.idle:
+            # Regular mario facing left
+            if not self.super_size:
+                if not self.invincible and not self.fire:
+                    self.image = pg.transform.scale(self.left_frames[index_], (self.width, self.height))
+                # elif not self
+        elif self.idle and self.facing_right:
+            if not self.super_size:
+                self.image = pg.transform.scale(self.small_right_idle, (self.width, self.height))
+        elif self.idle and not self.facing_right:
+            if not self.super_size:
+                self.image = pg.transform.scale(self.small_left_idle, (self.width, self.height))
 
     def check_collisions(self, enemies, objects):
         if not self.death:
@@ -141,8 +161,16 @@ class Mario(pg.sprite.Sprite):
                         else:  # Touching sides or bottom of enemies
                             if enemy.ename is "koopa_troopa" or enemy.ename is "goomba":
                                 # Mario takes damage
-                                self.is_dead = True
-                                self.death_sequence()
+                                if not self.super_size and not self.invincible:
+                                    self.is_dead = True
+                                    self.fire = False
+                                    self.death_sequence()
+                                elif self.invincible:
+                                    pass
+                                else:
+                                    self.super_size = False
+                                    self.fire = False
+
                             elif enemy.is_dead:
                                 # Do nothing
                                 pass
@@ -152,9 +180,18 @@ class Mario(pg.sprite.Sprite):
 
     def death_sequence(self):
         if self.is_dead:
+            self.ui.lives -= 1
             pg.mixer.Sound('sounds/death.wav').play()
             self.image = pg.image.load('images/mario_images/mario_death.png')
             self.image = pg.transform.scale(self.image, (self.width, self.height))
+
+            # Mario slightly hops up
+            self.y -= 15
+
+            # Mario falls through the floor
+            while self.y < self.settings.screen_height:
+                self.y += self.settings.fall_acceleration - .8
+
 
     def animation_speed(self):
         """Used to make walking animation speed be in relation to
@@ -165,7 +202,6 @@ class Mario(pg.sprite.Sprite):
             animation_speed = 130 - (self.x_velocity * 13)
         else:
             animation_speed = 130 - (self.x_velocity * 13 * -1)
-
         return animation_speed
 
     def update_pos(self, enemies, objects, settings):
@@ -182,20 +218,27 @@ class Mario(pg.sprite.Sprite):
 
             # Move right or left
             if self.move_right:
-                self.x += settings.WALK_SPEED
+                if self.run:
+                    self.x += settings.RUN_SPEED
+                else:
+                    self.x += settings.WALK_SPEED
             elif self.move_left and self.rect.left > 0:
-                self.x -= settings.WALK_SPEED
+                if self.run:
+                    self.x -= settings.RUN_SPEED
+                else:
+                    self.x -= settings.WALK_SPEED
+
             # Jump with spacebar
-            if self.jump_ and self.allow_jump:
+            if self.jump_ and self.jump_monitor == 0:
                 if not self.super_size:
                     self.image = pg.image.load("images/mario_images/mario_small_jump.png")
                     self.image = pg.transform.scale(self.image, (self.width, self.height))
                     if not self.facing_right:
                         self.image = pg.transform.flip(self.image, True, False)
-
                 else:
                     self.image = pg.image.load("images/mario_images/mario_big_jump.png")
                     self.image = pg.transform.scale(self.image, (self.width, self.height))
+                   # Force added to jump
                 if self.jumpCount > -1:
                     self.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5
                     self.jumpCount -= 2
@@ -204,7 +247,6 @@ class Mario(pg.sprite.Sprite):
             self.check_collisions(enemies, objects)
 
     def blitme(self):
-        """Draw the alien at its current location."""
         self.screen.blit(self.image, self.rect)
 
     def move_with_screen(self, screen_x_move):
