@@ -1,6 +1,7 @@
 import pygame
 from object import Object
 
+
 class CastleFlag(Object):
     def __init__(self, settings, screen, x, y, otype):
         super(CastleFlag, self).__init__(settings, screen, x, y, otype)
@@ -12,9 +13,6 @@ class CastleFlag(Object):
 
     def update_image(self):
         self.image = self.image
-
-
-
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

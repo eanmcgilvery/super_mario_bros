@@ -1,6 +1,7 @@
 import pygame
 from object import Object
 
+
 class Cloud(Object):
     def __init__(self, settings, screen, x, y, otype):
         super(Cloud, self).__init__(settings, screen, x, y, otype)
@@ -21,7 +22,6 @@ class Cloud(Object):
 
     def update_image(self):
         self.image = self.image
-
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

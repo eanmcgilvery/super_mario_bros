@@ -83,7 +83,6 @@ class Mario(pg.sprite.Sprite):
         self.jumpCount = 10
 
         self.facing_right = True
-        self.crouching = False
         self.fire = False
         self.invincible = False
         self.super_size = False
@@ -127,11 +126,11 @@ class Mario(pg.sprite.Sprite):
             if not self.super_size:
                 self.image = pg.transform.scale(self.small_right_idle, (self.width, self.height))
         # Standing still left
-        else:
+        elif self.idle and not self.facing_right:
             if not self.super_size:
                 self.image = pg.transform.scale(self.small_left_idle, (self.width, self.height))
 
-    def check_collisions(self, enemies, objects, ui):
+    def check_collisions(self, enemies, objects):
         if not self.death:
             for object_ in objects:
                 if self.rect.colliderect(object_):
@@ -151,6 +150,10 @@ class Mario(pg.sprite.Sprite):
                         self.y_velocity = 0
                         if self.super_size:
                             self.break_bricks()
+
+                    elif object_.rect.bottom == self.rect.top:
+                        self.y_velocity = 0
+                        self.y = object_.rect.bottom - self.height
                     elif self.rect.right - object_.rect.left < object_.rect.right - self.rect.left:  # Reposition to
                         # the left
                         self.x = object_.rect.left - self.width
@@ -243,6 +246,12 @@ class Mario(pg.sprite.Sprite):
             else:
                 self.x -= settings.WALK_SPEED
 
+    def crouching(self):
+        if self.crouch:
+            if not self.super_size and not self.invincible and not self.fire:
+                self.image = pg.image.load("images/mario_images/super_mario_crouch.png")
+                self.image = pg.transform.scale(self.image, (self.width, self.height))
+
     def update_pos(self, enemies, objects, settings, ui):
         if not self.death:
             # Constantly add a downward gravity force
@@ -256,6 +265,7 @@ class Mario(pg.sprite.Sprite):
 
             # Check movement
             self.movement(settings)
+            self.crouching()
 
             # Jump with spacebar
             if self.jump_ and self.jump_monitor == 0:
@@ -273,7 +283,7 @@ class Mario(pg.sprite.Sprite):
                     self.jumpCount -= 2
 
                 # self.allow_jump = False
-            self.check_collisions(enemies, objects, ui)
+            self.check_collisions(enemies, objects)
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

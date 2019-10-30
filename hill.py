@@ -1,6 +1,7 @@
 import pygame
 from object import Object
 
+
 class Hill(Object):
     def __init__(self, settings, screen, x, y, otype):
         super(Hill, self).__init__(settings, screen, x, y, otype)
@@ -18,7 +19,6 @@ class Hill(Object):
 
     def update_image(self):
         self.image = self.image
-
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

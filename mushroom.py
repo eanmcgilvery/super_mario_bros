@@ -1,6 +1,7 @@
 import pygame
 from object import Object
 
+
 class Mushroom(Object):
     def __init__(self, settings, screen, x, y, otype):
         super(Mushroom, self).__init__(settings, screen, x, y, otype)

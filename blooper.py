@@ -13,7 +13,7 @@ class Blooper(Enemy):
         self.pic = pygame.image.load('images/Bloopera1.png')
         self.image = pygame.transform.scale(self.pic, (self.width, self.height))
 
-    def update_pos(self, enemies, objects):
+    def update_pos(self):
         if self.eliminated:
             self.y_velocity += self.settings.swimming_fall_acceleration
             self.y += self.y_velocity
@@ -22,7 +22,7 @@ class Blooper(Enemy):
             self.rect.x = self.x
         self.rect.y = self.y
 
-    def update_image(self, changeframe):
+    def update_image(self):
         # Animation tied into movement
         if not self.eliminated:
             if self.frame is 1:
