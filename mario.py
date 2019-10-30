@@ -168,17 +168,6 @@ class Mario(pg.sprite.Sprite):
 
         return animation_speed
 
-    def upTime(self):
-        """Called when Mario is in a JUMP state."""
-        if self.jumpCount >= -10:
-            if self.jumpCount < 0:
-                neg = -1
-                self.y -= self.jumpCount ** 2 * 0.1 * neg
-                self.jumpCount -= 1
-            else:
-                self.isJump = False
-                self.jumpCount = 10
-
     def update_pos(self, enemies, objects, settings):
         if not self.death:
             # Constantly add a downward gravity force
@@ -198,10 +187,18 @@ class Mario(pg.sprite.Sprite):
                 self.x -= settings.WALK_SPEED
             # Jump with spacebar
             if self.jump_ and self.allow_jump:
-                if self.x_velocity > 4.5 or self.x_velocity < -4.5:
-                    self.y_velocity = settings.JUMP_VEL - .5
+                if not self.super_size:
+                    self.image = pg.image.load("images/mario_images/mario_small_jump.png")
+                    self.image = pg.transform.scale(self.image, (self.width, self.height))
+                    if not self.facing_right:
+                        self.image = pg.transform.flip(self.image, True, False)
+
                 else:
-                    self.y_velocity = settings.JUMP_VEL
+                    self.image = pg.image.load("images/mario_images/mario_big_jump.png")
+                    self.image = pg.transform.scale(self.image, (self.width, self.height))
+                if self.jumpCount > -1:
+                    self.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5
+                    self.jumpCount -= 2
 
                 # self.allow_jump = False
             self.check_collisions(enemies, objects)
