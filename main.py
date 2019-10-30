@@ -8,7 +8,6 @@ from level1_1 import Level1_1
 from sub_level1_1 import SubLevel1_1
 from mario import Mario
 from mushroom import Mushroom
-from sign import Sign
 
 
 def run_game():
@@ -26,7 +25,6 @@ def run_game():
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
     ui = UserInterface(settings, screen)
     pygame.display.set_caption("Super Mario Bros")
-    new_sign = Sign(settings, screen)
     # Create our timers
     timers = Timers()
 
@@ -46,7 +44,7 @@ def run_game():
     levels[0].active = True
     levels[0].generate_map(settings, screen, objects, background)
     levels[0].enemy_spawn_triggers(enemies)
-    # levels[0].background_sound(settings)
+    levels[0].background_sound(settings)
 
     while True:
         timers.curtime = pygame.time.get_ticks()
@@ -54,7 +52,7 @@ def run_game():
         gf.update_pos(settings, timers, enemies, objects, background, levels, items, mario)
         gf.update_animations(enemies, timers, objects, mario, settings, items)
         gf.update_level_timer(ui, timers, mario)
-        gf.update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items, new_sign)
+        gf.update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items)
         if ui.lives == 0:
             levels[0].active = False
 

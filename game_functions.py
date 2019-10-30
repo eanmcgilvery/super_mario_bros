@@ -63,6 +63,7 @@ def check_keydown_events(event, settings, screen, ui, timers, enemies, objects, 
         mario.jump_ = False
 
     if event.key == pygame.K_SPACE:
+        pygame.mixer.Sound('sounds/small_jump.ogg').play()
         mario.idle = False
         mario.jump_ = True
         mario.allow_jump = True
@@ -91,7 +92,7 @@ def check_keyup_events(event, settings, mario_):
     if event.key == pygame.K_c:
         mario.crouch = False
 
-def update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items, menu):
+def update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
 
