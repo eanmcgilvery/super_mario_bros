@@ -4,10 +4,9 @@ from pygame.sprite import Group
 from settings import Settings
 from user_interface import UserInterface
 from timers import Timers
-from level1_1 import Level1_1, generate_map
+from level1_1 import Level1_1
 from sub_level1_1 import SubLevel1_1
 from mario import Mario
-from level1_1 import background_sound
 
 
 def run_game():
@@ -32,7 +31,7 @@ def run_game():
     enemies = Group()
 
     # Create our Hero
-    mario = Mario(settings, screen, ui, timers)
+    mario_ = Mario(settings, screen, ui, timers)
 
     # Create a group to hold all objects and background
     objects = Group()
@@ -40,21 +39,26 @@ def run_game():
     items = Group()
 
     # Create first level
-    levels = [Level1_1(settings, screen, ui, timers), SubLevel1_1(settings, screen, ui, timers)]
-    levels[0].active = True
-    generate_map(settings, screen, objects, background)
-    levels[0].enemy_spawn_triggers(enemies)
-    background_sound(settings)
+    curlevel = Level1_1(settings, screen, enemies, objects, background, mario_, ui, timers)
 
     while True:
         timers.curtime = pygame.time.get_ticks()
-        gf.check_events(settings, mario)
-        gf.update_pos(settings, timers, enemies, objects, background, levels, items, mario, ui)
-        gf.update_animations(enemies, timers, objects, mario)
-        gf.update_level_timer(ui, timers, mario)
-        gf.update_screen(screen, ui, enemies, timers, objects, background, levels, mario, items)
-        if ui.lives == 0:
-            levels[0].active = False
+        gf.check_events(settings, mario_)
+        if curlevel.active:
+            gf.update_pos(settings, timers, enemies, objects, background, curlevel, items, mario_, ui)
+            gf.update_animations(enemies, timers, objects, mario_)
+            gf.update_level_timer(ui, timers, mario_)
+            gf.update_screen(screen, ui, enemies, timers, objects, background, curlevel, mario_, items)
+            if ui.lives == 0:
+                curlevel.active = False
+                ui.lives = 3
+                settings.level_num = 0
+        else:
+            objects.empty()
+            background.empty()
+            items.empty()
+            enemies.empty()
+            curlevel = gf.change_level(settings, screen, enemies, objects, background, mario_, ui, timers)
 
 
 run_game()

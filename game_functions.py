@@ -3,6 +3,9 @@ import sys
 import mario
 import math
 
+from level1_1 import Level1_1
+from sub_level1_1 import SubLevel1_1
+
 
 def check_events(settings, mario_):
     for event in pygame.event.get():
@@ -70,13 +73,12 @@ def check_keyup_events(event, settings, mario_):
     if event.key == pygame.K_v:
         mario_.run = False
 
-def update_screen(screen, ui, enemies, timers, objects, background, levels, mario_, items):
+
+def update_screen(screen, ui, enemies, timers, objects, background, curlevel, mario_, items):
     if timers.curtime - timers.last_display > timers.display_wait:
         timers.last_display = timers.curtime
 
-        for level in levels:
-            if level.active:
-                screen.fill(level.bg_color)
+        screen.fill(curlevel.bg_color)
         for object_ in background:
             object_.blitme()
         for enemy in enemies:
@@ -120,7 +122,7 @@ def update_animations(enemies, timers, objects, mario_):
             enemy.reanimate()
 
 
-def update_pos(settings, timers, enemies, objects, background, levels, items, mario_, ui):
+def update_pos(settings, timers, enemies, objects, background, curlevel, items, mario_, ui):
     if timers.curtime - timers.last_move > timers.move_wait:
         timers.last_move = timers.curtime
         for enemy in enemies:
@@ -132,13 +134,18 @@ def update_pos(settings, timers, enemies, objects, background, levels, items, ma
 
         # Move camera with Mario
         mario_.update_pos(enemies, objects, settings, ui)
+        detect_warps(curlevel, mario_)
         if mario_.x >= settings.screen_width / 2 and mario_.move_right:
             if not mario_.run:
                 screen_x_move = settings.WALK_SPEED
             else:
                 screen_x_move = settings.RUN_SPEED
-            screen_move(settings, enemies, objects, background, levels, screen_x_move)
+            screen_move(settings, enemies, objects, background, curlevel, screen_x_move)
             mario_.move_with_screen(screen_x_move)
+
+
+def detect_warps(curlevel, mario_):
+    curlevel.warp_triggers(mario_)
 
 
 def update_level_timer(ui, timers, mario_):
@@ -151,7 +158,14 @@ def update_level_timer(ui, timers, mario_):
             ui.time -= 1
 
 
-def screen_move(settings, enemies, objects, background, levels, screen_x_move):
+def change_level(settings, screen, enemies, objects, background, mario, ui, timers):
+    if settings.level_num is 0:
+        return Level1_1(settings, screen, enemies, objects, background, mario, ui, timers)
+    elif settings.level_num is 1:
+        return SubLevel1_1(settings, screen, enemies, objects, background, mario, ui, timers)
+
+
+def screen_move(settings, enemies, objects, background, curlevel, screen_x_move):
     settings.screen_pos += screen_x_move
     for object_ in objects:
         object_.move_with_screen(screen_x_move)
@@ -159,6 +173,5 @@ def screen_move(settings, enemies, objects, background, levels, screen_x_move):
         object_.move_with_screen(screen_x_move)
     for enemy in enemies:
         enemy.move_with_screen(screen_x_move)
-    for level in levels:
-        if level.active:
-            level.enemy_spawn_triggers(enemies)
+    curlevel.enemy_spawn_triggers(enemies)
+    curlevel.trigger_move(screen_x_move)

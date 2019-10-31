@@ -16,6 +16,9 @@ class Settings:
         self.screen_pos = 0
         self.ground_level = self.map_height - 50
 
+        # Find correct level
+        level_num = 0
+
         # Fall acceleration
         self.fall_acceleration = 1
         self.swimming_fall_acceleration = 0.5
@@ -129,13 +132,6 @@ class Settings:
         self.flower_width = self.brick_lenth
         self.flower_height = self.brick_lenth
 
-        # Music
-        self.background_sound = pygame.mixer.Sound('sounds/main_theme.ogg')
-        self.underground_sound = pygame.mixer.Sound('sounds/underground.wav')
-
-        # FOR TESTING
-        self.move_screen = False
-
         # Mario Settings
         self.mario_small_width = self.goomba_width
         self.mario_small_height = self.goomba_height
@@ -156,7 +152,6 @@ class Settings:
 
         self.MAX_RUN_SPEED = 20
         self.MAX_WALK_SPEED = 6
-
 
         # Speed of gravity in our world
         self.FALL_SPEED = -9.8
