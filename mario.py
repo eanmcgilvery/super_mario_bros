@@ -125,7 +125,7 @@ class Mario(pg.sprite.Sprite):
 
         elif not self.facing_right and self.idle:
             if not self.super_size:
-                self.image = pg.transform.scale(self.left_frames, (self.width, self.height))
+                self.image = pg.transform.scale(self.small_left_idle, (self.width, self.height))
             else:
                 # Regular Super Mario
                 if not self.fire and not self.invincible:
@@ -213,7 +213,7 @@ class Mario(pg.sprite.Sprite):
                             if enemy.ename is "koopa_troopa" or enemy.ename is "goomba":
                                 # Mario takes damage
                                 if not self.super_size and not self.invincible:
-                                    if enemy.ename is "goomba" and enemy.is_dead:
+                                    if not (enemy.ename is "goomba" and enemy.is_dead):
                                         pass
                                     elif not (enemy.ename is "koopa_troopa" and enemy.moving and (
                                             self.timers.curtime - self.timers.last_shell_kick > self.timers.shell_kick_wait)):
@@ -243,12 +243,8 @@ class Mario(pg.sprite.Sprite):
             self.image = pg.transform.scale(self.image, (self.width, self.height))
 
             # Mario slightly hops up
-            self.y -= 15
-
-            # Mario falls through the floor
-            while self.y < self.settings.screen_height:
-                self.y += self.settings.fall_acceleration - .8
-
+            self.rect.y -= 20
+            self.is_dead = False
     def animation_speed(self):
         """Used to make walking animation speed be in relation to
         Mario's x-vel"""

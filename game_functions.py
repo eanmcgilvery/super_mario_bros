@@ -1,6 +1,7 @@
 import pygame
 import sys
 import mario
+import math
 
 
 def check_events(settings, mario_):
@@ -93,11 +94,16 @@ def update_animations(enemies, timers, objects, mario_):
         timers.last_enemy_animation = timers.curtime
         changeframe = True
 
-
-        mario_.animation((timers.last_enemy_animation) % 3)
-
         for enemy in enemies:
             enemy.update_image(changeframe)
+
+    if mario_.index >= 3:
+        mario_.index = 0
+    else:
+        mario_.index += 1
+
+    mario_.animation(mario_.index - 1)
+
     if timers.curtime - timers.last_object_animation > timers.object_animation_wait:
         timers.last_object_animation = timers.curtime
         for object_ in objects:
