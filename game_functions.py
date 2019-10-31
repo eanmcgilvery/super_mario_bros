@@ -36,6 +36,8 @@ def check_keydown_events(event, mario_, ):
         mario_.move_left = False
 
     if event.key == pygame.K_SPACE:
+        mario_.image = pygame.image.load("images/mario_images/mario_small_jump.png")
+        mario_.image = pygame.transform.scale(mario_.image, (mario_.width, mario_.height))
         pygame.mixer.Sound('sounds/small_jump.ogg').play()
         mario_.idle = False
         mario_.jump_ = True
@@ -47,24 +49,26 @@ def check_keydown_events(event, mario_, ):
 
 
 def check_keyup_events(event, settings, mario_):
-    if event.key == pygame.K_x:
-        settings.move_screen = False
     if event.key == pygame.K_d:
         mario_.idle = True
+        mario_.move_left = False
         mario_.move_right = False
     if event.key == pygame.K_a:
+        mario_.idle = True
         mario_.move_left = False
+        mario_.move_right = False
     if event.key == pygame.K_s:
         mario_.idle = True
         mario_.crouch = False
+        mario_.move_left = False
+        mario_.move_right = False
     if event.key == pygame.K_SPACE:
         mario_.idle = True
         mario_.jump_ = False
+        mario_.move_left = False
+        mario.move_right = False
     if event.key == pygame.K_v:
         mario_.run = False
-    if event.key == pygame.K_c:
-        mario.crouch = False
-
 
 def update_screen(screen, ui, enemies, timers, objects, background, levels, mario_, items):
     if timers.curtime - timers.last_display > timers.display_wait:

@@ -98,7 +98,11 @@ class Mario(pg.sprite.Sprite):
         # Right moving images
         if self.facing_right and not self.idle:
             if not self.super_size:
-                self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
+                if self.jump_:
+                    self.image = pg.image.load("images/mario_images/mario_small_jump.png")
+                    self.image = pg.transform.scale(self.image, (self.width, self.height))
+                else:
+                    self.image = pg.transform.scale(self.right_frames[index_], (self.width, self.height))
             else:
                 # Regular Super Mario
                 if not self.fire and not self.invincible:
